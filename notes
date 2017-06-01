@@ -1,25 +1,55 @@
 ****** This is the general notes file it contains the following *******
 
-1. Helper notes about Node/other code;
+	1. Helper notes about Node/other code;
 
-2. Database definitions;
+	2. Database definitions;
 
 *** Helper Notes ***
 
-How to run the app: DEBUG=chip:* npm start
+	*** Launching The App
 
-To push to GIT hub:
+		How to run the app: DEBUG=chip:* npm start
 
-git add .
-git commit -m "Description"
-git push origin master
+	*** GIT Stuff ***
 
-To see remotes:
+		To push to GIT hub:
 
-git remote -v
+		git add .
+		git commit -m "Description"
+		git push origin master
 
-To push to Heroku:
+		To see remotes:
 
-git push heroku master
+		git remote -v
+
+		To push to Heroku:
+
+		git push heroku master
+
+	*** Postgres ***
+
+		How to see all current tables: \dt *.*
+		How to create a new user:
+			CREATE USER tester WITH PASSWORD 'test_password';
+			GRANT ALL PRIVILEGES ON DATABASE "test_database" to tester;
+		Connection from terminal as master: 
+			psql -h chip-db.cclyf5gm9q8m.us-west-2.rds.amazonaws.com -U the_annual_chip -p 5432 -d the_annual_chip
+			password: the_annual_chip
+		Connection from terminal as tom: 
+			psql -h chip-db.cclyf5gm9q8m.us-west-2.rds.amazonaws.com -U tom -p 5432 -d the_annual_chip
+			password: the_annual_chip
+		Connection from terminal as sam: 
+			psql -h chip-db.cclyf5gm9q8m.us-west-2.rds.amazonaws.com -U sam -p 5432 -d the_annual_chip
+			password: the_annual_chip
 
 *** Database Definitions ***
+
+	DB Instance Identifier: chip-db
+	Master User Name: the_annual_chip
+	Master Password: the_annual_chip
+	DB Name: the_annual_chip
+
+	
+
+
+
