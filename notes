@@ -8,4 +8,18 @@
 
 How to run the app: DEBUG=chip:* npm start
 
+To push to GIT hub:
+
+git add .
+git commit -m "Description"
+git push origin master
+
+To see remotes:
+
+git remote -v
+
+To push to Heroku:
+
+git push heroku master
+
 *** Database Definitions ***
