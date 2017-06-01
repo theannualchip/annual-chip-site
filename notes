@@ -1,1 +1,11 @@
+****** This is the general notes file it contains the following *******
+
+1. Helper notes about Node/other code;
+
+2. Database definitions;
+
+*** Helper Notes ***
+
 How to run the app: DEBUG=chip:* npm start
+
+*** Database Definitions ***
