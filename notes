@@ -8,7 +8,7 @@
 
 	*** Launching The App
 
-		How to run the app: DEBUG=chip:* npm start
+		How to run the app: DEBUG=chip:* 
 
 	*** GIT Stuff ***
 
@@ -48,6 +48,25 @@
 	Master User Name: the_annual_chip
 	Master Password: the_annual_chip
 	DB Name: the_annual_chip
+
+	** Golf Scores Table **
+		CREATE TABLE scores(
+		   username varchar(50),
+		   day integer,
+		   hole integer,
+		   score integer,
+		   PRIMARY KEY( username, day, hole )
+		);
+
+		* Add some dummy data *
+			INSERT INTO scores (username, day, hole, score)
+		    VALUES ('T Bish', 1, 1, 4);
+		    INSERT INTO scores (username, day, hole, score)
+		    VALUES ('T Bish', 1, 2, 4);
+			INSERT INTO scores (username, day, hole, score)
+		    VALUES ('Sammy B', 1, 1, 3);
+			INSERT INTO scores (username, day, hole, score)
+		    VALUES ('Sammy B', 1, 2, 6);
 
 	
 

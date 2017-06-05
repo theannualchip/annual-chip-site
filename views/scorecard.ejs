@@ -45,27 +45,35 @@
             
             <!-- Section for the main scorecard -->
             <div class="mdl-cell mdl-cell--9-col">
-                <div class="paper"> 
+              <div class="paper"> 
 
-                  <h1><%= title %></h1>
-                  <p>Welcome to <%= title %></p>
-                  <h6> Welcome to the Day 1 Scorecard!</h6>
-                  <!-- Numeric Textfield -->
-                  <form action="#">
-                    <div class="mdl-textfield mdl-js-textfield">
-                      <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="score">
-                      <label class="mdl-textfield__label" for="sample2">Your score...</label>
-                      <span class="mdl-textfield__error">Input is not a number!</span>
-                    </div>
-                  </form>
+                <h1><%= title %></h1>
+                <p>Welcome to <%= title %></p>
+                <h6> Welcome to the Day 1 Scorecard!</h6>
+                <!-- Numeric Textfield -->
+                <form action="#">
+                  <div class="mdl-textfield mdl-js-textfield">
+                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="score">
+                    <label class="mdl-textfield__label" for="sample2">Your score...</label>
+                    <span class="mdl-textfield__error">Input is not a number!</span>
+                  </div>
+                </form>
 
-                </div>
+              </div>
             </div>
             
             <!-- Section for the dynamic leaderboard icons -->
+
             <div class="mdl-cell mdl-cell--2-col">
+
+            <div>
                 <img class="img-circle" src="/img/tom.jpg">
                 <h6 class="float-left">Tom</h6>
+              </div>
+              <div>
+                <img class="img-circle" src="/img/sam.jpg">
+                <h6 class="float-left">Sam</h6>
+              </div>
             </div>
             
           </div>

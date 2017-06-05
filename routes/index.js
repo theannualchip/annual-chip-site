@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var pgp = require('pg-promise')();
+var tom_js = require("../public/javascripts/tom.js");
 
 /* DB Connection */
 
@@ -28,7 +29,10 @@ router.get('/', function(req, res, next) {
 /* TOM SECTION. */
 
 router.get('/scorecard', function(req, res, next) {
-    res.render('scorecard', { title: 'Scorecard' });
+
+    tom_js.get_short_leaderboard(db, 1).then(function(data){console.log(JSON.stringify(data));})
+
+    res.render('scorecard', { title: 'Scorecard'});
 });
 
 /* General Stuff */
