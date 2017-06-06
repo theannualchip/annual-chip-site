@@ -30,9 +30,21 @@ router.get('/', function(req, res, next) {
 
 router.get('/scorecard', function(req, res, next) {
 
-    tom_js.get_short_leaderboard(db, 1).then(function(data){console.log(JSON.stringify(data));})
 
-    res.render('scorecard', { title: 'Scorecard'});
+    tom_js.get_short_lboard(db, 1)
+    .then(data => {
+
+        lboard_html = tom_js.format_lboard(data)
+
+        res.render('scorecard', {
+            title: 'Scorecard', 
+            leaderboard: lboard_html
+        })
+    }).catch(error => {console.log(error)})
+    
+    // console.log(JSON.stringify(leaderboard_s));
+
+    // res.render('scorecard', { title: 'Scorecard'});
 });
 
 /* General Stuff */
