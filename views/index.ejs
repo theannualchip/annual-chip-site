@@ -17,19 +17,22 @@
         <div class='columns'>
             <div class='column is-two-thirds'>
                 <div class='notification is-danger'>
-                    Ah Oh!
+                    <input class='input' type='text' id='js-socket_tester'></input>
                 </div>
             </div>
             <div class='column'>
-                <div class='notification is-primary'>
-                    Thats Better.
+                <div class='notification'>
+                    <input class='button is-primary' type='button' id='js-socket_submit' value='Send' onclick='send_message()'></input>
                 </div>
             </div>
         </div>
         <div class='notification is-warning'>
-            Full Width!
+            <p class='' id='js-text_output'></p>
         </div>
     </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascripts/sam.js"></script>
 
 </html>

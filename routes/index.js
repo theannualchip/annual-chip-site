@@ -8,12 +8,12 @@ var tom_js = require("../public/javascripts/tom.js");
 /* DB Connection */
 
 const db_connection_string = 'https://the_annual_chip:the_annual_chip@chip-db.cclyf5gm9q8m.us-west-2.rds.amazonaws.com:5432/the_annual_chip';
-var db = pgp(db_connection_string);
+//var db = pgp(db_connection_string);
 
 /* SAM SECTION. */
 
 router.get('/', function(req, res, next) {
-    db.query('SELECT * FROM users_example WHERE username = $1', ['T Bish'])
+    /*db.query('SELECT * FROM users_example WHERE username = $1', ['T Bish'])
         .then(data => {
             console.log(JSON.stringify(data));
             res.render('index', {
@@ -23,7 +23,10 @@ router.get('/', function(req, res, next) {
         })
         .catch(error => {
             console.log(error);
-        });
+        });*/
+        res.render('index',{title: 'The Annual Chip',
+                users: "Whatever"
+            });
 });
 
 /* TOM SECTION. */
@@ -32,16 +35,16 @@ router.get('/scorecard', function(req, res, next) {
 
 
     tom_js.get_short_lboard(db, 1)
-    .then(data => {
+        .then(data => {
 
-        lboard_html = tom_js.format_lboard(data)
+            lboard_html = tom_js.format_lboard(data)
 
-        res.render('scorecard', {
-            title: 'Scorecard', 
-            leaderboard: lboard_html
-        })
-    }).catch(error => {console.log(error)})
-    
+            res.render('scorecard', {
+                title: 'Scorecard',
+                leaderboard: lboard_html
+            })
+        }).catch(error => { console.log(error) })
+
     // console.log(JSON.stringify(leaderboard_s));
 
     // res.render('scorecard', { title: 'Scorecard'});
