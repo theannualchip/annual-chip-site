@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include head.ejs %>
+        <title>
+            Welcome To The Annual Chip In.
+        </title>
+        <link rel='stylesheet' href='/stylesheets/sam.css' />
+</head>
+
+<body>
+    <section class="hero is-alt is-fullheight background_color-grey">
+        <div class="hero-body">
+            <div class="column is-half-tablet is-offset-one-quarter-tablet is-one-third-desktop is-offset-one-third-desktop">
+                <div class="card-content">
+                    <h1 class="title has-text-centered is-large main_theme-title">
+                		The Annual Chip In
+              		</h1>
+              		<br>
+                    <p class="control has-icon">
+                        <input class="input" type="email" placeholder="Email">
+                        <span class="icon is-small is-left">
+					    	<i class="fa fa-user"></i>
+					    </span>
+                    </p>
+                    <p class="control has-icon">
+                        <input class="input" type="password" placeholder="Password">
+                        <span class="icon is-small is-left">
+					    	<i class="fa fa-key"></i>
+					    </span>
+                    </p>
+                    <p class="control">
+                        <label class="checkbox">
+                            <input type="checkbox"> Remember me
+                        </label>
+                    </p>
+                    <br>
+                    <p class="control">
+                        <button class="button is-medium is-fullwidth background_color-yellow">
+                            Login
+                        </button>
+                    </p>
+                </div>
+            </div>
+            <div id='js-login_error_output'></div>
+        </div>
+    </section>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/javascripts/sam.js"></script>
+
+</html>

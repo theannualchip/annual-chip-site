@@ -12,7 +12,7 @@ const database_object = {
     password: process.env.db_password
 };
 
-console.log(database_object);
+console.log("Connected to database: \x1b[33m" + database_object.database + " \x1b[0m(\x1b[34m" + database_object.host + "\x1b[0m)");
 module.exports = pgp(database_object);
 
 
