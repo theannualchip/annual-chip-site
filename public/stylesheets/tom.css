@@ -1,7 +1,13 @@
-/*body {
+body {
 	font-family: 'Roboto', sans-serif;
 }
-*/
+
+.main_theme-title {
+    text-shadow: 2px 2px #E5E4D7, 4px 4px #aeac84;
+    font-size:24pt;
+    font-family: 'Pacifico', cursive;
+}
+
 .paper {
   background: #fff;
   box-shadow:

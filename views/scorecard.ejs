@@ -11,16 +11,66 @@
 
 <body>
 
+  <div class="box">
+    <h1 class='title has-text-centered is-large main_theme-title'><%= title %></h1>
 
-<div class="box">
-  <div class="notification">
-      <h1 class='title'><%= title %></h1>
-      <p>Welcome to <%= title %></p>
-      <h6> Welcome to the Day 1 Scorecard!</h6>
-  </div>
+    <div class="tabs is-toggle is-fullwidth">
+      <ul>
+        <li class="is-active">
+          <a>
+            <span class="icon is-small"><i class="fa fa-ellipsis-v"></i></span>
+            <span>Day 1</span>
+          </a>
+        </li>
+        <li>
+          <a>
+            <span class="icon is-small"><i class="fa fa-hand-peace-o"></i></span>
+            <span>Day 2</span>
+          </a>
+        </li>
+        <li>
+          <a>
+            <span class="icon is-small"><i class="fa fa-cubes"></i></span>
+            <span>Day 3</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+<!--     <p>Welcome to <%= title %></p>
+  <h6> Welcome to the Day 1 Scorecard!</h6> -->
 </div>
 
-  <%- include footer.ejs %>
+<!-- BODY OF SCOREBOARD -->
+<div class="container is-fluid">
+ <div class='columns'>
+
+  <!-- Main Display -->
+  <div class='column is-two-thirds'>
+  <div class="hero is-dark">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            Scorecard Body
+          </h1>
+          <h2 class="subtitle">
+            This will be the content of the scorecard
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Side Leaderboard -->
+  <div class='column is-one-third'>
+   <%- leaderboard %>
+ </div>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<%- include footer.ejs %>
 
 </body>
 
