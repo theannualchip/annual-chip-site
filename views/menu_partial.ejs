@@ -1,0 +1,44 @@
+<div class="main_theme-nav background_color-yellow">
+        <div class="nav-left">
+            <div class="nav-item">
+                <a href="/">
+                    <h3 class="title has-text-centered main_theme-title-smaller">
+                        The Annual Chip In
+                    </h3>
+                </a>
+            </div>
+        </div>
+        <div id="js-menu_hamburger" class="main_theme-nav-hamburger">
+            <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
+        </div>
+    </div>
+    <div id='js-drop_down_menu' class='main_theme-drop_menu_container'>
+        <aside class="menu">
+            <p class="menu-label-update">
+                Main Events
+            </p>
+            <ul class="menu-list">
+                <li><a href="/" class="is-active">The Chit-Chat</a></li>
+                <li><a>The Scorecard</a></li>
+            </ul>
+            <p class="menu-label-update">
+                Soft Skills
+            </p>
+            <ul class="menu-list">
+                <li><a>Constitution</a></li>
+                <li><a>Photos</a></li>
+                <li><a>Edit Profile</a></li>
+                <li><a href="/login">Log Out</a></li>
+            </ul>
+            <%if (locals.is_admin) { %>
+                <br>
+                
+                    <ul class="menu-list">
+                        <div class='admin_warning'>
+                        <li><a href="/admin">Admin Privileges</a></li>
+                        </div>
+                    </ul>
+               
+            <% } %>
+        </aside>
+    </div>

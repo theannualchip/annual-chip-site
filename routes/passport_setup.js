@@ -63,7 +63,7 @@ passport.use(new local_strategy({
                             identifier = { session_id: req.sessionID, email: data[0].email };
                             console.log("\x1b[34m" + email + "\x1b[42m \x1b[37msuccessfully logged in\x1b[0m");
                             add_session(identifier);
-                            return done(null, { session_id: req.sessionID, email: data[0].email, username:data[0].username });
+                            return done(null, { session_id: req.sessionID, email: data[0].email, username:data[0].username, is_admin:data[0].is_admin });
                         } else {
                             console.log("\x1b[34m" + email + "\x1b[31m wasn't able to log in because their password was wrong\x1b[0m");
                             return done(null, false, { message: "Woops! I don't think that is the correct password." });

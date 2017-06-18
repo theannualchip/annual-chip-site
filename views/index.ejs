@@ -4,14 +4,18 @@
 <head>
     <% include head.ejs %>
         <title>
-            <%= title %>
+            Welcome
+            <%= user %> to The Annual Chip In
         </title>
         <link rel='stylesheet' href='/stylesheets/sam.css' />
 </head>
 
 <body>
+    <% include menu_partial.ejs %>
+    <div class='body_offset'>
+    </div>
     <div class='column'>
-        <h1 class='title'><%= title %></h1>
+        <h1 class='title'><%= user %></h1>
     </div>
     <div class='column'>
         <div class='columns'>
