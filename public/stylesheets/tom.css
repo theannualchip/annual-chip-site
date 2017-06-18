@@ -32,6 +32,28 @@ body {
     box-shadow: 0 5px 5px rgba(0,0,0,0.22);
 }
 
+.img-circle:hover {
+    box-shadow: 0 5px 5px rgb(255,207,121);
+}
+
 .float-left {
 	display:inline-block
 }
+
+
+/* BULMA ALTERATIONS */
+
+.tabs.is-toggle li.is-active a {
+  background-color: #FFCF79;
+  border-color: #FFCF79;
+  color: #fff;
+  z-index: 1;
+}
+
+.tabs.is-toggle a:hover {
+  background-color: #ffeac6;
+  border-color: #FFCF79;
+  z-index: 2;
+}
+
+/* END BULMA ALTERATIONS*/

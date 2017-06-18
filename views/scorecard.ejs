@@ -11,7 +11,6 @@
 
 <body>
 
-  <div class="box">
     <h1 class='title has-text-centered is-large main_theme-title'><%= title %></h1>
 
     <div class="tabs is-toggle is-fullwidth">
@@ -37,17 +36,43 @@
       </ul>
     </div>
 
-<!--     <p>Welcome to <%= title %></p>
-  <h6> Welcome to the Day 1 Scorecard!</h6> -->
-</div>
 
 <!-- BODY OF SCOREBOARD -->
+
 <div class="container is-fluid">
+<div class="box">
  <div class='columns'>
 
   <!-- Main Display -->
-  <div class='column is-two-thirds'>
-  <div class="hero is-dark">
+  <div class='column is-three-quarters'>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th> Day </th>
+          <th> Hole</th>
+          <th> <img class="img-circle image is-32x32" src="/img/sam.jpg"></th>
+          <th> <img class="img-circle image is-32x32" src="/img/tom.jpg"></th>
+        </tr>
+      </thead>
+       <tbody>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>4</td>
+            <td>5</td>
+          </tr>
+        </tbody>
+    </table>
+
+
+<!--   <div class="hero is-dark">
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
@@ -58,14 +83,15 @@
           </h2>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <!-- Side Leaderboard -->
-  <div class='column is-one-third'>
+  <div class='column is-one-quarter'>
    <%- leaderboard %>
  </div>
 
+</div>
 </div>
 </div>
 
