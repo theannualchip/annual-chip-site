@@ -8,6 +8,7 @@
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.2",
+    "connect-pg-simple": "^4.2.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
     "dotenv": "^4.0.0",

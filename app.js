@@ -23,13 +23,26 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(require('express-session')({
+var session = require('express-session');
+var pg_session = require('connect-pg-simple')(session);
+app.use(session({
+    store: new pg_session({
+        conObject: {
+            host: 'chip-db.cclyf5gm9q8m.us-west-2.rds.amazonaws.com',
+            port: 5432,
+            database: 'the_annual_chip',
+            user: process.env.db_user,
+            password: process.env.db_password
+        }
+    }),
+    cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 },
     secret: 'chip secret',
     resave: false,
     saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);

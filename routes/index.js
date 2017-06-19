@@ -14,6 +14,7 @@ const salt_rounds = 10;
 
 router.post('/user_login', function(req, res, next) {
     passport.authenticate('local', { badRequestMessage: "Looks like you are missing either your email or password." }, function(error, user, info) {
+        console.log(user);
         if (error || !user || user == false) {
             return res.render('login', { warning: info.message });
         }
@@ -21,8 +22,10 @@ router.post('/user_login', function(req, res, next) {
             if (loginErr) {
                 return next(loginErr);
             }
-            console.log("Redirecting \x1b[34m" + req.session.passport.user.email + "\x1b[0m to index.ejs");
-            return res.redirect('/');
+            req.session.save(function(err) {
+                console.log("Redirecting \x1b[34m" + req.session.passport.user.email + "\x1b[0m to index.ejs");
+                return res.redirect('/');
+            });
         });
     })(req, res, next);
 });
@@ -37,20 +40,18 @@ router.post('/user_signup', function(req, res, next) {
         console.log("Creating new user: \x1b[34m" + JSON.stringify(req.body) + "\x1b[0m");
         bcrypt.genSalt(salt_rounds, function(err, salt) {
             console.log(err);
-            console.log("taco1");
             bcrypt.hash(req.body.password, salt, null, function(err, hash) {
                 console.log(err);
-                console.log("taco2");
-                db.query("INSERT INTO golfers (username,email,password,is_admin) VALUES ($1,$2,$3,$4)", [req.body.username, req.body.email,hash,is_admin])
-                .then(function(data) {
+                db.query("INSERT INTO golfers (username,email,password,is_admin) VALUES ($1,$2,$3,$4)", [req.body.username, req.body.email, hash, is_admin])
+                    .then(function(data) {
                         console.log("\x1b[42m\x1b[37mSuccessfully created user for\x1b[0m \x1b[34m" + JSON.stringify(req.body) + "\x1b[0m");
-                        res.render('admin', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, sign_up_success:"Success! Signed up " + req.body.email + "."});
-                })
-                .catch(function(error) {
-                    console.log("Couldn't sign up user \x1b[34m" + JSON.stringify(req.body) + "\x1b[31m error quering the golfers database\x1b[0m:");
-                    console.log(error);
-                    res.render('admin', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, sign_up_success:"Couldn't sign up user as there was an error quering the golfers database." });
-                });
+                        res.render('admin', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, sign_up_success: "Success! Signed up " + req.body.email + "." });
+                    })
+                    .catch(function(error) {
+                        console.log("Couldn't sign up user \x1b[34m" + JSON.stringify(req.body) + "\x1b[31m error quering the golfers database\x1b[0m:");
+                        console.log(error);
+                        res.render('admin', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, sign_up_success: "Couldn't sign up user as there was an error quering the golfers database." });
+                    });
             });
         });
     } else {
