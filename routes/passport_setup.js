@@ -7,6 +7,18 @@ var bcrypt = require('bcrypt-nodejs');
 
 const salt_rounds = 10;
 
+function update_last_used(email) {
+    console.log("Updating last_active field for \x1b[34m" + email + "\x1b[0m");
+    db.query("UPDATE golfers SET last_active=$1 WHERE email=$2", [moment(), email])
+        .then(function(data) {
+            console.log("\x1b[42m\x1b[37mSuccessfully updated last_active field for\x1b[0m \x1b[34m" + email + "\x1b[0m");
+        })
+        .catch(function(error) {
+            console.log("\x1b[34m" + email + "\x1b[31m wasn't able to update last_active field because there was an error quering the golfers database\x1b[0m:");
+            console.log(error);
+        });
+}
+
 passport.use(new local_strategy({
         usernameField: "email",
         passwordField: "password",
@@ -25,7 +37,8 @@ passport.use(new local_strategy({
                         if (res == true) {
                             identifier = { session_id: req.sessionID, email: data[0].email };
                             console.log("\x1b[34m" + email + "\x1b[42m \x1b[37msuccessfully logged in\x1b[0m");
-                            return done(null, { session_id: req.sessionID, email: data[0].email, username:data[0].username, is_admin:data[0].is_admin });
+                            update_last_used(data[0].email);
+                            return done(null, { session_id: req.sessionID, email: data[0].email, username: data[0].username, is_admin: data[0].is_admin });
                         } else {
                             console.log("\x1b[34m" + email + "\x1b[31m wasn't able to log in because their password was wrong\x1b[0m");
                             return done(null, false, { message: "Woops! I don't think that is the correct password." });
@@ -50,12 +63,13 @@ passport.deserializeUser(function(user, done) {
     db.query("SELECT sid, sess FROM session WHERE sid=$1", [user.session_id])
         .then(function(data) {
             if (data.length > 0) {
-                if (data[0].sess.passport.user.email==user.email) {
+                if (data[0].sess.passport.user.email == user.email) {
                     console.log("\x1b[42m\x1b[37mSuccessfully authenticated session for\x1b[0m \x1b[34m" + user.email + "\x1b[0m");
+                    update_last_used(user.email);
                     return done(null, user);
                 } else {
                     console.log("\x1b[31mCouldn't authenticate due to mismatch of cookie id and session id for \x1b[34m" + user.email + "\x1b[0m");
-                    return done(null, user);
+                    return done(null, false);
                 }
             } else {
                 console.log("\x1b[33mNo session exists for \x1b[34m" + user.email + "\x1b[31m")

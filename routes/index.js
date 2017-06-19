@@ -14,7 +14,6 @@ const salt_rounds = 10;
 
 router.post('/user_login', function(req, res, next) {
     passport.authenticate('local', { badRequestMessage: "Looks like you are missing either your email or password." }, function(error, user, info) {
-        console.log(user);
         if (error || !user || user == false) {
             return res.render('login', { warning: info.message });
         }
