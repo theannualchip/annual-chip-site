@@ -4,9 +4,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var local_strategy = require('passport-local').Strategy;
+var parser = require('body-parser');
+var urlencodedParser = parser.urlencoded({ extended: false });
+var pgp = require('pg-promise')();
+var db = require("./db.js");
 
 var index = require('./routes/index');
-var users = require('./routes/users');
 
 var app = express();
 
@@ -14,16 +19,33 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+var session = require('express-session');
+var pg_session = require('connect-pg-simple')(session);
+app.use(session({
+    store: new pg_session({
+        conObject: {
+            host: 'chip-db.cclyf5gm9q8m.us-west-2.rds.amazonaws.com',
+            port: 5432,
+            database: 'the_annual_chip',
+            user: process.env.db_user,
+            password: process.env.db_password
+        }
+    }),
+    cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 },
+    secret: 'chip secret',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

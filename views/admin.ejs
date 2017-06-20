@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include head.ejs %>
+        <title>
+            Welcome
+            <%= user %> to The Annual Chip In
+        </title>
+        <link rel='stylesheet' href='/stylesheets/sam.css' />
+</head>
+
+<body>
+    <% include menu_partial.ejs %>
+    <div class='body_offset'>
+    </div>
+    <div class='hero background_color-grey'>
+        <div class='hero-body'>
+            <div class="column is-one-half-table is-one-third-desktop">
+                <div class='title'>
+                    <p>Sign up a new user</p>
+                </div>
+                <form method='POST' action='/user_signup'>
+                    <p class="control has-icon">
+                        <input class="input" type="email" name='email' placeholder="Email">
+                        <span class="icon is-small is-left">
+                        <i class="fa fa-user"></i>
+                    </span>
+                    </p>
+                    <p class="control has-icon">
+                        <input class="input" type="text" name='username' placeholder="Username">
+                        <span class="icon is-small is-left">
+                        <i class="fa fa-comments"></i>
+                    </span>
+                    </p>
+                    <p class="control has-icon">
+                        <input class="input" type="password" name='password' placeholder="Password">
+                        <span class="icon is-small is-left">
+                        <i class="fa fa-key"></i>
+                    </span>
+                    </p>
+                    <p class="control">
+                        <label class="checkbox">
+                            <input type="checkbox" name="is_admin"> Is this user an admin?
+                        </label>
+                    </p>
+                    <br>
+                    <p class="control" id='js-login_submit_button'>
+                        <button type='submit' class="button is-medium is-fullwidth background_color-yellow" style="display: inline-block">
+                            Sign Up
+                        </button>
+                    </p>
+                </form>
+                <%if (locals.sign_up_success) { %>
+                        <br><div class='notification is-danger has-text-centered'>  <%= sign_up_success %></div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascripts/sam.js"></script>
+
+</html>

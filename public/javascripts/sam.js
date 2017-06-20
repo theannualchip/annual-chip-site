@@ -17,3 +17,15 @@ $('#js-socket_tester').on("keydown", function (e) {
         send_message();
     }
 });*/
+
+// nav
+
+$('#js-menu_hamburger').on('click touch', function() {
+	console.log($('#js-drop_down_menu').position().top);
+	if ($('#js-drop_down_menu').position().top==-277) {
+		$('#js-drop_down_menu').animate({top:53},500);
+	} else {
+		$('#js-drop_down_menu').animate({top:-277},500);
+	}
+});
+
