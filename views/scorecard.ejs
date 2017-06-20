@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <% include head.ejs %>
   <title>
     <%= title %>
   </title>
-  <link rel='stylesheet' href='/stylesheets/tom.css' />
+  <link rel='stylesheet' href='/stylesheets/tom.css'/>
+  <script type="text/javascript" src="/javascripts/tom.js"></script>
 </head>
 
 <body>
@@ -46,44 +46,8 @@
   <!-- Main Display -->
   <div class='column is-three-quarters'>
 
-    <table class="table">
-      <thead>
-        <tr>
-          <th> Day </th>
-          <th> Hole</th>
-          <th> <img class="img-circle image is-32x32" src="/img/sam.jpg"></th>
-          <th> <img class="img-circle image is-32x32" src="/img/tom.jpg"></th>
-        </tr>
-      </thead>
-       <tbody>
-          <tr>
-            <td>1</td>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>4</td>
-            <td>5</td>
-          </tr>
-        </tbody>
-    </table>
+    <%- include card.ejs-%>
 
-
-<!--   <div class="hero is-dark">
-      <div class="hero-body">
-        <div class="container">
-          <h1 class="title">
-            Scorecard Body
-          </h1>
-          <h2 class="subtitle">
-            This will be the content of the scorecard
-          </h2>
-        </div>
-      </div>
-    </div> -->
   </div>
 
   <!-- Side Leaderboard -->
@@ -92,6 +56,7 @@
  </div>
 
 </div>
+<br>
 </div>
 </div>
 

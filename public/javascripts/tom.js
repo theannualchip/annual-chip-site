@@ -36,4 +36,15 @@ exports.format_lboard = function(lboard) {
 
 	return table;
 
+};
+
+function my_function() {
+
+    // alert("I did something!");
+
+    $('#hole_1').click(
+	    function(){
+	        $('.modal').addClass("is-active");
+	        // css('border','0 none transparent');
+	});
 }
