@@ -69,6 +69,41 @@
 		    VALUES ('Sammy B', 1, 2, 6);
 
 	
+	** Photos Table **
+
+	Starting with the pics stored locally and manually entering the log details
+	Will update later
+
+		* Add some dummy data *
+		INSERT INTO photos (photo_title, uploaded_user, date_uploaded)
+	    VALUES ('tom.jpg', 'T Bish', to_date('2017-06-21', 'YYYY-MM-DD'));
+
+	    INSERT INTO photos (photo_title, uploaded_user, date_uploaded)
+	    VALUES ('sam.jpg','Sammy B', to_date('2017-06-21', 'YYYY-MM-DD'));
+
+	    INSERT INTO photos (photo_title, uploaded_user, date_uploaded)
+	    VALUES ('gimp.jpg', 'Gimp', to_date('2017-06-21', 'YYYY-MM-DD'));
 
 
 
+*** Tom Javascript Helpers ***
+
+	** THis is a switch statement **
+
+		switch(lboard[i].username) {
+		    case "T Bish":
+		        img = "tom.jpg";
+		        break;
+		    case "Sammy B":
+		        img = "sam.jpg";
+		        break;
+		    };
+
+	** Multiline strings **
+
+		Use the multiline package (cause of course you're not allowed)
+
+		multiline_string = multline(function(){/*
+			your string here
+		*/
+		})

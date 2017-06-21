@@ -40,24 +40,30 @@
 <!-- BODY OF SCOREBOARD -->
 
 <div class="container is-fluid">
-<div class="box">
  <div class='columns'>
 
   <!-- Main Display -->
-  <div class='column is-three-quarters'>
+  <div class='column is-10 box'>
 
+    <div>
+      <h1 class='title has-text-centered is-medium main_theme-title'> Input </h1>
+    </div>
     <%- include card.ejs-%>
 
   </div>
 
   <!-- Side Leaderboard -->
-  <div class='column is-one-quarter'>
-   <%- leaderboard %>
+  <div class='column is-2 box'>
+    <div>
+      <h1 class='title has-text-centered is-medium main_theme-title'> L-Board </h1>
+    </div>
+    <br>
+    <%- leaderboard %>
+    <br>
  </div>
 
 </div>
 <br>
-</div>
 </div>
 
 <!-- FOOTER -->

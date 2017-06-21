@@ -37,9 +37,47 @@ body {
     box-shadow: 0 5px 5px rgb(255,207,121);
 }
 
+
+/* TEXT FORMATTING */
+.test {
+  border: 2px dashed #f69c55;
+}
+
+.center-div {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
 .float-left {
 	display:inline-block
 }
+
+.hover-nice:hover{
+  text-underline-position: 
+}
+
+.row {
+  display: flex;
+}
+
+
+/* Forms and Inputs */
+
+.score-input {
+  color: white;
+  width: 600px;
+  max-width: 80%;
+  display: none;
+  border-bottom-color: white;
+}
+
+.input-faded {
+
+
+
+}
+
 
 /* BULMA ALTERATIONS */
 
