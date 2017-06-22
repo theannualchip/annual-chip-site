@@ -64,19 +64,117 @@ body {
 
 /* Forms and Inputs */
 
-.score-input {
+.score-column {
+    list-style:none;
+    padding:0;
+    margin:0;   
+}
+
+.score-column li {
+    display: block;
+    padding: 15px;
+/*    height: 75px;
+*/    border:1px solid #FFCF79;
+    margin-bottom: 30px;
+    border-radius: 3px;
+}
+
+.score-column li > label{
+    display: block;
+    float: left;
+    margin-top: -24px;
+    background: #FFFFFF;
+    height: 14px;
+    padding: 2px 5px 2px 5px;
+    color: #FFCF79;
+    font-size: 12px;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.score-column li > span{
+    background: #f9d490;
+    display: block;
+    padding: 3px;
+    margin: 0 -9px -9px -9px;
+    text-align: center;
+    color: #FFFFFF;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+}
+
+.score-column input {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 20%;
+    display: block;
+    outline: none;
+    border: 1px solid #FFCF79;
+/*    border:none; */
+/*    border-bottom: 1px dashed #83A4C5;
+*/    border: 1px solid #FFCF79;
+
+/*    height: 50%;
+*/    line-height: 25px;
+    font-size: 16px;
+    padding: 0;
+    margin-left: 40%;
+    font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+
+/*.score-input {
   color: white;
   width: 600px;
   max-width: 80%;
   display: none;
   border-bottom-color: white;
+}*/
+
+/* STUFFFFFFFF*/
+
+.draw {
+  transition: color 0.25s;
 }
 
-.input-faded {
-
-
-
+.draw::before, .draw::after {
+  border: 2px solid transparent;
+  width: 0;
+  height: 0;
 }
+
+.draw::before {
+  top: 0;
+  left: 0;
+}
+
+.draw::after {
+  bottom: 0;
+  right: 0;
+}
+
+.draw:hover {
+  color: #60daaa;
+}
+
+.draw:hover::before, .draw:hover::after {
+  width: 100%;
+  height: 100%;
+}
+
+.draw:hover::before {
+  border-top-color: #60daaa;
+  border-right-color: #60daaa;
+  transition: width 0.25s ease-out, height 0.25s ease-out 0.25s;
+}
+
+.draw:hover::after {
+  border-bottom-color: #60daaa;
+  border-left-color: #60daaa;
+  transition: border-color 0s ease-out 0.5s, width 0.25s ease-out 0.5s, height 0.25s ease-out 0.75s;
+}
+
 
 
 /* BULMA ALTERATIONS */
