@@ -18,7 +18,7 @@
                 Main Events
             </p>
             <ul class="menu-list">
-                <li><a href="/" class="is-active">The Chit-Chat</a></li>
+                <li><a href="/" id='js-chit_chat'>The Chit-Chat</a></li>
                 <li><a>The Scorecard</a></li>
             </ul>
             <p class="menu-label-update">
@@ -26,7 +26,7 @@
             </p>
             <ul class="menu-list">
                 <li><a>Constitution</a></li>
-                <li><a>Photos</a></li>
+                <li><a id='js-photos' href='/photos'>Photos</a></li>
                 <li><a>Edit Profile</a></li>
                 <li><a href="/login">Log Out</a></li>
             </ul>
@@ -35,10 +35,16 @@
                 
                     <ul class="menu-list">
                         <div class='admin_warning'>
-                        <li><a href="/admin">Admin Privileges</a></li>
+                        <li><a id='js-admin' href="/admin">Admin Privileges</a></li>
                         </div>
                     </ul>
                
             <% } %>
         </aside>
     </div>
+    <%if (locals.current_page) { %>
+    <script>
+        current_page='<%= current_page %>';
+    </script>
+    <% } %>
+    <div class='menu_buffer'></div>

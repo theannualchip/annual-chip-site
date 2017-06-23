@@ -12,31 +12,55 @@
 
 <body>
     <% include menu_partial.ejs %>
-    <div class='body_offset'>
-    </div>
-    <div class='column'>
-        <h1 class='title'><%= user %></h1>
-    </div>
-    <div class='column'>
-        <div class='columns'>
-            <div class='column is-two-thirds'>
-                <div class='notification is-danger'>
-                    <input class='input' type='text' id='js-socket_tester'></input>
+        <div class='columns full_height is-gapless'>
+            <div class='column full_height_less background_color-light_grey is-full-width is-10-touch'>
+                <div class='column chat_window'>
+                    <div class='column' id='js-chat_output'>
+                    </div>
                 </div>
             </div>
-            <div class='column'>
-                <div class='notification'>
-                    <input class='button is-primary' type='button' id='js-socket_submit' value='Send' onclick='send_message()'></input>
+            <div class='chat_input background_color-grey'>
+                <div class='column'>
+                    <div class='columns is-mobile'>
+                        <div class='column is-9'>
+                            <input class='input' placeholder='Message' autocomplete="off" type='text' id='js-chat_input'></input>
+                        </div>
+                        <div class='column'>
+                            <input class='button background_color-yellow is-full-width' type='button' value='Send' onclick='send_message()'></input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='column full_height background_color-light_yellow is-2 is-hidden-touch'>
+                <div class='column'>
+                    side bar
                 </div>
             </div>
         </div>
-        <div class='notification is-warning'>
-            <p class='' id='js-text_output'></p>
-        </div>
-    </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/javascripts/sam.js"></script>
+<script>
+var socket = io();
+
+function send_message() {
+    message = $('#js-chat_input').val();
+    if (message != "") {
+        socket.emit('chat message', message);
+        $('#js-chat_input').val('');
+    }
+}
+socket.on('chat message', function(msg) {
+    $('#js-chat_output').append("<%= user %>: " + " " + msg + "<br>");
+    $('#js-chat_output').animate({scrollTop: $('#js-chat_output')[0].scrollHeight + 'px'}, 500);
+})
+
+$('#js-chat_input').on("keydown", function(e) {
+    if (e.keyCode == 13) {
+        send_message();
+    }
+});
+</script>
 
 </html>

@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var local_strategy = require('passport-local').Strategy;
 var parser = require('body-parser');
+var multer  = require('multer');
 var urlencodedParser = parser.urlencoded({ extended: false });
 var pgp = require('pg-promise')();
 var db = require("./db.js");
@@ -18,10 +19,10 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(cookieParser());
 var session = require('express-session');
 var pg_session = require('connect-pg-simple')(session);
