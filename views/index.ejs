@@ -32,8 +32,7 @@
                 </div>
             </div>
             <div class='column full_height background_color-light_yellow is-2 is-hidden-touch'>
-                <div class='column'>
-                    side bar
+                <div class='column' id='js-chat_side_bar'>
                 </div>
             </div>
         </div>
@@ -44,15 +43,27 @@
 <script>
 var socket = io();
 
+socket.emit('add user', '<%= user_email %>');
+
 function send_message() {
     message = $('#js-chat_input').val();
     if (message != "") {
-        socket.emit('chat message', message);
+        socket.emit('chat message', {user:'<%= user %>',message:message});
         $('#js-chat_input').val('');
     }
 }
+
+socket.on('online update', function(online_users) {
+    html_output='<h1><%= user %></h1>';
+    for (row_1 = 0; row_1 < online_users.length; row_1++) {
+        if (online_users[row_1]!='<%= user %>')
+        html_output += '<li>' + online_users[row_1] + '</li>';
+    }
+    $('#js-chat_side_bar').html(html_output);
+})
+
 socket.on('chat message', function(msg) {
-    $('#js-chat_output').append("<%= user %>: " + " " + msg + "<br>");
+    $('#js-chat_output').append(msg.user + ": " + msg.message + "<br>");
     $('#js-chat_output').animate({scrollTop: $('#js-chat_output')[0].scrollHeight + 'px'}, 500);
 })
 

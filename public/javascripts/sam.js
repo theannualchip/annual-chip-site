@@ -51,6 +51,10 @@ $('#js-photo_upload-name').on("keyup", function() {
     }
 });
 
+$("#js-profile_upload_input").change(function() {
+    $("#js-profile_upload_output").html($(this).val().replace(/^.*[\\\/]/, '')+"<br><br>");
+});
+
 $('#js-photo_upload_close').on('click touch', function() {
     $('#js-photo_upload-input_holder').html("<input type='file' class='level-left hide_input' name='photo_file' id='js-photo_upload_input'>");
     $("#js-photo_upload_output").html("");
@@ -73,19 +77,18 @@ $('.on_hover_pointer').on('click touch', function() {
             if (return_status != 'success') {
                 $('#js-photo_upload_delete_warning').html("<div class='notification is-danger has-text-centered'>" + return_status + "</div>");
             } else {
-                $('#js-photo_upload_imge_container-' + photo_title.replace( /(:|\.|\[|\]|,|=|@)/g, "\\$1" )).remove();
+                $('#js-photo_upload_imge_container-' + photo_title.replace(/(:|\.|\[|\]|,|=|@)/g, "\\$1")).remove();
             }
         });
 });
 
 $('.photo_album-image_wrapper').on('click touch', function() {
-    if ($(this).hasClass('full_screen_image')){
-        $(this).toggleClass('full_screen_image',false);
-        $(this).children().css('margin-top','auto');
+    if ($(this).hasClass('full_screen_image')) {
+        $(this).toggleClass('full_screen_image', false);
+        $(this).children().css('margin-top', 'auto');
 
     } else {
-        $(this).toggleClass('full_screen_image',true);
-        $(this).children().css('margin-top',($(this).height()-$(this).children().height())/2 + "px");
+        $(this).toggleClass('full_screen_image', true);
+        $(this).children().css('margin-top', ($(this).height() - $(this).children().height()) / 2 + "px");
     }
 })
-

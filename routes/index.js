@@ -14,12 +14,16 @@ var moment = require('moment');
 var multer = require('multer');
 const salt_rounds = 10;
 
+/* MESSAGES */
+
+var chat_bot = require('./chat_bot.js');
+
 /* SAM SECTION. */
 
 var allowable_image_types = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg'];
 
-function get_unique_photo_filename(filename, call_back) {
-    db.query("SELECT photo_title FROM photos")
+function get_unique_photo_filename(filename, directory, current_photo_list, call_back) {
+    db.query(current_photo_list)
         .then(function(data) {
             existing_names = [];
             if (data.length > 0) {
@@ -27,7 +31,7 @@ function get_unique_photo_filename(filename, call_back) {
                     existing_names.push(data[row_1].photo_title);
                 }
             }
-            fs.readdir("./public/img/photo_album/", function(err, files) {
+            fs.readdir(directory, function(err, files) {
                 if (files.indexOf(filename) < 0 && existing_names.indexOf(filename) < 0) {
                     return call_back(filename);
                 } else {
@@ -57,7 +61,7 @@ var photo_album_storage = multer.diskStorage({
     destination: './public/img/photo_album/',
     filename: function(req, file, cb) {
         if (allowable_image_types.indexOf(path.extname(file.originalname).toLowerCase()) > -1) {
-            get_unique_photo_filename(file.originalname, function(new_file_name) {
+            get_unique_photo_filename(file.originalname, './public/img/photo_album/', 'SELECT photo_title FROM photos', function(new_file_name) {
                 if (new_file_name == "error") {
                     cb("Something went wrong uploading " + file.originalname.toLowerCase() + ". Try uploading a different image file, or even renaming it.");
                 } else {
@@ -82,6 +86,26 @@ var photo_album_storage = multer.diskStorage({
 
 var upload_photo_album = multer({ storage: photo_album_storage });
 
+var profile_photo_storage = multer.diskStorage({
+    destination: './public/img/profile_pictures/',
+    filename: function(req, file, cb) {
+        if (allowable_image_types.indexOf(path.extname(file.originalname).toLowerCase()) > -1) {
+            get_unique_photo_filename(file.originalname, './public/img/profile_pictures/', 'SELECT profile_photo_title FROM golfers', function(new_file_name) {
+                if (new_file_name == "error") {
+                    cb("Something went wrong uploading " + file.originalname.toLowerCase() + ". Try uploading a different image file, or even renaming it.");
+                } else {
+                    console.log("\x1b[42m\x1b[37mSuccessfully added \x1b[0m \x1b[34m" + new_file_name + "\x1b[0m to photos db");
+                    cb(null, new_file_name);
+                }
+            });
+        } else {
+            cb("We can't work with " + path.extname(file.originalname).toLowerCase() + " files. Try uploading a regular image file.");
+        }
+    }
+})
+
+var upload_profile_picture = multer({ storage: profile_photo_storage });
+
 router.post('/user_login', function(req, res, next) {
     passport.authenticate('local', { badRequestMessage: "Looks like you are missing either your email or password." }, function(error, user, info) {
         if (error || !user || user == false) {
@@ -101,27 +125,35 @@ router.post('/user_login', function(req, res, next) {
 
 router.post('/user_signup', function(req, res, next) {
     if (req.isAuthenticated() && req.session.passport.user.is_admin) {
-        if (req.body.is_admin) {
-            is_admin = true;
-        } else {
-            is_admin = false;
-        }
-        console.log("Creating new user: \x1b[34m" + JSON.stringify(req.body) + "\x1b[0m");
-        bcrypt.genSalt(salt_rounds, function(err, salt) {
-            console.log(err);
-            bcrypt.hash(req.body.password, salt, null, function(err, hash) {
-                console.log(err);
-                db.query("INSERT INTO golfers (username,email,password,is_admin) VALUES ($1,$2,$3,$4)", [req.body.username, req.body.email, hash, is_admin])
-                    .then(function(data) {
-                        console.log("\x1b[42m\x1b[37mSuccessfully created user for\x1b[0m \x1b[34m" + JSON.stringify(req.body) + "\x1b[0m");
-                        res.render('admin', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, sign_up_success: "Success! Signed up " + req.body.email + "." });
-                    })
-                    .catch(function(error) {
-                        console.log("Couldn't sign up user \x1b[34m" + JSON.stringify(req.body) + "\x1b[31m error quering the golfers database\x1b[0m:");
-                        console.log(error);
-                        res.render('admin', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, sign_up_success: "Couldn't sign up user as there was an error quering the golfers database." });
+        upload_profile_picture.single('photo_file')(req, res, function(error) {
+            if (error) {
+                console.log(error);
+                res.render('admin', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, current_page: 'admin', sign_up_success: error });
+                return
+            } else {
+                if (req.body.is_admin) {
+                    is_admin = true;
+                } else {
+                    is_admin = false;
+                }
+                console.log("Creating new user: \x1b[34m" + JSON.stringify(req.body) + "\x1b[0m");
+                bcrypt.genSalt(salt_rounds, function(err, salt) {
+                    console.log(err);
+                    bcrypt.hash(req.body.password, salt, null, function(err, hash) {
+                        console.log(err);
+                        db.query("INSERT INTO golfers (username,email,password,is_admin,profile_photo_title) VALUES ($1,$2,$3,$4,$5)", [req.body.username, req.body.email, hash, is_admin, req.file.filename])
+                            .then(function(data) {
+                                console.log("\x1b[42m\x1b[37mSuccessfully created user for\x1b[0m \x1b[34m" + JSON.stringify(req.body) + "\x1b[0m");
+                                res.render('admin', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, current_page: 'admin', sign_up_success: "Success! Signed up " + req.body.email + "." });
+                            })
+                            .catch(function(error) {
+                                console.log("Couldn't sign up user \x1b[34m" + JSON.stringify(req.body) + "\x1b[31m error quering the golfers database\x1b[0m:");
+                                console.log(error);
+                                res.render('admin', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, current_page: 'admin', sign_up_success: "Couldn't sign up user as there was an error quering the golfers database." });
+                            });
                     });
-            });
+                });
+            }
         });
     } else {
         res.redirect('/');
@@ -131,7 +163,7 @@ router.post('/user_signup', function(req, res, next) {
 router.get('/',
     function(req, res, next) {
         if (req.isAuthenticated()) {
-            res.render('index', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, current_page: 'chit_chat' });
+            res.render('index', { user: req.session.passport.user.username, user_email: req.session.passport.user.email, is_admin: req.session.passport.user.is_admin, current_page: 'chit_chat' });
         } else {
             res.redirect('/login');
         }
@@ -169,6 +201,7 @@ router.get('/photos', function(req, res, next) {
                             console.log("\x1b[31m Can't find the photo \x1b[34m" + data[row_1].photo_title + "\x1b[31m in the photo_album folder\x1b[0m:");
                         }
                     }
+                    chat_bot(req,req.session.passport.user.email + " just went to photos.");
                     res.render('photos', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, current_page: 'photos', image_array: image_array });
                 } else {
                     console.log("Looks like there are no photos in the table, rendering page without any.");
