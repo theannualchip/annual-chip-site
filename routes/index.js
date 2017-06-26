@@ -2,15 +2,85 @@
 
 var express = require('express');
 var router = express.Router();
+var path = require('path');
+var fs = require('fs');
 var pgp = require('pg-promise')();
 var tom_js = require("../public/javascripts/tom.js");
 var db = require("../db.js");
 var passport_setup = require('./passport_setup.js');
 var passport = require('passport');
 var bcrypt = require('bcrypt-nodejs');
+var moment = require('moment');
+var multer = require('multer');
 const salt_rounds = 10;
 
 /* SAM SECTION. */
+
+var allowable_image_types = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg'];
+
+function get_unique_photo_filename(filename, call_back) {
+    db.query("SELECT photo_title FROM photos")
+        .then(function(data) {
+            existing_names = [];
+            if (data.length > 0) {
+                for (row_1 = 0; row_1 < data.length; row_1++) {
+                    existing_names.push(data[row_1].photo_title);
+                }
+            }
+            fs.readdir("./public/img/photo_album/", function(err, files) {
+                if (files.indexOf(filename) < 0 && existing_names.indexOf(filename) < 0) {
+                    return call_back(filename);
+                } else {
+                    count = 1;
+                    while (count < 100) {
+                        temp_file_name = filename.substring(0, filename.length - path.extname(filename).length) + "-" + count + path.extname(filename);
+                        if (files.indexOf(temp_file_name) < 0 && existing_names.indexOf(temp_file_name) < 0) {
+                            return call_back(temp_file_name);
+                            count += 1;
+                        } else {
+                            count += 1;
+                        }
+                    }
+                    console.log("\x1b[31mCouldn't find an available filename for \x1b[34m" + filename + "\x1b[0m.");
+                    return call_back("error");
+                }
+            });
+        })
+        .catch(function(error) {
+            console.log("Couldn't upload \x1b[34m" + filename + "\x1b[31m error quering the photos database\x1b[0m:");
+            console.log(error);
+            return call_back("error");
+        });
+}
+
+var photo_album_storage = multer.diskStorage({
+    destination: './public/img/photo_album/',
+    filename: function(req, file, cb) {
+        if (allowable_image_types.indexOf(path.extname(file.originalname).toLowerCase()) > -1) {
+            get_unique_photo_filename(file.originalname, function(new_file_name) {
+                if (new_file_name == "error") {
+                    cb("Something went wrong uploading " + file.originalname.toLowerCase() + ". Try uploading a different image file, or even renaming it.");
+                } else {
+                    db.query("INSERT INTO photos (photo_title,date_uploaded,uploaded_user_email,image_context,short_title) VALUES ($1,$2,$3,$4,$5)", [new_file_name, moment(), req.session.passport.user.email, "album", req.body.photo_title])
+                        .then(function(data) {
+                            console.log("\x1b[42m\x1b[37mSuccessfully added \x1b[0m \x1b[34m" + new_file_name + "\x1b[0m to photos db");
+                            cb(null, new_file_name);
+                        })
+                        .catch(function(error) {
+                            console.log("Couldn't upload \x1b[34m" + new_file_name + "\x1b[31m error quering the photos database\x1b[0m:");
+                            console.log(error);
+                            error_message = "Something went wrong uploading " + file.originalname.toLowerCase() + ". Try uploading a different image file, or even renaming it.";
+                            cb(error_message);
+                        });
+                }
+            });
+        } else {
+            cb("We can't work with " + path.extname(file.originalname).toLowerCase() + " files. Try uploading a regular image file.");
+        }
+    }
+})
+
+var upload_photo_album = multer({ storage: photo_album_storage });
 
 router.post('/user_login', function(req, res, next) {
     passport.authenticate('local', { badRequestMessage: "Looks like you are missing either your email or password." }, function(error, user, info) {
@@ -61,7 +131,7 @@ router.post('/user_signup', function(req, res, next) {
 router.get('/',
     function(req, res, next) {
         if (req.isAuthenticated()) {
-            res.render('index', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin });
+            res.render('index', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, current_page: 'chit_chat' });
         } else {
             res.redirect('/login');
         }
@@ -76,11 +146,108 @@ router.get('/login', function(req, res, next) {
 
 router.get('/admin', function(req, res, next) {
     if (req.isAuthenticated() && req.session.passport.user.is_admin) {
-        res.render('admin', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin });
+        res.render('admin', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, current_page: 'admin' });
     } else {
         res.redirect('/');
     }
 })
+
+router.get('/photos', function(req, res, next) {
+    if (req.isAuthenticated()) {
+        db.query("SELECT p.photo_title, p.short_title, g.email, g.username FROM photos as p, golfers as g WHERE p.uploaded_user_email=g.email AND image_context='album'")
+            .then(function(data) {
+                if (data.length > 0) {
+                    image_array = [];
+                    for (row_1 = 0; row_1 < data.length; row_1++) {
+                        if (fs.existsSync('./public/img/photo_album/' + data[row_1].photo_title)) {
+                            your_photo = false;
+                            if (data[row_1].email == req.session.passport.user.email) {
+                                your_photo = true;
+                            }
+                            image_array.push({ photo_title: data[row_1].photo_title, short_title: data[row_1].short_title, your_photo: your_photo, uploaded_user: data[row_1].username })
+                        } else {
+                            console.log("\x1b[31m Can't find the photo \x1b[34m" + data[row_1].photo_title + "\x1b[31m in the photo_album folder\x1b[0m:");
+                        }
+                    }
+                    res.render('photos', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, current_page: 'photos', image_array: image_array });
+                } else {
+                    console.log("Looks like there are no photos in the table, rendering page without any.");
+                    res.render('photos', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, current_page: 'photos' });
+                }
+            })
+            .catch(function(error) {
+                console.log("Couldn't find any photos \x1b[31m as there was an error when quering the photos table\x1b[0m:");
+                console.log(error);
+                res.render('photos', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, current_page: 'photos' });
+            });
+    } else {
+        res.redirect('/');
+    }
+})
+
+router.post('/photo_album_upload', function(req, res, next) {
+    if (req.isAuthenticated()) {
+        upload_photo_album.single('photo_file')(req, res, function(error) {
+            if (error) {
+                console.log(error);
+                res.render('photos', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, current_page: 'photos', warning: error });
+                return
+            } else {
+                console.log("\x1b[42m\x1b[37mSuccessfully uploaded \x1b[0m \x1b[34m" + req.file.originalname + "\x1b[0m");
+                db.query("UPDATE photos SET short_title=$1 WHERE photo_title=$2", [req.body.photo_title, req.file.filename])
+                    .then(function() {
+                        console.log("\x1b[42m\x1b[37mSuccessfully updated short_title for \x1b[0m \x1b[34m" + req.file.filename + "\x1b[0m");
+                        res.redirect('/photos');
+                    })
+                    .catch(function(error) {
+                        console.log("Couldn't update short_title for \x1b[0m" + req.file.filename + "\x1b[31m as there was an error when quering the photos table\x1b[0m:");
+                        res.redirect('/photos');
+                    })
+
+            }
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.post('/delete_photo', function(req, res, next) {
+    if (req.isAuthenticated()) {
+        console.log(req.session.passport.user.email + " is attempting to delete \x1b[0m" + req.body.photo_title + "\x1b[0m");
+        db.query("SELECT uploaded_user_email FROM photos WHERE photo_title=$1", [req.body.photo_title])
+            .then(function(data) {
+                if (data.length > 0) {
+                    if (data[0].uploaded_user_email == req.session.passport.user.email || req.session.passport.user.is_admin) {
+                        db.query("DELETE FROM photos WHERE photo_title=$1", [req.body.photo_title])
+                            .then(function(data) {
+                                fs.unlinkSync('./public/img/photo_album/' + req.body.photo_title);
+                                console.log("\x1b[42m\x1b[37mSuccessfully deleted \x1b[0m \x1b[34m" + req.body.photo_title + "\x1b[0m");
+                                res.send('success');
+                            })
+                            .catch(function(error) {
+                                console.log("Couldn't delete \x1b[0m" + req.body.photo_title + "\x1b[31m as there was an error when quering the photos table\x1b[0m:");
+                                console.log(error);
+                                res.send('Ah oh... Something went wrong when deleting ' + req.body.photo_title + '.');
+                            });
+                    } else {
+                        console.log("Couldn't delete \x1b[0m" + req.body.photo_title + "\x1b[0m as " + req.session.passport.user.email + " doesn't have permission");
+                        res.send("Doesn't look like you have permission to delete " + req.body.photo_title + '.');
+                    }
+                } else {
+                    console.log("Couldn't find \x1b[0m" + req.body.photo_title + "\x1b[0m in the photos table");
+                    res.send('Ah oh... Something went wrong when deleting ' + req.body.photo_title + '.');
+                }
+            })
+            .catch(function(error) {
+                console.log("Couldn't find \x1b[0m" + req.body.photo_title + "\x1b[31m as there was an error when quering the photos table\x1b[0m:");
+                console.log(error);
+                res.send('Ah oh... Something went wrong when deleting ' + req.body.photo_title + '.');
+            });
+    } else {
+        res.redirect('/');
+    }
+});
+
 
 /* TOM SECTION. */
 

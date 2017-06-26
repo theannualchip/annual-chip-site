@@ -1,105 +1,193 @@
 /* Main Themes */
 
 body {
-	font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
-.body_offset {
-	height:53px;
+.columns.is-gapless:not(:last-child) {
+    margin-bottom: 0;
+}
+
+.menu_buffer {
+    width: 100%;
+    height: 53px;
+}
+
+.chat_input {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 53px;
+}
+
+.chat_window {
+    bottom: 53px;
+    position: absolute;
+    width: 100%;
+    overflow-y: scroll;
+    max-height: 100%;
 }
 
 .main_theme-title {
-	text-shadow: 2px 2px #E5E4D7, 4px 4px #aeac84;
-	font-size:24pt;
-	font-family: 'Pacifico', cursive;
+    text-shadow: 2px 2px #E5E4D7, 4px 4px #aeac84;
+    font-size: 24pt;
+    font-family: 'Pacifico', cursive;
 }
 
 .main_theme-title-smaller {
-	text-shadow: 2px 2px #FFCF79, 4px 4px #996300;
-	font-size:16pt;
-	font-family: 'Pacifico', cursive;
+    text-shadow: 2px 2px #FFCF79, 4px 4px #996300;
+    font-size: 16pt;
+    font-family: 'Pacifico', cursive;
+}
+
+.main_theme-title-subtitle {
+    font-size: 18pt;
+    font-family: 'Pacifico', cursive;
+    text-shadow: 3px 3px #E5E4D7;
 }
 
 .main_theme-nav-hamburger:hover {
-	color:white;
+    color: white;
 }
 
 .main_theme-nav {
-	width:100%;
-	height:53px;
-	padding-top:5px;
-	position:fixed;
-	z-index:100;
+    width: 100%;
+    height: 53px;
+    padding-top: 5px;
+    position: fixed;
+    z-index: 100;
 }
 
 .main_theme-drop_menu_container {
-	position:fixed;
-	height:330;
-	top:-277px;
-	right:0;
-	max-width:100%;
-	width:400px;
-	z-index:50;
-	background-color:#E5E4D7;
-	opacity: 0.9;
-	padding:5px;
+    position: fixed;
+    height: 330;
+    top: -277px;
+    right: 0;
+    max-width: 100%;
+    width: 400px;
+    z-index: 50;
+    background-color: #E5E4D7;
+    opacity: 0.9;
+    padding: 5px;
 }
 
 .menu-label-update {
-	font-family: 'Pacifico', cursive;
-	padding:10px 0 10px;
+    font-family: 'Pacifico', cursive;
+    padding: 10px 0 10px;
 }
 
 .main_theme-nav-hamburger {
-	position:absolute;
-	right:15px;
-	top:15px;
-	cursor: pointer;
-	text-shadow: 1px 1px #FFCF79, 2px 2px #996300;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+    text-shadow: 1px 1px #FFCF79, 2px 2px #996300;
 }
 
 .admin_warning {
-	background-color:#ff3860;
-	color:white;
-	border-radius: 2px;
+    background-color: #ff3860;
+    color: white;
+    border-radius: 2px;
 }
 
 .admin_warning a {
-	color:white;
+    color: white;
 }
 
 .menu-list a.is-active {
-	background-color:#FFCF79;
-	color:#4a4a4a;
+    background-color: #FFCF79;
+    color: #4a4a4a;
 }
 
 .menu-list a:hover {
-	color:#FFCF79;
-	background-color:white;
+    color: #FFCF79;
+    background-color: white;
 }
 
-.input:focus, .button:focus {
-	border-color:#FFCF79;
+.input:focus,
+.button:focus {
+    border-color: #FFCF79;
+}
+
+#js-chat_input:focus {
+    border-color: #dbdbdb !important;
+}
+
+.hide_input {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.hidden_to_begin {
+    display:none;
+}
+
+.font-small {
+    font-size:11pt;
+}
+
+.border-radius-3 {
+    border-radius: 5px;
+    width:16px;
+    height:16px;
+    text-align: center;
+}
+
+.border-radius-3:hover, .on_hover_pointer:hover, .photo_album-image_wrapper {
+    cursor: pointer;
+} 
+
+.full_screen_image {
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:200;
+    width:100%;
+    height:100%;
+    background-color:#3d3d29;
+    text-align:center;
+}
+.full_screen_image img {
+    display:inline-block;
+    margin-top:auto;
+    max-width:100%;
+    max-height:100%;
 }
 
 /* Highlight */
 
 .background_color-grey {
-	background-color:#E5E4D7;
+    background-color: #E5E4D7;
+}
+
+.background_color-light_grey {
+    background-color: #f5f5f0;
 }
 
 .background_color-yellow {
-	background-color:#FFCF79;
+    background-color: #FFCF79;
+}
+
+.background_color-light_yellow {
+    background-color: #ffedcc;
 }
 
 .background_color-dark_green {
-	background-color:#2C6700;
+    background-color: #2C6700;
 }
 
 .background_color-light_green {
-	background-color:#92CD00;
+    background-color: #00b300;
+    color: white;
 }
 
+.background-color-danger_pink {
+    background-color: #ff3860;
+    color:white;
+}
 
-
-
+.green_text {
+    color: #2C6700;
+}
