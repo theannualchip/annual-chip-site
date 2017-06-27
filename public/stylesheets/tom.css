@@ -38,6 +38,32 @@ body {
 }
 
 
+
+/* FLICKETY SCROLL BAR */
+
+.gallery-cell {
+  width: 28%;
+  height: 100px;
+  margin-right: 10px;
+  background: #E5E4D7;
+  counter-increment: gallery-cell;
+}
+
+.button__badge {
+  background-color: #fa3e3e;
+  background-color: #FFCF79;
+  border-radius: 2px;
+  color: white;
+  padding: 1px 3px;
+  font-size: 10px;
+  position: absolute; /* Position the badge within the relatively positioned button */
+  top: 5px;
+  right: 35%;
+}
+
+/* END
+   FLICKETY SCROLL BAR  */
+
 /* TEXT FORMATTING */
 .test {
   border: 2px dashed #f69c55;
@@ -73,55 +99,6 @@ body {
   display: none;
   border-bottom-color: white;
 }*/
-
-/* STUFFFFFFFF*/
-
-.draw {
-  transition: color 0.25s;
-}
-
-.draw::before, .draw::after {
-  border: 2px solid transparent;
-  width: 0;
-  height: 0;
-}
-
-.draw::before {
-  top: 0;
-  left: 0;
-}
-
-.draw::after {
-  bottom: 0;
-  right: 0;
-}
-
-.draw:hover {
-  color: #60daaa;
-}
-
-.draw:hover::before, .draw:hover::after {
-  width: 100%;
-  height: 100%;
-}
-
-.draw:hover::before {
-  border-top-color: #60daaa;
-  border-right-color: #60daaa;
-  transition: width 0.25s ease-out, height 0.25s ease-out 0.25s;
-}
-
-.draw:hover::after {
-  border-bottom-color: #60daaa;
-  border-left-color: #60daaa;
-  transition: border-color 0s ease-out 0.5s, width 0.25s ease-out 0.5s, height 0.25s ease-out 0.75s;
-}
-
-
-
-
-
-
 
 
 /* SCORE INPUT VERSION 1 */
