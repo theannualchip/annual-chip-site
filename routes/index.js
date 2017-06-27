@@ -163,16 +163,25 @@ router.post('/user_signup', function(req, res, next) {
 router.get('/',
     function(req, res, next) {
         if (req.isAuthenticated()) {
+            res.render('index', { user: req.session.passport.user.username, user_email: req.session.passport.user.email, is_admin: req.session.passport.user.is_admin, current_page: 'chit_chat'});
+        } else {
+            res.redirect('/login');
+        }
+    }
+);
+
+router.post('/previous_messages',
+    function(req, res, next) {
+        if (req.isAuthenticated()) {
             db.query("SELECT c.user_email, c.comment, c.timestamp, g.username, g.profile_photo_title FROM chat as c, golfers as g WHERE c.user_email=g.email ORDER BY c.timestamp")
                 .then(function(data) {
                     console.log("\x1b[42m\x1b[37mSuccessfully collected previous chat logs\x1b[0m");
-                    console.log(data);
-                    res.render('index', { user: req.session.passport.user.username, user_email: req.session.passport.user.email, is_admin: req.session.passport.user.is_admin, current_page: 'chit_chat', chat_messages: data });
+                    res.send(data);
                 })
                 .catch(function(error) {
                     console.log("Couldn't collect previous chat comments \x1b[31m error quering the chat database\x1b[0m:");
                     console.log(error);
-                    res.render('index', { user: req.session.passport.user.username, user_email: req.session.passport.user.email, is_admin: req.session.passport.user.is_admin, current_page: 'chit_chat' });
+                    res.send('index', { user: req.session.passport.user.username, user_email: req.session.passport.user.email, is_admin: req.session.passport.user.is_admin, current_page: 'chit_chat', error_message:"Woops! Something went wrong." });
                 });
         } else {
             res.redirect('/login');

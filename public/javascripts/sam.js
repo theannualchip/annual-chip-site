@@ -26,7 +26,7 @@ $(window).resize(function() {
 
 resize_to_full();
 
-if (current_page) {
+if (current_page!=null) {
     $('#js-' + current_page).toggleClass('is-active', true);
 }
 

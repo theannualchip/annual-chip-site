@@ -36,22 +36,24 @@
                 </div>
             </div>
         </div>
-        <% if (locals.chat_messages) { %>
-            <script>
-            var chat_messages = <%- JSON.stringify(chat_messages) %>;
-            </script>
-            <% } %>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/javascripts/sam.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script>
-if (chat_messages != null) {
-    for (row_1 = 0; row_1 < chat_messages.length; row_1++) {
-        $('#js-chat_output').append(output_chat_message(chat_messages[row_1].username, chat_messages[row_1].profile_photo_title, chat_messages[row_1].comment, moment(chat_messages[row_1].timestamp).add(10,'hours')));
-    }
-}
+
+$.ajax({
+        method: "POST",
+        url: "/previous_messages",
+    })
+    .done(function(chat_messages) {
+        if (chat_messages != null) {
+            for (row_1 = 0; row_1 < chat_messages.length; row_1++) {
+                $('#js-chat_output').append(output_chat_message(chat_messages[row_1].username, chat_messages[row_1].profile_photo_title, chat_messages[row_1].comment, moment(chat_messages[row_1].timestamp).add(10, 'hours')));
+            }
+        }
+    });
 
 var socket = io();
 

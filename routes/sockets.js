@@ -25,7 +25,6 @@ module.exports = function(io) {
                         socket.useremail = user_email;
                         socket.username = data[0].username;
                         socket.profile_photo_title = data[0].profile_photo_title;
-                        //check who is online emmit online object
                         online_users = get_online_users(io.sockets.connected);
                         io.emit('online update', online_users);
                         io.emit('chat message', { username: "Chat Bot", message: socket.username + " just joined the conversation.", profile_photo_title: 'chat_bot.jpg', timestamp: moment() });
