@@ -195,8 +195,7 @@ body {
 .score-column1 li {
     display: block;
     padding: 15px;
-/*    height: 75px;
-*/    border:1px solid #FFCF79;
+    border:1px solid #FFCF79;
     margin-bottom: 30px;
     border-radius: 3px;
 }
