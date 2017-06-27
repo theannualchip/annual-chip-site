@@ -6,68 +6,49 @@
     <%= title %>
   </title>
   <link rel='stylesheet' href='/stylesheets/tom.css'/>
+  <link rel="stylesheet" href="/stylesheets/extras/flickity.css" media="screen">
   <script type="text/javascript" src="/javascripts/tom.js"></script>
 </head>
 
 <body>
 
-    <h1 class='title has-text-centered is-large main_theme-title'><%= title %></h1>
+  <h1 class='title has-text-centered is-large main_theme-title'><%= title %></h1>
 
-    <div class="tabs is-toggle is-fullwidth">
-      <ul>
-        <li class="is-active">
-          <a>
-            <span class="icon is-small"><i class="fa fa-ellipsis-v"></i></span>
-            <span>Day 1</span>
-          </a>
-        </li>
-        <li>
-          <a>
-            <span class="icon is-small"><i class="fa fa-hand-peace-o"></i></span>
-            <span>Day 2</span>
-          </a>
-        </li>
-        <li>
-          <a>
-            <span class="icon is-small"><i class="fa fa-cubes"></i></span>
-            <span>Day 3</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-
-
-<!-- BODY OF SCOREBOARD -->
-
-<div class="container is-fluid">
- <div class='columns'>
-
-  <!-- Main Display -->
-  <div class='column is-10 box'>
-
-    <div>
-      <h1 class='title has-text-centered is-medium main_theme-title'> Input </h1>
-    </div>
-    <%- include card.ejs-%>
-
+  <div class="tabs is-toggle is-fullwidth">
+    <ul>
+      <li class="is-active">
+        <a>
+          <span class="icon is-small"><i class="fa fa-ellipsis-v"></i></span>
+          <span>Day 1</span>
+        </a>
+      </li>
+      <li>
+        <a>
+          <span class="icon is-small"><i class="fa fa-hand-peace-o"></i></span>
+          <span>Day 2</span>
+        </a>
+      </li>
+      <li>
+        <a>
+          <span class="icon is-small"><i class="fa fa-cubes"></i></span>
+          <span>Day 3</span>
+        </a>
+      </li>
+    </ul>
   </div>
 
-  <!-- Side Leaderboard -->
-  <div class='column is-2 box'>
-    <div>
-      <h1 class='title has-text-centered is-medium main_theme-title'> L-Board </h1>
-    </div>
-    <br>
+  <!-- Small Leaderboard Scroller -->
+  <div class="container is-fluid is-fullwidth">
     <%- leaderboard %>
-    <br>
- </div>
+  </div>
 
-</div>
-<br>
-</div>
+  <!-- BODY OF SCOREBOARD -->
 
-<!-- FOOTER -->
-<%- include footer.ejs %>
+
+  <br>
+  </div>
+
+  <script src="/javascripts/extras/flickity.pkgd.min.js"></script>
 
 </body>
 

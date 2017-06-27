@@ -5,34 +5,23 @@ exports.get_short_lboard = function(db_connection, day) {
 	db = db_connection;
 
 	query_string =  multiline.stripIndent(function(){/*
-		
-		WITH user_info AS (
-			SELECT
-				a.username,
-				b.photo_title
-			FROM
-				golfers a
-				INNER JOIN photos b ON (
-					a.username = b.uploaded_user)
-		),
 
-		scores as (
+		WITH scores as (
 			SELECT
 				username,
 				sum(score) as score
 			FROM
 				scores
-			WHERE
-				day = $1
 			GROUP BY
 				username
 		)	
 
 		SELECT
-			a.*,
+			a.username,
+			a.profile_photo_title,
 			COALESCE(b.score, 99) as score
 		FROM
-			user_info a
+			golfers a
 			LEFT JOIN scores b ON (
 				a.username = b.username)
 		ORDER BY
@@ -48,27 +37,35 @@ exports.get_short_lboard = function(db_connection, day) {
 
 exports.format_lboard = function(lboard) {
 
-	var table = "";
+	var output = "<div class='main-gallery js-flickity'>";
 
 	for (var i=0; i<lboard.length; i++) {
 
 		var name = lboard[i].username;
 		var score = lboard[i].score;
-		var img = lboard[i].photo_title;
+		var pic_name = lboard[i].profile_photo_title;
+		var rank = i+1;
 
-		// table += "<div class='columns'>"
-		// table += '<div class="column is-4 align-middle-col "><img class="img-circle" src="/img/' + img + '"></div>'
-		// table += '<div class="column is-4 align-middle-col "><span class="is-medium has-text-centered align-middle-el">' + name + '</span></div>'  
-		// table += '<div class="column is-4 align-middle-col "><span class="is-medium has-text-centered align-middle-el">' + score + '</span></div></div>'  
+		flick_cell_element = `
+		  <div class="gallery-cell center-div has-text-centered">
+		    <div>
+		      <div>
+		        <img class="img-circle" src="/img/profile_pictures/${pic_name}">
+		        <span class="button__badge">${rank}</span>
+		      </div>
+		      <div><strong> ${name} </strong></div>
+		      <div><strong> ${score} </strong></div>
+		    </div>  
+		  </div>
+		`;
 
-		table += "<div class='columns'>"
-		table += '<div class="column is-4 center-div"><img class="img-circle" src="/img/' + img + '"></div>'
-		table += '<div class="column is-4 center-div"><strong>' + name + '</strong></div>'  
-		table += '<div class="column is-4 center-div"><strong>' + score + '</strong></div></div>'  
+		output += flick_cell_element
 
 	}
 
-	return table;
+	output += "</div>"
+
+	return output;
 
 };
 
