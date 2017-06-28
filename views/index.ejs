@@ -40,7 +40,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/javascripts/sam.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script>
+
+$.ajax({
+        method: "POST",
+        url: "/previous_messages",
+    })
+    .done(function(chat_messages) {
+        if (chat_messages != null) {
+            for (row_1 = 0; row_1 < chat_messages.length; row_1++) {
+                $('#js-chat_output').append(output_chat_message(chat_messages[row_1].username, chat_messages[row_1].profile_photo_title, chat_messages[row_1].comment, moment(chat_messages[row_1].timestamp).add(10, 'hours')));
+            }
+        }
+    });
+
 var socket = io();
 
 socket.emit('add user', '<%= user_email %>');
@@ -48,24 +62,26 @@ socket.emit('add user', '<%= user_email %>');
 function send_message() {
     message = $('#js-chat_input').val();
     if (message != "") {
-        socket.emit('chat message', {user:'<%= user %>',message:message});
+        socket.emit('chat message', message);
         $('#js-chat_input').val('');
     }
 }
 
 socket.on('online update', function(online_users) {
-    html_output='<h1><%= user %></h1>';
+    html_output = '<h1><%= user %></h1>';
     for (row_1 = 0; row_1 < online_users.length; row_1++) {
-        if (online_users[row_1]!='<%= user %>')
-        html_output += '<li>' + online_users[row_1] + '</li>';
+        if (online_users[row_1] != '<%= user %>')
+            html_output += '<li>' + online_users[row_1] + '</li>';
     }
     $('#js-chat_side_bar').html(html_output);
-})
+});
 
 socket.on('chat message', function(msg) {
-    $('#js-chat_output').append(msg.user + ": " + msg.message + "<br>");
-    $('#js-chat_output').animate({scrollTop: $('#js-chat_output')[0].scrollHeight + 'px'}, 500);
-})
+    $('#js-chat_output').append(output_chat_message(msg.username, msg.profile_photo_title, msg.message, msg.timestamp));
+    $('#js-chat_output').animate({
+        scrollTop: $('#js-chat_output')[0].scrollHeight + 'px'
+    }, 500);
+});
 
 $('#js-chat_input').on("keydown", function(e) {
     if (e.keyCode == 13) {

@@ -26,7 +26,7 @@ $(window).resize(function() {
 
 resize_to_full();
 
-if (current_page) {
+if (current_page!=null) {
     $('#js-' + current_page).toggleClass('is-active', true);
 }
 
@@ -92,3 +92,49 @@ $('.photo_album-image_wrapper').on('click touch', function() {
         $(this).children().css('margin-top', ($(this).height() - $(this).children().height()) / 2 + "px");
     }
 })
+
+// chat format
+
+var entityMap = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+  '/': '&#x2F;',
+  '`': '&#x60;',
+  '=': '&#x3D;'
+};
+
+function escape_html(string) {
+  return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+    return entityMap[s];
+  });
+}
+
+function output_chat_message(username,image_name,message,timestamp) {
+    aus_time=moment(timestamp).format('h:mm a');
+    html_output=`
+    <div class='is-full-width'>
+        <div class='is-full-width'>
+            <div class='comment_image'>
+                <img src='/img/profile_pictures/${image_name}'/>
+            </div>
+            <div class='comment_title'>
+                <div class='column'>
+                    <div class='comment_title-user'>
+                    ${escape_html(username)}
+                    </div>
+                    <div class='comment_title-time'>
+                        ${aus_time}
+                    </div>
+                </div>
+                <div class='comment_message'>
+                    ${escape_html(message)}
+                </div>
+            </div>
+        </div>
+    </div>`
+    return html_output;
+}
+

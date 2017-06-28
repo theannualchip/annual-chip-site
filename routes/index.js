@@ -163,7 +163,26 @@ router.post('/user_signup', function(req, res, next) {
 router.get('/',
     function(req, res, next) {
         if (req.isAuthenticated()) {
-            res.render('index', { user: req.session.passport.user.username, user_email: req.session.passport.user.email, is_admin: req.session.passport.user.is_admin, current_page: 'chit_chat' });
+            res.render('index', { user: req.session.passport.user.username, user_email: req.session.passport.user.email, is_admin: req.session.passport.user.is_admin, current_page: 'chit_chat'});
+        } else {
+            res.redirect('/login');
+        }
+    }
+);
+
+router.post('/previous_messages',
+    function(req, res, next) {
+        if (req.isAuthenticated()) {
+            db.query("SELECT c.user_email, c.comment, c.timestamp, g.username, g.profile_photo_title FROM chat as c, golfers as g WHERE c.user_email=g.email ORDER BY c.timestamp")
+                .then(function(data) {
+                    console.log("\x1b[42m\x1b[37mSuccessfully collected previous chat logs\x1b[0m");
+                    res.send(data);
+                })
+                .catch(function(error) {
+                    console.log("Couldn't collect previous chat comments \x1b[31m error quering the chat database\x1b[0m:");
+                    console.log(error);
+                    res.send('index', { user: req.session.passport.user.username, user_email: req.session.passport.user.email, is_admin: req.session.passport.user.is_admin, current_page: 'chit_chat', error_message:"Woops! Something went wrong." });
+                });
         } else {
             res.redirect('/login');
         }
@@ -201,7 +220,6 @@ router.get('/photos', function(req, res, next) {
                             console.log("\x1b[31m Can't find the photo \x1b[34m" + data[row_1].photo_title + "\x1b[31m in the photo_album folder\x1b[0m:");
                         }
                     }
-                    chat_bot(req,req.session.passport.user.email + " just went to photos.");
                     res.render('photos', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, current_page: 'photos', image_array: image_array });
                 } else {
                     console.log("Looks like there are no photos in the table, rendering page without any.");
