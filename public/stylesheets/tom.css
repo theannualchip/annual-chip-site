@@ -8,6 +8,11 @@ body {
     font-family: 'Pacifico', cursive;
 }
 
+.main_theme-number {
+    font-size:24pt;
+    font-family: 'Pacifico', cursive;
+}
+
 .paper {
   background: #fff;
   box-shadow:
@@ -42,7 +47,7 @@ body {
 /* FLICKETY SCROLL BAR */
 
 .gallery-cell {
-  width: 28%;
+  width: 35%;
   height: 100px;
   margin-right: 10px;
   background: #E5E4D7;
@@ -58,11 +63,25 @@ body {
   font-size: 10px;
   position: absolute; /* Position the badge within the relatively positioned button */
   top: 5px;
-  right: 35%;
+  right: 37%;
 }
 
-/* END
-   FLICKETY SCROLL BAR  */
+/* END FLICKETY SCROLL BAR  */
+
+
+
+/* Grid LAYOUT */
+
+.box-hole {
+  background: #fff;
+  border-radius: 1px 1px 1px 1px;
+  -webkit-box-shadow: 0 1px 2px #777;
+  -moz-box-shadow: 0 2px 1px #777;
+  box-shadow: 0 2px 1px #777;
+}
+
+/* End Grid LAYOUT */
+
 
 /* TEXT FORMATTING */
 .test {
@@ -242,3 +261,37 @@ body {
 }
 
 /* END BULMA ALTERATIONS*/
+
+.background_color-grey {
+    background-color: #E5E4D7;
+}
+
+.background_color-light_grey {
+    background-color: #f5f5f0;
+}
+
+.background_color-yellow {
+    background-color: #FFCF79;
+}
+
+.background_color-light_yellow {
+    background-color: #ffedcc;
+}
+
+.background_color-dark_green {
+    background-color: #2C6700;
+}
+
+.background_color-light_green {
+    background-color: #00b300;
+    color: white;
+}
+
+.background-color-danger_pink {
+    background-color: #ff3860;
+    color:white;
+}
+
+.green_text {
+    color: #2C6700;
+}
