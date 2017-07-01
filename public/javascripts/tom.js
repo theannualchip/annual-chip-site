@@ -37,7 +37,7 @@ exports.get_short_lboard = function(db_connection, day) {
 
 exports.format_lboard = function(lboard) {
 
-	var output = "<div class='main-gallery js-flickity'>";
+	var output = "<div class='main-gallery js-flickity' data-flickity-options='{\"freeScroll\": true,\"wrapAround\": true}'>";
 
 	for (var i=0; i<lboard.length; i++) {
 

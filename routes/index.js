@@ -321,6 +321,14 @@ router.get('/scorecard', function(req, res, next) {
     // res.render('scorecard', { title: 'Scorecard'});
 });
 
+
+router.get('/scorecard/day1_hole1', function(req, res, next) {
+
+    res.render('card', {title: 'Scorecard'});
+});
+
+
+
 /* General Stuff */
 
 module.exports = router;

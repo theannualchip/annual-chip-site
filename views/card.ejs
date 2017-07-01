@@ -1,83 +1,65 @@
-<div class = "columns">
-  
+<!DOCTYPE html>
+<html>
+<head>
+<% include head.ejs %>
+<title>
+<%= title %>
+</title>
+<link rel='stylesheet' href='/stylesheets/tom.css'/>
+<script type="text/javascript" src="/javascripts/tom.js"></script>
+</head>
 
-  <div class = "column is-1  center-div test">
-    
-    <ul>
-      <li> <h2> 1 </h2> </li>
-      <li> <h2> 2 </h2> </li>
-    </ul>
+<body>
 
-  </div>
-
-  <div class = "column is-1  center-div test">
-  
-    <ul>
-      <li> <h2> 3 </h2> </li>
-      <li> <h2> 4 </h2> </li>
-    </ul>
-
-  </div>
-
-  <div class = "column is-4 center-div test">
-    
-    <ul>
-      <li> <h2> View Map </h2> </li>
-      <li> <h2> View Map </h2> </li>
-    </ul>
-
-  </div> 
-
-<div class = "column is-3 test">
-    <ul class="score-column">
-
-      <!-- FINISHED SCORE -->
-      <li>
-          <label class="score">Par: 4</label>
-          <input name="name" maxlength="100">
-          <!-- <span>Enter your score here</span> -->
-      </li>
-
-      <!-- UNFINISED SCORE -->
-
-      <li>
-          <label class="score">Par: 4</label>
-          <input class = "score-input draw" name="name" maxlength="100">
-          <!-- <span>Enter your score here</span> -->
-      </li>
-
-    </ul>
-  </div>
-
-<div class = "column is-3 test">
-    <ul class="score-column">
-
-      <!-- FINISHED SCORE -->
-      <li>
-          <label class="score">Par: 4</label>
-          <input name="name" maxlength="100">
-          <!-- <span>Enter your score here</span> -->
-      </li>
-
-      <!-- UNFINISED SCORE -->
-
-      <li>
-          <label class="score">Par: 4</label>
-          <input class = "score-input draw" name="name" maxlength="100">
-          <!-- <span>Enter your score here</span> -->
-      </li>
-
-    </ul>
-  </div>
-
+<!-- <section class="hero is-dark container is-fluid"> -->
+<section class="hero is-alt background_color-grey">
+<div class="hero-body">
+<div class="container">
+<h1 class="title">
+Hole 1
+</h1>
 </div>
 
-
-
-<div class="modal">
-  <div class="modal-background"></div>
-  <div class="modal-content">
-    <p> hello </p>
-  </div>
-  <button class="modal-close"></button>
 </div>
+</section>
+
+<div class="columnns">
+
+
+<div class="column is-3"></div>
+
+<div class="column is-6">
+
+
+<div class="card">
+<div class="card-image">
+<figure class="image is-2by1">
+<img src="/img/hole_diagrams/hole_1.jpg" alt="Image">
+</figure>
+</div>
+<div class="card-content">
+<div class="media">
+<div class="media-content">
+<p class="title is-4">John Smith</p>
+<p class="subtitle is-6">@johnsmith</p>
+</div>
+</div>
+
+<div class="content">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+<a>#css</a> <a>#responsive</a>
+<br>
+<small>11:09 PM - 1 Jan 2016</small>
+</div>
+</div>
+</div>
+</div>
+
+<div class="column is-3"></div>
+
+
+
+</body>
+
+</html>
