@@ -4,6 +4,11 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+img {
+    max-width: none;
+    max-height: none;
+}
+
 .columns.is-gapless:not(:last-child) {
     margin-bottom: 0;
 }
@@ -46,7 +51,7 @@ body {
 .main_theme-drop_menu_container {
     position: fixed;
     height: 330;
-    top: -277px;
+    top: -330px;
     right: 0;
     max-width: 100%;
     width: 400px;
@@ -94,7 +99,90 @@ body {
     border-color: #FFCF79;
 }
 
+.main_theme-loading_window {
+    position: absolute;
+    top: 53px;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    opacity: 0;
+}
+
+.main_theme-loading_window-content {
+    width: 300px;
+    height: 181px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    margin: -100px 0 0 -150px;
+}
+
+.main_theme-loading_window-content img {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    filter: gray;
+    /* IE6-9 */
+    -webkit-filter: grayscale(1);
+    /* Google Chrome, Safari 6+ & Opera 15+ */
+    filter: grayscale(1);
+}
+
+.main_theme-loading_window-content progress::-moz-progress-bar {
+    background: #FFCF79;
+}
+
+.main_theme-loading_window-content progress::-webkit-progress-value {
+    background: #FFCF79;
+}
+
+.main_theme-loading_window-content progress {
+    color: #FFCF79;
+}
+
+
 /***************************************************** CHIT CHAT *************************************************/
+
+.chit_chat-chat_output {
+    position: absolute;
+    width: 80%;
+    left: -80%;
+    top: 53px;
+    overflow-y: scroll;
+}
+
+.chit_chat-side_bar {
+    position: absolute;
+    right: -20%;
+    top: 53px;
+    width: 20%;
+}
+
+.chit_chat-chat_input {
+    position: absolute;
+    bottom: -53px;
+    width: 80%;
+    height: 53px;
+}
+
+@media (max-height:300px) {
+    .chit_chat-loader_image {
+        display: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .chit_chat-side_bar {
+        display: none;
+    }
+    .chit_chat-chat_output {
+        width: 100%;
+        left: -100%;
+    }
+    .chit_chat-chat_input {
+        width: 100%;
+    }
+}
 
 .chat_input {
     position: absolute;
@@ -117,27 +205,28 @@ body {
 }
 
 .comment_image {
-    width:40px;
-    height:40px;
-    border-radius:20px;
-    overflow:hidden;
-    float:left;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    overflow: hidden;
+    float: left;
 }
 
 .comment_title-user {
-    float:left;
-    padding:0 10px 0 20px;
-    font-size:14pt;
-    margin-top:-5px;
+    float: left;
+    padding: 0 10px 0 20px;
+    font-size: 14pt;
+    margin-top: -5px;
 }
 
 .comment_title-time {
-    margin-top:-2px;
+    margin-top: -2px;
 }
 
 .comment_message {
-    padding-left:60px;
+    padding-left: 60px;
 }
+
 
 /***************************************************** PHOTOS PAGE *************************************************/
 
@@ -148,25 +237,27 @@ body {
 }
 
 .hidden_to_begin {
-    display:none;
+    display: none;
 }
 
 .full_screen_image {
-    position:fixed;
-    top:0;
-    left:0;
-    z-index:200;
-    width:100%;
-    height:100%;
-    background-color:rgba(0,0,0,0.85);
-    text-align:center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    text-align: center;
 }
+
 .full_screen_image img {
-    display:inline-block;
-    margin-top:auto;
-    max-width:100%;
-    max-height:100%;
+    display: inline-block;
+    margin-top: auto;
+    max-width: 100%;
+    max-height: 100%;
 }
+
 
 /***************************************************** HIGHLIGHTS *************************************************/
 
@@ -176,6 +267,18 @@ body {
 
 .background_color-light_grey {
     background-color: #f5f5f0;
+}
+
+.background_color-dark_grey {
+    background-color: #8c8c8c;
+}
+
+.background_color-darker_grey {
+    background-color: #cdcbb2;
+}
+
+.background_color-white {
+    background-color: white;
 }
 
 .background_color-yellow {
@@ -197,7 +300,7 @@ body {
 
 .background-color-danger_pink {
     background-color: #ff3860;
-    color:white;
+    color: white;
 }
 
 .green_text {
@@ -205,16 +308,25 @@ body {
 }
 
 .font-small {
-    font-size:11pt;
+    font-size: 11pt;
 }
 
 .border-radius-3 {
     border-radius: 5px;
-    width:16px;
-    height:16px;
+    width: 16px;
+    height: 16px;
     text-align: center;
 }
 
-.border-radius-3:hover, .on_hover_pointer:hover, .photo_album-image_wrapper {
+.border-radius-3:hover,
+.on_hover_pointer:hover,
+.photo_album-image_wrapper {
     cursor: pointer;
-} 
+}
+
+
+/* TOGGLES */
+
+.toggle-display_none {
+    display: none;
+}

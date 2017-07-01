@@ -2,12 +2,16 @@
 
 $('#js-menu_hamburger').on('click touch', function() {
     console.log($('#js-drop_down_menu').position().top);
-    if ($('#js-drop_down_menu').position().top == -277) {
+    if ($('#js-drop_down_menu').position().top == -330) {
         $('#js-drop_down_menu').animate({ top: 53 }, 500);
     } else {
-        $('#js-drop_down_menu').animate({ top: -277 }, 500);
+        $('#js-drop_down_menu').animate({ top: -330 }, 500);
     }
 });
+
+if (current_page!=null) {
+    $('#js-' + current_page).toggleClass('is-active', true);
+}
 
 // full height
 
@@ -26,9 +30,7 @@ $(window).resize(function() {
 
 resize_to_full();
 
-if (current_page!=null) {
-    $('#js-' + current_page).toggleClass('is-active', true);
-}
+//photos
 
 function add_changer_to_photo_upload() {
     $("#js-photo_upload_input").change(function() {
@@ -93,48 +95,4 @@ $('.photo_album-image_wrapper').on('click touch', function() {
     }
 })
 
-// chat format
-
-var entityMap = {
-  '&': '&amp;',
-  '<': '&lt;',
-  '>': '&gt;',
-  '"': '&quot;',
-  "'": '&#39;',
-  '/': '&#x2F;',
-  '`': '&#x60;',
-  '=': '&#x3D;'
-};
-
-function escape_html(string) {
-  return String(string).replace(/[&<>"'`=\/]/g, function (s) {
-    return entityMap[s];
-  });
-}
-
-function output_chat_message(username,image_name,message,timestamp) {
-    aus_time=moment(timestamp).format('h:mm a');
-    html_output=`
-    <div class='is-full-width'>
-        <div class='is-full-width'>
-            <div class='comment_image'>
-                <img src='/img/profile_pictures/${image_name}'/>
-            </div>
-            <div class='comment_title'>
-                <div class='column'>
-                    <div class='comment_title-user'>
-                    ${escape_html(username)}
-                    </div>
-                    <div class='comment_title-time'>
-                        ${aus_time}
-                    </div>
-                </div>
-                <div class='comment_message'>
-                    ${escape_html(message)}
-                </div>
-            </div>
-        </div>
-    </div>`
-    return html_output;
-}
-
+// CHIT CHAT

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class='background_color-light_grey'>
 
 <head>
     <% include head.ejs %>
@@ -9,85 +9,58 @@
         </title>
         <link rel='stylesheet' href='/stylesheets/sam.css' />
 </head>
-
 <body>
+
+    <!-- the loading screen -->
     <% include menu_partial.ejs %>
-        <div class='columns full_height is-gapless'>
-            <div class='column full_height_less background_color-light_grey is-full-width is-10-touch'>
-                <div class='column chat_window'>
-                    <div class='column' id='js-chat_output'>
-                    </div>
-                </div>
-            </div>
-            <div class='chat_input background_color-grey'>
-                <div class='column'>
-                    <div class='columns is-mobile'>
-                        <div class='column is-9'>
-                            <input class='input' placeholder='Message' autocomplete="off" type='text' id='js-chat_input'></input>
-                        </div>
-                        <div class='column'>
-                            <input class='button background_color-yellow is-full-width' type='button' value='Send' onclick='send_message()'></input>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class='column full_height background_color-light_yellow is-2 is-hidden-touch'>
-                <div class='column' id='js-chat_side_bar'>
-                </div>
-            </div>
+    <% photos=['broken_club','dancing_man','fresh_prince','golf_devil','golf_pong','golf_shot','golf_dog'] %>
+    <% todays_photo='/img/loading_images/' + photos[Math.floor(Math.random()*7)] + '.gif' %>
+    <div class='main_theme-loading_window background_color-light_grey toggle-display_none' id='js-chit_chat_loader'>
+        <div class="main_theme-loading_window-content">
+            <img src='<%= todays_photo %>' class='chit_chat-loader_image' id='js-chit_chat-loader_image'>
+            <br>
+            <br>
+            <progress class="progress is-small" id='js-main_theme-loading_window-progress' value="0" max="100"></progress>
         </div>
+    </div> 
+
+    <!-- the chat output -->
+
+    <div class='chit_chat-chat_output background_color-white toggle-display_none' id='js-chit_chat-chat_output'>
+        <div class='column' id='js-chat_output'>
+        </div>
+    </div>
+
+
+    <!-- the side bar -->
+
+    <div class='chit_chat-side_bar background_color-light_yellow toggle-display_none' id='js-chit_chat-side_bar'>
+        <div class='column' id='js-chat_side_bar'>
+        </div>
+    </div>
+
+    <!-- the chat input -->
+
+    <div class='chit_chat-chat_input background_color-grey toggle-display_none' id='js-chit_chat-chat_input'>
+        <!--<div class='column'>
+            <div class='columns is-mobile'>
+                <div class='column is-9'>
+                    <input class='input' placeholder='Message' autocomplete="off" type='text' id='js-chat_input'></input>
+                </div>
+                <div class='column'>
+                    <input class='button background_color-yellow is-full-width' type='button' value='Send' onclick='send_message()'></input>
+                </div>
+            </div>
+        </div>-->
+    </div>
+
 </body>
+<script>
+    var variables = <%- JSON.stringify(locals) %>;
+</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/javascripts/sam.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-<script>
-
-$.ajax({
-        method: "POST",
-        url: "/previous_messages",
-    })
-    .done(function(chat_messages) {
-        if (chat_messages != null) {
-            for (row_1 = 0; row_1 < chat_messages.length; row_1++) {
-                $('#js-chat_output').append(output_chat_message(chat_messages[row_1].username, chat_messages[row_1].profile_photo_title, chat_messages[row_1].comment, moment(chat_messages[row_1].timestamp).add(10, 'hours')));
-            }
-        }
-    });
-
-var socket = io();
-
-socket.emit('add user', '<%= user_email %>');
-
-function send_message() {
-    message = $('#js-chat_input').val();
-    if (message != "") {
-        socket.emit('chat message', message);
-        $('#js-chat_input').val('');
-    }
-}
-
-socket.on('online update', function(online_users) {
-    html_output = '<h1><%= user %></h1>';
-    for (row_1 = 0; row_1 < online_users.length; row_1++) {
-        if (online_users[row_1] != '<%= user %>')
-            html_output += '<li>' + online_users[row_1] + '</li>';
-    }
-    $('#js-chat_side_bar').html(html_output);
-});
-
-socket.on('chat message', function(msg) {
-    $('#js-chat_output').append(output_chat_message(msg.username, msg.profile_photo_title, msg.message, msg.timestamp));
-    $('#js-chat_output').animate({
-        scrollTop: $('#js-chat_output')[0].scrollHeight + 'px'
-    }, 500);
-});
-
-$('#js-chat_input').on("keydown", function(e) {
-    if (e.keyCode == 13) {
-        send_message();
-    }
-});
-</script>
-
+<script src="/javascripts/chit_chat.js"></script>
 </html>
