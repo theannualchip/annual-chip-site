@@ -156,6 +156,7 @@ img {
     right: -20%;
     top: 53px;
     width: 20%;
+    overflow-y:scroll;
 }
 
 .chit_chat-chat_input {
@@ -212,11 +213,67 @@ img {
     float: left;
 }
 
+.side_bar-username {
+    text-shadow: 2px 2px #FFCF79, 4px 4px #996300;
+    font-size: 14pt;
+    font-family: 'Pacifico', cursive;
+    text-align: center;
+    margin-bottom:20px;
+}
+
+.side_bar-username a {
+    color:#3273dc;
+    font-size:12pt;
+}
+
+.side_bar-profile_container {
+    border-radius: 5px;
+}
+
+.side_bar-profile_picture {
+    width:100%;
+    border-radius: 5px;
+}
+
+.side_bar_container {
+    white-space: nowrap;
+    border-radius: 5px;
+    margin-bottom:5px;
+}
+
+.side_bar_container:hover{
+    background-color: white;
+    color:#8c8c8c;
+    cursor: pointer;
+}
+
+.side_bar_container-break {
+    border-radius: 2px;
+    margin-bottom:5px;
+    height:4px;
+}
+
+.side_bar_image {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    overflow: hidden;
+    float: left;
+    display:inline-block;
+}
+
 .comment_title-user {
     float: left;
     padding: 0 10px 0 20px;
     font-size: 14pt;
     margin-top: -5px;
+}
+
+.side_bar-comment {
+    padding: 0 5px;
+    font-size: 10pt;
+    margin-top: 3px;
+    display:inline-block;
 }
 
 .comment_title-time {
@@ -303,6 +360,15 @@ img {
     color: white;
 }
 
+.background_color-info_blue {
+    background-color: #3273dc;
+    color: white;
+}
+
+.background_color-golf_green {
+    background-color: #92edbf;
+}
+
 .green_text {
     color: #2C6700;
 }
@@ -322,6 +388,14 @@ img {
 .on_hover_pointer:hover,
 .photo_album-image_wrapper {
     cursor: pointer;
+}
+
+.black_and_white_img {
+    filter: gray;
+    /* IE6-9 */
+    -webkit-filter: grayscale(1);
+    /* Google Chrome, Safari 6+ & Opera 15+ */
+    filter: grayscale(1);
 }
 
 
