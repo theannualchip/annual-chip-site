@@ -9,6 +9,10 @@ img {
     max-height: none;
 }
 
+[contenteditable]:focus {
+    outline: 0px solid transparent;
+}
+
 .columns.is-gapless:not(:last-child) {
     margin-bottom: 0;
 }
@@ -157,6 +161,9 @@ img {
     top: 53px;
     width: 20%;
     overflow-y:scroll;
+    border-style:solid;
+    border-width:0 0 0 1px;
+    border-color:#E5E4D7;
 }
 
 .chit_chat-chat_input {
@@ -282,8 +289,71 @@ img {
 
 .comment_message {
     padding-left: 60px;
+    word-wrap: break-word;
 }
 
+.chit_chat-chat_input-button {
+    width:80%;
+}
+
+.chit_chat-chat_input-bet, .chit_chat-chat_input-send  {
+    position:absolute;
+    top:0;
+    width:32px;
+    height:100%;
+    color:white;
+    border-style:solid;
+    border-color:#E5E4D7;
+    border-width:1px 1px 1px 0;
+}
+
+.chit_chat-chat_input-bet:hover, .chit_chat-chat_input-send:hover {
+    cursor:pointer;
+    background-color:#ff3860;
+}
+
+.chit_chat-input_container {
+    min-height:32px;
+    width:100%;
+    position:relative;
+}
+
+.chit_chat-chat_input-text {
+    position:absolute;
+    left:0;
+    top:0;
+    background-color:red;
+    border-radius: 5px 0 0 5px;
+    height:100%;
+    display: inline-block;
+    padding:5px 10px 5px 10px;
+    overflow-y:scroll;
+    border-style:solid;
+    border-color:#E5E4D7;
+    border-width:1px;
+}
+
+.chit_chat-chat_input-text:hover {
+    cursor:text;
+}
+
+.chit_chat-chat_input-text p {
+}
+
+.chit_chat-chat_input-text p:focus {
+    border:none;
+}
+
+.chit_chat-chat_input-send {
+    right:32px;
+    padding:7px 2px 0 7px;
+}
+
+.chit_chat-chat_input-bet {
+    border-radius:0 5px 5px 0;
+    right:0;
+    padding:7px 1px 0 10px;
+}
 
 /***************************************************** PHOTOS PAGE *************************************************/
 
@@ -377,6 +447,10 @@ img {
     font-size: 11pt;
 }
 
+.font-small-12 {
+    font-size: 12pt;
+}
+
 .border-radius-3 {
     border-radius: 5px;
     width: 16px;
@@ -403,4 +477,8 @@ img {
 
 .toggle-display_none {
     display: none;
+}
+
+.toggle-text_place_holder {
+    color:#b3b3b3;
 }

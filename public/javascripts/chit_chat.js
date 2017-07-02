@@ -32,9 +32,9 @@ function output_chat_message(username, image_name, message, timestamp) {
                         ${aus_time}
                     </div>
                 </div>
-                <div class='comment_message'>
-                    ${escape_html(message)}
-                </div>
+                <div class='comment_message'>`
+                html_output += escape_html(message)
+                html_output += `</div>
             </div>
         </div>
     </div>`
@@ -98,6 +98,7 @@ function resize_everything() {
     $('#js-chit_chat_loader').css('height', window_height - 53 + 'px')
     $('#js-chit_chat-chat_output').css('height', window_height - 2 * 53 + 'px')
     $('#js-chit_chat-side_bar').css('height', window_height - 53 + 'px')
+    $('#js-chit_chat-chat_input-text').css('width', $('#js-chit_chat-input_container').width() - 64 + 'px')
 }
 
 function progress(final, call_back) {
@@ -151,6 +152,7 @@ $(window).on('load', function() {
                         $('#js-chit_chat-chat_input').toggleClass('toggle-display_none', false)
                         $('#js-chit_chat-side_bar').toggleClass('toggle-display_none', false)
                         $('#js-chit_chat-chat_output').toggleClass('toggle-display_none', false)
+                        resize_everything()
                         $('#js-chit_chat_loader').animate({ 'opacity': 0 }, 50, function() {
                             $('#js-chit_chat_loader').toggleClass('toggle-display_none', true)
                             $('#js-chit_chat-chat_input').animate({ 'bottom': 0 }, 250, function() {
@@ -170,25 +172,45 @@ $(window).resize(function() {
     resize_everything();
 })
 
-/*
+var placeholder_string = "Something you'd like to say?"
 
 function send_message() {
-    message = $('#js-chat_input').val();
-    if (message != "") {
+    message = $('#js-chit_chat-chat_p').text();
+    if (message != "" && message != placeholder_string) {
         socket.emit('chat message', message);
-        $('#js-chat_input').val('');
+        $('#js-chit_chat-chat_p').html(placeholder_string)
+        $('#js-chit_chat-chat_p').toggleClass('toggle-text_place_holder', true)
+        $('#js-chit_chat-chat_p').blur()
     }
 }
 
+$('#js-chit_chat-chat_p').on('focus', function() {
+    if ($('#js-chit_chat-chat_p').html() == placeholder_string || $('#js-chit_chat-chat_p').hasClass('toggle-text_place_holder')) {
+        $('#js-chit_chat-chat_p').html('')
+        $('#js-chit_chat-chat_p').toggleClass('toggle-text_place_holder', false)
+    }
+})
+
+$('#js-chit_chat-chat_p').on('focusout', function() {
+    if ($('#js-chit_chat-chat_p').html() == '') {
+        $('#js-chit_chat-chat_p').html(placeholder_string)
+        $('#js-chit_chat-chat_p').toggleClass('toggle-text_place_holder', true)
+    }
+})
+
 socket.on('chat message', function(msg) {
     $('#js-chat_output').append(output_chat_message(msg.username, msg.profile_photo_title, msg.message, msg.timestamp));
-    $('#js-chat_output').animate({
-        scrollTop: $('#js-chat_output')[0].scrollHeight + 'px'
-    }, 500);
+    $('#js-chit_chat-chat_output').imagesLoaded(function() {
+        $('.ensure_square').each(function() {
+            square_up(this, 40);
+        })
+    })
+    $('#js-chit_chat-chat_output').animate({scrollTop:$('#js-chit_chat-chat_output')[0].scrollHeight},250)
 });
 
-$('#js-chat_input').on("keydown", function(e) {
+$('#js-chit_chat-chat_p').on("keydown", function(e) {
     if (e.keyCode == 13) {
         send_message();
+        return false
     }
-}); */
+});

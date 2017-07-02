@@ -33,7 +33,7 @@
 
     <!-- the side bar -->
 
-    <div class='chit_chat-side_bar background_color-light_yellow toggle-display_none' id='js-chit_chat-side_bar'>
+    <div class='chit_chat-side_bar background_color-light_grey toggle-display_none' id='js-chit_chat-side_bar'>
         <div class='column is-full-width' id='js-chat_side_bar-your_profile'>
         </div>
         <div class='column' id='js-chat_side_bar'>
@@ -43,16 +43,19 @@
     <!-- the chat input -->
 
     <div class='chit_chat-chat_input background_color-grey toggle-display_none' id='js-chit_chat-chat_input'>
-        <!--<div class='column'>
-            <div class='columns is-mobile'>
-                <div class='column is-9'>
-                    <input class='input' placeholder='Message' autocomplete="off" type='text' id='js-chat_input'></input>
+        <div class='column is-full-width'>
+            <div class='chit_chat-input_container' id='js-chit_chat-input_container'>
+                <div class='chit_chat-chat_input-text background_color-light_grey' id='js-chit_chat-chat_input-text'>
+                    <p class='toggle-text_place_holder' contenteditable="true" id='js-chit_chat-chat_p' autocorrect='off' autocomplete='off' spellcheck='true'>Something you'd like to say?</p>
                 </div>
-                <div class='column'>
-                    <input class='button background_color-yellow is-full-width' type='button' value='Send' onclick='send_message()'></input>
+                <div class='chit_chat-chat_input-send background_color-yellow' onclick='send_message()'>
+                    <i class="fa fa-comment font-small-12"></i>
                 </div>
-            </div>
-        </div>-->
+                <div class='chit_chat-chat_input-bet background_color-info_blue'>
+                    <i class="fa fa-usd font-small-12"></i>
+                </div>
+           </div>
+        </div>
     </div>
 
 </body>
