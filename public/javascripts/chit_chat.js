@@ -18,24 +18,22 @@ function escape_html(string) {
 function output_chat_message(username, image_name, message, timestamp) {
     aus_time = moment(timestamp).format('h:mm a');
     html_output = `
-    <div class='is-full-width'>
-        <div class='is-full-width'>
-            <div class='comment_image'>
-                <img class='ensure_square' src='/img/profile_pictures/${image_name}'/>
-            </div>
-            <div class='comment_title'>
-                <div class='column'>
-                    <div class='comment_title-user'>
-                    ${escape_html(username)}
-                    </div>
-                    <div class='comment_title-time'>
-                        ${aus_time}
-                    </div>
+    <div class='is-full-width margin_top_and_bottom'>
+        <div class='comment_image'>
+            <img class='ensure_square' src='/img/profile_pictures/${image_name}'/>
+        </div>
+        <div class='comment_title'>
+            <div class='column'>
+                <div class='comment_title-user'>
+                ${escape_html(username)}
                 </div>
-                <div class='comment_message'>`
-                html_output += escape_html(message)
-                html_output += `</div>
+                <div class='comment_title-time'>
+                    ${aus_time}
+                </div>
             </div>
+            <div class='comment_message'>`
+            html_output += escape_html(message)
+            html_output += `</div>
         </div>
     </div>`
     return html_output;

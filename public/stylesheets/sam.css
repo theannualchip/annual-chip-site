@@ -367,6 +367,10 @@ img {
     display: none;
 }
 
+.photo_album-image_wrapper img {
+    width:100%;
+}
+
 .full_screen_image {
     position: fixed;
     top: 0;
@@ -481,4 +485,13 @@ img {
 
 .toggle-text_place_holder {
     color:#b3b3b3;
+}
+
+.margin_top_and_bottom {
+    padding:5px;
+    border-radius:0 20px 0 0;
+}
+
+.margin_top_and_bottom:hover {
+    background-color:#f5f5f0;
 }
