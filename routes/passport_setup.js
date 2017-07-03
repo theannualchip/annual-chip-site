@@ -9,7 +9,7 @@ const salt_rounds = 10;
 
 function update_last_used(email) {
     console.log("Updating last_active field for \x1b[34m" + email + "\x1b[0m");
-    db.query("UPDATE golfers SET last_active=$1 WHERE email=$2", [moment(), email])
+    db.query("UPDATE golfers SET last_active=$1 WHERE email=$2", [moment.utc(), email])
         .then(function(data) {
             console.log("\x1b[42m\x1b[37mSuccessfully updated last_active field for\x1b[0m \x1b[34m" + email + "\x1b[0m");
         })
