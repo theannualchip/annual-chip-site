@@ -5,7 +5,7 @@ var router = express.Router();
 var path = require('path');
 var fs = require('fs');
 var pgp = require('pg-promise')();
-var tom_js = require("../public/javascripts/tom.js");
+var tom_js = require("../public/javascripts/tom_backend.js");
 var db = require("../db.js");
 var passport_setup = require('./passport_setup.js');
 var passport = require('passport');
@@ -325,6 +325,7 @@ router.get('/scorecard', function(req, res, next) {
 router.get('/scorecard/day1_hole1', function(req, res, next) {
 
     res.render('card', {title: 'Scorecard'});
+
 });
 
 

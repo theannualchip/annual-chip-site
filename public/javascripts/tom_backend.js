@@ -1,10 +1,8 @@
-var multiline = require('multiline');
-
 exports.get_short_lboard = function(db_connection, day) {
 
 	db = db_connection;
 
-	query_string =  multiline.stripIndent(function(){/*
+	query_string = `
 
 		WITH scores as (
 			SELECT
@@ -26,14 +24,13 @@ exports.get_short_lboard = function(db_connection, day) {
 				a.username = b.username)
 		ORDER BY
 			score;
-	*/
-	});
+	`
 
 	result = db.query(query_string, [day])
 
 	return result;
 
-}
+};
 
 exports.format_lboard = function(lboard) {
 
@@ -68,15 +65,3 @@ exports.format_lboard = function(lboard) {
 	return output;
 
 };
-
-
-function my_function() {
-
-    // alert("I did something!");
-
-    $('#hole_1').click(
-	    function(){
-	        $('.modal').addClass("is-active");
-	        // css('border','0 none transparent');
-	});
-}
