@@ -13,11 +13,10 @@
 
     <!-- the loading screen -->
     <% include menu_partial.ejs %>
-    <% photos=['broken_club','dancing_man','fresh_prince','golf_devil','golf_pong','golf_shot','golf_dog'] %>
-    <% todays_photo='/img/loading_images/' + photos[Math.floor(Math.random()*7)] + '.gif' %>
+
     <div class='main_theme-loading_window background_color-light_grey toggle-display_none' id='js-chit_chat_loader'>
         <div class="main_theme-loading_window-content">
-            <img src='<%= todays_photo %>' class='chit_chat-loader_image' id='js-chit_chat-loader_image'>
+            <img src='<%= loading_image %>' class='chit_chat-loader_image' id='js-chit_chat-loader_image'>
             <br>
             <br>
             <progress class="progress is-small" id='js-main_theme-loading_window-progress' value="0" max="100"></progress>
@@ -34,7 +33,9 @@
 
     <!-- the side bar -->
 
-    <div class='chit_chat-side_bar background_color-light_yellow toggle-display_none' id='js-chit_chat-side_bar'>
+    <div class='chit_chat-side_bar background_color-light_grey toggle-display_none' id='js-chit_chat-side_bar'>
+        <div class='column is-full-width' id='js-chat_side_bar-your_profile'>
+        </div>
         <div class='column' id='js-chat_side_bar'>
         </div>
     </div>
@@ -42,16 +43,19 @@
     <!-- the chat input -->
 
     <div class='chit_chat-chat_input background_color-grey toggle-display_none' id='js-chit_chat-chat_input'>
-        <!--<div class='column'>
-            <div class='columns is-mobile'>
-                <div class='column is-9'>
-                    <input class='input' placeholder='Message' autocomplete="off" type='text' id='js-chat_input'></input>
+        <div class='column is-full-width'>
+            <div class='chit_chat-input_container' id='js-chit_chat-input_container'>
+                <div class='chit_chat-chat_input-text background_color-light_grey' id='js-chit_chat-chat_input-text'>
+                    <p class='toggle-text_place_holder' contenteditable="true" id='js-chit_chat-chat_p' autocorrect='off' autocomplete='off' spellcheck='true'>Something you'd like to say?</p>
                 </div>
-                <div class='column'>
-                    <input class='button background_color-yellow is-full-width' type='button' value='Send' onclick='send_message()'></input>
+                <div class='chit_chat-chat_input-send background_color-yellow' onclick='send_message()'>
+                    <i class="fa fa-comment font-small-12"></i>
                 </div>
-            </div>
-        </div>-->
+                <div class='chit_chat-chat_input-bet background_color-info_blue'>
+                    <i class="fa fa-usd font-small-12"></i>
+                </div>
+           </div>
+        </div>
     </div>
 
 </body>
@@ -62,5 +66,6 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="/javascripts/sam.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
 <script src="/javascripts/chit_chat.js"></script>
 </html>

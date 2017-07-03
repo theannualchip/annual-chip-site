@@ -9,6 +9,10 @@ img {
     max-height: none;
 }
 
+[contenteditable]:focus {
+    outline: 0px solid transparent;
+}
+
 .columns.is-gapless:not(:last-child) {
     margin-bottom: 0;
 }
@@ -156,6 +160,10 @@ img {
     right: -20%;
     top: 53px;
     width: 20%;
+    overflow-y:scroll;
+    border-style:solid;
+    border-width:0 0 0 1px;
+    border-color:#E5E4D7;
 }
 
 .chit_chat-chat_input {
@@ -212,11 +220,67 @@ img {
     float: left;
 }
 
+.side_bar-username {
+    text-shadow: 2px 2px #FFCF79, 4px 4px #996300;
+    font-size: 14pt;
+    font-family: 'Pacifico', cursive;
+    text-align: center;
+    margin-bottom:20px;
+}
+
+.side_bar-username a {
+    color:#3273dc;
+    font-size:12pt;
+}
+
+.side_bar-profile_container {
+    border-radius: 5px;
+}
+
+.side_bar-profile_picture {
+    width:100%;
+    border-radius: 5px;
+}
+
+.side_bar_container {
+    white-space: nowrap;
+    border-radius: 5px;
+    margin-bottom:5px;
+}
+
+.side_bar_container:hover{
+    background-color: white;
+    color:#8c8c8c;
+    cursor: pointer;
+}
+
+.side_bar_container-break {
+    border-radius: 2px;
+    margin-bottom:5px;
+    height:4px;
+}
+
+.side_bar_image {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    overflow: hidden;
+    float: left;
+    display:inline-block;
+}
+
 .comment_title-user {
     float: left;
     padding: 0 10px 0 20px;
     font-size: 14pt;
     margin-top: -5px;
+}
+
+.side_bar-comment {
+    padding: 0 5px;
+    font-size: 10pt;
+    margin-top: 3px;
+    display:inline-block;
 }
 
 .comment_title-time {
@@ -225,8 +289,71 @@ img {
 
 .comment_message {
     padding-left: 60px;
+    word-wrap: break-word;
 }
 
+.chit_chat-chat_input-button {
+    width:80%;
+}
+
+.chit_chat-chat_input-bet, .chit_chat-chat_input-send  {
+    position:absolute;
+    top:0;
+    width:32px;
+    height:100%;
+    color:white;
+    border-style:solid;
+    border-color:#E5E4D7;
+    border-width:1px 1px 1px 0;
+}
+
+.chit_chat-chat_input-bet:hover, .chit_chat-chat_input-send:hover {
+    cursor:pointer;
+    background-color:#ff3860;
+}
+
+.chit_chat-input_container {
+    min-height:32px;
+    width:100%;
+    position:relative;
+}
+
+.chit_chat-chat_input-text {
+    position:absolute;
+    left:0;
+    top:0;
+    background-color:red;
+    border-radius: 5px 0 0 5px;
+    height:100%;
+    display: inline-block;
+    padding:5px 10px 5px 10px;
+    overflow-y:scroll;
+    border-style:solid;
+    border-color:#E5E4D7;
+    border-width:1px;
+}
+
+.chit_chat-chat_input-text:hover {
+    cursor:text;
+}
+
+.chit_chat-chat_input-text p {
+}
+
+.chit_chat-chat_input-text p:focus {
+    border:none;
+}
+
+.chit_chat-chat_input-send {
+    right:32px;
+    padding:7px 2px 0 7px;
+}
+
+.chit_chat-chat_input-bet {
+    border-radius:0 5px 5px 0;
+    right:0;
+    padding:7px 1px 0 10px;
+}
 
 /***************************************************** PHOTOS PAGE *************************************************/
 
@@ -238,6 +365,10 @@ img {
 
 .hidden_to_begin {
     display: none;
+}
+
+.photo_album-image_wrapper img {
+    width:100%;
 }
 
 .full_screen_image {
@@ -303,12 +434,25 @@ img {
     color: white;
 }
 
+.background_color-info_blue {
+    background-color: #3273dc;
+    color: white;
+}
+
+.background_color-golf_green {
+    background-color: #92edbf;
+}
+
 .green_text {
     color: #2C6700;
 }
 
 .font-small {
     font-size: 11pt;
+}
+
+.font-small-12 {
+    font-size: 12pt;
 }
 
 .border-radius-3 {
@@ -324,9 +468,30 @@ img {
     cursor: pointer;
 }
 
+.black_and_white_img {
+    filter: gray;
+    /* IE6-9 */
+    -webkit-filter: grayscale(1);
+    /* Google Chrome, Safari 6+ & Opera 15+ */
+    filter: grayscale(1);
+}
+
 
 /* TOGGLES */
 
 .toggle-display_none {
     display: none;
+}
+
+.toggle-text_place_holder {
+    color:#b3b3b3;
+}
+
+.margin_top_and_bottom {
+    padding:5px;
+    border-radius:0 20px 0 0;
+}
+
+.margin_top_and_bottom:hover {
+    background-color:#f5f5f0;
 }

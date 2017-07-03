@@ -163,7 +163,22 @@ router.post('/user_signup', function(req, res, next) {
 router.get('/',
     function(req, res, next) {
         if (req.isAuthenticated()) {
-            res.render('index', { user: req.session.passport.user.username, user_email: req.session.passport.user.email, is_admin: req.session.passport.user.is_admin, current_page: 'chit_chat'});
+            fs.readdir('./public/img/loading_images/', function(error, images) {
+                if (error) {
+                    console.error("\x1b[31mCouldn't collect read files in ./public/img/loading_images/ because of an error\x1b[0m:")
+                    console.log(error)
+                    res.render('index', { user: req.session.passport.user.username, user_email: req.session.passport.user.email, is_admin: req.session.passport.user.is_admin, current_page: 'chit_chat' });
+                } else {
+                    gif_array = []
+                    images.forEach(function(image) {
+                        if (path.extname(image).toLowerCase() == '.gif') {
+                            gif_array.push(image)
+                        }
+                    })
+                    todays_photo = '/img/loading_images/' + gif_array[Math.min(Math.floor(Math.random() * gif_array.length), gif_array.length - 1)]
+                    res.render('index', { user: req.session.passport.user.username, user_email: req.session.passport.user.email, is_admin: req.session.passport.user.is_admin, current_page: 'chit_chat', loading_image: todays_photo });
+                }
+            })
         } else {
             res.redirect('/login');
         }
@@ -181,7 +196,7 @@ router.post('/previous_messages',
                 .catch(function(error) {
                     console.log("Couldn't collect previous chat comments \x1b[31m error quering the chat database\x1b[0m:");
                     console.log(error);
-                    res.send('index', { user: req.session.passport.user.username, user_email: req.session.passport.user.email, is_admin: req.session.passport.user.is_admin, current_page: 'chit_chat', error_message:"Woops! Something went wrong." });
+                    res.send('index', { user: req.session.passport.user.username, user_email: req.session.passport.user.email, is_admin: req.session.passport.user.is_admin, current_page: 'chit_chat', error_message: "Woops! Something went wrong." });
                 });
         } else {
             res.redirect('/login');
@@ -324,8 +339,12 @@ router.get('/scorecard', function(req, res, next) {
 
 router.get('/scorecard/day1_hole1', function(req, res, next) {
 
+<<<<<<< HEAD
     res.render('card', {title: 'Scorecard'});
 
+=======
+    res.render('card', { title: 'Scorecard' });
+>>>>>>> 5ccdf6f9500fcf5de198a69b5668eb1f3791c50b
 });
 
 
