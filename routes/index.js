@@ -65,7 +65,7 @@ var photo_album_storage = multer.diskStorage({
                 if (new_file_name == "error") {
                     cb("Something went wrong uploading " + file.originalname.toLowerCase() + ". Try uploading a different image file, or even renaming it.");
                 } else {
-                    db.query("INSERT INTO photos (photo_title,date_uploaded,uploaded_user_email,image_context,short_title) VALUES ($1,$2,$3,$4,$5)", [new_file_name, moment(), req.session.passport.user.email, "album", req.body.photo_title])
+                    db.query("INSERT INTO photos (photo_title,date_uploaded,uploaded_user_email,image_context,short_title) VALUES ($1,$2,$3,$4,$5)", [new_file_name, moment.utc(), req.session.passport.user.email, "album", req.body.photo_title])
                         .then(function(data) {
                             console.log("\x1b[42m\x1b[37mSuccessfully added \x1b[0m \x1b[34m" + new_file_name + "\x1b[0m to photos db");
                             cb(null, new_file_name);
@@ -338,8 +338,12 @@ router.get('/scorecard', function(req, res, next) {
 
 
 router.get('/scorecard/day1_hole1', function(req, res, next) {
+<<<<<<< HEAD
 
     res.render('card', {title: 'Scorecard'});
+=======
+    res.render('card', { title: 'Scorecard' });
+>>>>>>> e3aef9e03a406e3a3791a640910840e08c33f689
 });
 
 

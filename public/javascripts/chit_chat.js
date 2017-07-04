@@ -16,7 +16,6 @@ function escape_html(string) {
 }
 
 function output_chat_message(username, image_name, message, timestamp) {
-    aus_time = moment(timestamp).format('h:mm a');
     html_output = `
     <div class='is-full-width margin_top_and_bottom'>
         <div class='comment_image'>
@@ -28,12 +27,12 @@ function output_chat_message(username, image_name, message, timestamp) {
                 ${escape_html(username)}
                 </div>
                 <div class='comment_title-time'>
-                    ${aus_time}
+                    ${moment.utc(timestamp).local().format('h:mm a')}
                 </div>
             </div>
             <div class='comment_message'>`
-            html_output += escape_html(message)
-            html_output += `</div>
+    html_output += escape_html(message)
+    html_output += `</div>
         </div>
     </div>`
     return html_output;
@@ -71,6 +70,11 @@ socket.on('online update', function(return_object) {
     }
     for (row_1 = 0; row_1 < return_object.offline.length; row_1++) {
         if (return_object.offline[row_1].email != variables.user_email) {
+            if (moment.utc(return_object.offline[row_1].last_active).local().isSame(moment(), 'd')) {
+                last_online = moment.utc(return_object.offline[row_1].last_active).local().format('h:mm a');
+            } else {
+                last_online = moment.utc(return_object.offline[row_1].last_active).local().format('D/MM/YY');
+            }
             html_output += `<div class='column is-full-width side_bar_container background_color-grey'>
                 <div class='side_bar_image'>
                     <img class='ensure_square-side_bar black_and_white_img' src='/img/profile_pictures/${return_object.offline[row_1].profile_photo_title}'/>
@@ -78,7 +82,7 @@ socket.on('online update', function(return_object) {
                 <div class='side_bar-comment'>
                     ${escape_html(return_object.offline[row_1].username)} - Offline
                     <br>
-                    Last Online ${moment(return_object.offline[row_1].last_active).format('D/MM/YY')}
+                    Last Online ${last_online}
                 </div>
             </div>`
         }
@@ -139,7 +143,7 @@ $(window).on('load', function() {
             .done(function(chat_messages) {
                 if (chat_messages != null) {
                     for (row_1 = 0; row_1 < chat_messages.length; row_1++) {
-                        $('#js-chat_output').append(output_chat_message(chat_messages[row_1].username, chat_messages[row_1].profile_photo_title, chat_messages[row_1].comment, moment(chat_messages[row_1].timestamp).add(10, 'hours')));
+                        $('#js-chat_output').append(output_chat_message(chat_messages[row_1].username, chat_messages[row_1].profile_photo_title, chat_messages[row_1].comment, chat_messages[row_1].timestamp));
                     }
                 }
                 $('#js-chit_chat-chat_output').imagesLoaded(function() {
@@ -203,7 +207,7 @@ socket.on('chat message', function(msg) {
             square_up(this, 40);
         })
     })
-    $('#js-chit_chat-chat_output').animate({scrollTop:$('#js-chit_chat-chat_output')[0].scrollHeight},250)
+    $('#js-chit_chat-chat_output').animate({ scrollTop: $('#js-chit_chat-chat_output')[0].scrollHeight }, 250)
 });
 
 $('#js-chit_chat-chat_p').on("keydown", function(e) {
