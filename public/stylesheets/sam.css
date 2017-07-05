@@ -355,6 +355,15 @@ img {
     padding:7px 1px 0 10px;
 }
 
+.chit_chat-time_stamp_break {
+    width:100%;
+    text-align: center;
+    display:block;
+    padding:2px 0 2px 0 ;
+    background-color:#f5f5f0;
+    border-radius:5px;
+}
+
 /***************************************************** PHOTOS PAGE *************************************************/
 
 .hide_input {
@@ -489,9 +498,9 @@ img {
 
 .margin_top_and_bottom {
     padding:5px;
-    border-radius:0 20px 0 0;
+    border-radius:5px
 }
 
 .margin_top_and_bottom:hover {
-    background-color:#f5f5f0;
+    background-color:#E5E4D7;
 }
