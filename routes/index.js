@@ -338,7 +338,12 @@ router.get('/scorecard', function(req, res, next) {
 
 
 router.get('/scorecard/day1_hole1', function(req, res, next) {
+<<<<<<< HEAD
+
+    res.render('card', {title: 'Scorecard'});
+=======
     res.render('card', { title: 'Scorecard' });
+>>>>>>> e3aef9e03a406e3a3791a640910840e08c33f689
 });
 
 

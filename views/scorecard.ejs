@@ -6,11 +6,15 @@
     <%= title %>
   </title>
   <link rel='stylesheet' href='/stylesheets/tom.css'/>
+  <link rel='stylesheet' href='/stylesheets/sam.css' />
   <link rel="stylesheet" href="/stylesheets/extras/flickity.css" media="screen">
   <script type="text/javascript" src="/javascripts/tom_frontend.js"></script>
 </head>
 
 <body>
+
+  <!-- Include header -->
+  <% include menu_partial.ejs %>
 
   <h1 class='title has-text-centered is-large main_theme-title'><%= title %></h1>
 
@@ -27,19 +31,19 @@
       <li class="is-active">
         <a>
           <span class="icon is-small"><i class="fa fa-ellipsis-v"></i></span>
-          <span>Day 1</span>
+          <span class = "day-label">Day 1</span>
         </a>
       </li>
       <li>
         <a>
           <span class="icon is-small"><i class="fa fa-hand-peace-o"></i></span>
-          <span>Day 2</span>
+          <span class = "day-label">Day 2</span>
         </a>
       </li>
       <li>
         <a>
           <span class="icon is-small"><i class="fa fa-cubes"></i></span>
-          <span>Day 3</span>
+          <span class = "day-label">Day 3</span>
         </a>
       </li>
     </ul>
