@@ -65,17 +65,20 @@ function message_publisher(message_array, callback) {
             }
             for (message = starting_message; message > 0; message--) {
 
-                previous_user = $($('#js-chat_output').children()[0]).find('.comment_title-user').html().trim()
-                previous_timestamp = $($('#js-chat_output').children()[0]).find('.comment_title-time').attr('id')
+                previous_user = $($('#js-chat_output').find('.comment_title-user')[0]).html().trim()
+                previous_timestamp = $($('#js-chat_output').find('.comment_title-time')[0]).attr('id')
                 current_message = message_array[message - 1]
                 if (moment(previous_timestamp).isSame(moment(current_message.timestamp), 'd')) {
                     if (previous_user == current_message.username) {
-                        $($('#js-chat_output').children()[0]).find('.comment_message').prepend(`<div>${escape_html(current_message.comment)}</div>`)
+                        $($('#js-chat_output').find('.comment_message')[0]).prepend(`<div>${escape_html(current_message.comment)}</div>`)
                     } else {
                         $('#js-chat_output').prepend(output_chat_message(current_message.username, current_message.profile_photo_title, current_message.comment, current_message.timestamp))
                     }
                 } else {
-                    $('#js-chat_output').prepend(create_chat_break(previous_timestamp))
+                    if (!$($($('#js-chat_output').children()[0]).children()[0]).hasClass('chit_chat-time_stamp_break')) {
+                        console.log($($('#js-chat_output').children()[0]).html())
+                        $('#js-chat_output').prepend(create_chat_break(previous_timestamp))
+                    }
                     $('#js-chat_output').prepend(output_chat_message(current_message.username, current_message.profile_photo_title, current_message.comment, current_message.timestamp))
                 }
             }
@@ -86,23 +89,23 @@ function message_publisher(message_array, callback) {
 }
 
 function message_publisher_to_end(message, callback) {
-    if (message != null && message.message.length>0) {
+    if (message != null && message.message.length > 0) {
         if ($('#js-chat_output').children().length == 0) {
             $('#js-chat_output').html(output_chat_message(message.username, message.profile_photo_title, message.message, message.timestamp))
             $('#js-chat_output').prepend(create_chat_break(message.timestamp))
         } else {
-            previous_user = $($('#js-chat_output').children()[$('#js-chat_output').children().length-1]).find('.comment_title-user').html().trim()
-            previous_timestamp = $($('#js-chat_output').children()[$('#js-chat_output').children().length-1]).find('.comment_title-time').attr('id')
+            previous_user = $($('#js-chat_output').children()[$('#js-chat_output').children().length - 1]).find('.comment_title-user').html().trim()
+            previous_timestamp = $($('#js-chat_output').children()[$('#js-chat_output').children().length - 1]).find('.comment_title-time').attr('id')
             if (moment(previous_timestamp).isSame(moment(message.timestamp), 'd')) {
                 if (previous_user == message.username) {
-                    $($('#js-chat_output').children()[$('#js-chat_output').children().length-1]).find('.comment_message').append(`<div>${escape_html(message.message)}</div>`)
+                    $($('#js-chat_output').children()[$('#js-chat_output').children().length - 1]).find('.comment_message').append(`<div>${escape_html(message.message)}</div>`)
                 } else {
                     $('#js-chat_output').append(output_chat_message(message.username, message.profile_photo_title, message.message, message.timestamp))
                 }
             } else {
                 $('#js-chat_output').append(create_chat_break(message.timestamp))
                 $('#js-chat_output').append(output_chat_message(message.username, message.profile_photo_title, message.message, message.timestamp))
-            }     
+            }
         }
         callback()
     }
@@ -209,6 +212,7 @@ $(window).on('load', function() {
         $.ajax({
                 method: "POST",
                 url: "/previous_messages",
+                data: {}
             })
             .done(function(chat_messages) {
                 message_publisher(chat_messages, function() {
@@ -266,7 +270,7 @@ $('#js-chit_chat-chat_p').on('focusout', function() {
 })
 
 socket.on('chat message', function(msg) {
-    message_publisher_to_end(msg,function() {
+    message_publisher_to_end(msg, function() {
         $('#js-chit_chat-chat_output').imagesLoaded(function() {
             $('.ensure_square').each(function() {
                 square_up(this, 40);
@@ -282,3 +286,37 @@ $('#js-chit_chat-chat_p').on("keydown", function(e) {
         return false
     }
 });
+
+$('#js-chat_output-request_messages-button').on('click touch', function() {
+    if ($('#js-chat_output-request_messages-button span').html().trim() == 'Want older conversations?') {
+        $('#js-chat_output-request_messages-button').html('<div class="chat_output-request_messages-loading"><i class="fa fa-cog fa-spin fa-3x fa-fw"></i></div>')
+        if ($('#js-chat_output').find('.comment_title-time')[0]) {
+            data = { previous_timestamp: $($('#js-chat_output').find('.comment_title-time')[0]).attr('id') }
+        } else {
+            data = {}
+        }
+        $.ajax({
+                method: "POST",
+                url: "/previous_messages",
+                data: data
+            })
+            .done(function(chat_messages) {
+                if (chat_messages.length > 0) {
+                    message_publisher(chat_messages, function() {
+                        $('#js-chit_chat-chat_output').imagesLoaded(function() {
+                            $('.ensure_square').each(function() {
+                                square_up(this, 40);
+                            })
+                            $('#js-chat_output-request_messages-button').html('<span>Want older conversations?</span>')
+                        })
+                    })
+                } else {
+                    $('#js-chat_output-request_messages-container').html(`<div class='chat_output-request_messages-button-spent background-color-danger_pink'>
+                        <span>
+                            Looks like thats it!
+                        </span>
+                    </div>`)
+                }
+            })
+    }
+})
