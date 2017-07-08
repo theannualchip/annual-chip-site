@@ -16,121 +16,63 @@
   <!-- Include header -->
   <% include menu_partial.ejs %>
 
-  <h1 class='title has-text-centered is-large main_theme-title'><%= title %></h1>
+<!--   <h1 class='title has-text-centered is-large main_theme-title'><%= title %></h1>
+-->
 
+<br>
+<!-- Small Leaderboard Scroller -->
+<div class="container is-fluid is-fullwidth">
+  <%- leaderboard %>
+</div>
+<br>
 
-  <!-- Small Leaderboard Scroller -->
-  <div class="container is-fluid is-fullwidth">
-    <%- leaderboard %>
-  </div>
+<!-- <div class="tabs is-toggle is-fullwidth">
+  <ul>
+    <li class="is-active">
+      <a>
+        <span class="icon is-small"><i class="fa fa-ellipsis-v"></i></span>
+        <span class = "day-label">Day 1</span>
+      </a>
+    </li>
+    <li>
+      <a>
+        <span class="icon is-small"><i class="fa fa-hand-peace-o"></i></span>
+        <span class = "day-label">Day 2</span>
+      </a>
+    </li>
+    <li>
+      <a>
+        <span class="icon is-small"><i class="fa fa-cubes"></i></span>
+        <span class = "day-label">Day 3</span>
+      </a>
+    </li>
+  </ul>
+</div>
 
-  <br><br>
+-->
 
-  <div class="tabs is-toggle is-fullwidth">
-    <ul>
-      <li class="is-active">
-        <a>
-          <span class="icon is-small"><i class="fa fa-ellipsis-v"></i></span>
-          <span class = "day-label">Day 1</span>
-        </a>
-      </li>
-      <li>
-        <a>
-          <span class="icon is-small"><i class="fa fa-hand-peace-o"></i></span>
-          <span class = "day-label">Day 2</span>
-        </a>
-      </li>
-      <li>
-        <a>
-          <span class="icon is-small"><i class="fa fa-cubes"></i></span>
-          <span class = "day-label">Day 3</span>
-        </a>
-      </li>
-    </ul>
-  </div>
+<br> 
 
+<div class="is-fullwidth center-div">
+<div class="field">
+  <p class="control is-fullwidth">
+    <span class="select is-large">
+      <select>
+        <option> Day 1</option>
+        <option> Day 2</option>
+        <option> Day 3</option>
 
-  <br>
-
-  <!-- BODY OF SCOREBOARD -->
-
-  <div class="columns is-mobile">
-
-    <div class="column is-2"></div>
-
-    <div id = "test" class="column is-2 box-hole">
-      <h1 class='title has-text-centered is-small main_theme-number'> 1 </h1>
-    </div>
-
-    <div class="column is-1"></div>
-
-    <div class="column is-2 box-hole">
-      <h1 class='title has-text-centered is-small main_theme-number'> 2 </h1>
-    </div>
-
-    <div class="column is-1"></div>
-
-    <div class="column is-2 box-hole">
-      <h1 class='title has-text-centered is-small main_theme-number'> 3 </h1>
-    </div>
-
-    <div class="column is-2"></div>
-
-  </div>
-
-  <br>
-
-  <div class="columns is-mobile">
-
-    <div class="column is-2"></div>
-
-    <div class="column is-2 box-hole">
-      <h1 class='title has-text-centered is-small main_theme-number'> 4 </h1>
-    </div>
-
-    <div class="column is-1"></div>
-
-    <div class="column is-2 box-hole">
-      <h1 class='title has-text-centered is-small main_theme-number'> 5 </h1>
-    </div>
-
-    <div class="column is-1"></div>
-
-    <div class="column is-2 box-hole">
-      <h1 class='title has-text-centered is-small main_theme-number'> 6 </h1>
-    </div>
-
-    <div class="column is-2"></div>
-
-  </div>
-
-  <br>
-
-  <div class="columns is-mobile">
-
-    <div class="column is-2"></div>
-
-    <div class="column is-2 box-hole">
-      <h1 class='title has-text-centered is-small main_theme-number'> 7 </h1>
-    </div>
-
-    <div class="column is-1"></div>
-
-    <div class="column is-2 box-hole">
-      <h1 class='title has-text-centered is-small main_theme-number'> 8 </h1>
-    </div>
-
-    <div class="column is-1"></div>
-
-    <div class="column is-2 box-hole">
-      <h1 class='title has-text-centered is-small main_theme-number'> 9 </h1>
-    </div>
-
-    <div class="column is-2"></div>
-
-  </div>
+      </select>
+    </span>
+  </p>
+</div>
 
 </div>
+
+
+
+<!-- BODY OF SCOREBOARD -->
+<%- links %>
 
 <script src="/javascripts/extras/flickity.pkgd.min.js"></script>
 

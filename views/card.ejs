@@ -1,65 +1,100 @@
 <!DOCTYPE html>
 <html>
 <head>
-<% include head.ejs %>
-<title>
-<%= title %>
-</title>
-<link rel='stylesheet' href='/stylesheets/tom.css'/>
-<script type="text/javascript" src="/javascripts/tom.js"></script>
+	<% include head.ejs %>
+	<title>
+		<%= title %>
+	</title>
+	<link rel='stylesheet' href='/stylesheets/tom.css'/>
+	<script type="text/javascript" src="/javascripts/tom_frontend.js"></script>
 </head>
 
 <body>
 
-<!-- <section class="hero is-dark container is-fluid"> -->
-<section class="hero is-alt background_color-grey">
-<div class="hero-body">
-<div class="container">
-<h1 class="title">
-Hole 1
-</h1>
-</div>
+	<!-- <section class="hero is-dark container is-fluid"> -->
+	<section class="hero is-alt is-bold is-dark">
+		<div class="hero-body">
+			<div class="container">
 
-</div>
-</section>
+				<div class="columns is-mobile">
 
-<div class="columnns">
+					<div class="column is-3">
 
+						<h1 class="title"> <small>Hole</small><%= hole %> </h1>
 
-<div class="column is-3"></div>
-
-<div class="column is-6">
+					</div>
+					<div class="column is-3 is-offset-6">
+						<h1 class="title">
+							<small>Day</small><%= day %>
+						</h1>
 
 
-<div class="card">
-<div class="card-image">
-<figure class="image is-2by1">
-<img src="/img/hole_diagrams/hole_1.jpg" alt="Image">
-</figure>
-</div>
-<div class="card-content">
-<div class="media">
-<div class="media-content">
-<p class="title is-4">John Smith</p>
-<p class="subtitle is-6">@johnsmith</p>
-</div>
-</div>
+					</div>
 
-<div class="content">
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-<a>#css</a> <a>#responsive</a>
-<br>
-<small>11:09 PM - 1 Jan 2016</small>
-</div>
-</div>
-</div>
-</div>
+				</div>
 
-<div class="column is-3"></div>
+				<br>
+
+				<div class="columns is-mobile">
+					<div class="column ">
+						<span> Par: <span class="hole-stats"> 3 </span> </span>
+					</div>
+
+					<div class="column">
+						<p> Meters: <span class="hole-stats"> 355 </span> </span>
+						</div>
+					</div>
 
 
+				</div>
+			</section>
 
-</body>
+			<br>
 
-</html>
+			<section>
+				<div class="container is-fluid">
+					<nav class="panel">
+						<p class="panel-heading">
+							Widget
+						</p>
+						<p class="panel-tabs">
+							<a class="is-active">Stats</a>
+							<a> Map </a>
+							<a> Your Score </a>
+							<a> Compass</a>
+						</p>
+						<a class="panel-block is-active">
+							<span class="panel-icon">
+								<i class="fa fa-book"></i>
+							</span>
+							bulma
+						</a>
+						<a class="panel-block">
+							<span class="panel-icon">
+								<i class="fa fa-book"></i>
+							</span>
+							marksheet
+						</a>
+						<a class="panel-block">
+							<span class="panel-icon">
+								<i class="fa fa-book"></i>
+							</span>
+							minireset.css
+						</a>
+						<label class="panel-block">
+							<input type="checkbox">
+							Remember me
+						</label>
+						<div class="panel-block">
+							<button class="button is-primary is-outlined is-fullwidth">
+								Reset all filters
+							</button>
+						</div>
+					</nav>
+
+				</div>
+			</section>
+
+		</body>
+
+		</html>

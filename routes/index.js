@@ -325,9 +325,12 @@ router.get('/scorecard', function(req, res, next) {
 
             lboard_html = tom_js.format_lboard(data)
 
+            links_html = tom_js.format_hole_links(1)
+
             res.render('scorecard', {
                 title: 'Scorecard',
-                leaderboard: lboard_html
+                leaderboard: lboard_html,
+                links: links_html
             })
         }).catch(error => { console.log(error) })
 
@@ -337,16 +340,20 @@ router.get('/scorecard', function(req, res, next) {
 });
 
 
-router.get('/scorecard/day1_hole1', function(req, res, next) {
-<<<<<<< HEAD
 
-    res.render('card', {title: 'Scorecard'});
-=======
-    res.render('card', { title: 'Scorecard' });
->>>>>>> e3aef9e03a406e3a3791a640910840e08c33f689
+router.get('/scorecard/card', function(req, res, next) {
+
+        day = req.query.day;
+        hole = req.query.hole;
+
+       res.render('card', {title: 'Individual Hole', day: day, hole: hole});
 });
 
+router.get('/scorecard/day1_hole1', function(req, res, next) {
 
+    res.render('card', {title: 'Scorecard'});
+
+});
 
 /* General Stuff */
 
