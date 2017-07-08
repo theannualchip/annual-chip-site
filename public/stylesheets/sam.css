@@ -292,6 +292,10 @@ img {
     word-wrap: break-word;
 }
 
+.comment_message div {
+    margin-bottom:5px;
+}
+
 .chit_chat-chat_input-button {
     width:80%;
 }
@@ -353,6 +357,43 @@ img {
     border-radius:0 5px 5px 0;
     right:0;
     padding:7px 1px 0 10px;
+}
+
+.chit_chat-time_stamp_break {
+    width:100%;
+    text-align: center;
+    display:block;
+    padding:2px 0 2px 0 ;
+    background-color:#f5f5f0;
+    border-radius:5px;
+}
+
+.chat_output-request_messages-container{
+    width:100%;
+    position:absolute;
+    top:0;
+    right:0;
+}
+
+.chat_output-request_messages-button, .chat_output-request_messages-button-spent {
+    padding:5px;
+    position:absolute;
+    top:0;
+    right:40px;
+    width:120px;
+    height:52px;
+    text-align:center;
+    border-radius:0 0 10px 10px;
+}
+
+.chat_output-request_messages-loading {
+    padding-top:10px;
+}
+
+.chat_output-request_messages-button:hover {
+    background-color:#3273dc;
+    color:white;
+    cursor:pointer;
 }
 
 /***************************************************** PHOTOS PAGE *************************************************/
@@ -489,9 +530,4 @@ img {
 
 .margin_top_and_bottom {
     padding:5px;
-    border-radius:0 20px 0 0;
-}
-
-.margin_top_and_bottom:hover {
-    background-color:#f5f5f0;
 }

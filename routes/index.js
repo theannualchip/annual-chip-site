@@ -190,8 +190,33 @@ router.post('/previous_messages',
         if (req.isAuthenticated()) {
             db.query("SELECT c.user_email, c.comment, c.timestamp, g.username, g.profile_photo_title FROM chat as c, golfers as g WHERE c.user_email=g.email ORDER BY c.timestamp")
                 .then(function(data) {
-                    console.log("\x1b[42m\x1b[37mSuccessfully collected previous chat logs\x1b[0m");
-                    res.send(data);
+                    return_array = []
+                    if (data.length > 0) {
+                        if (req.body.previous_timestamp) {
+                            upper_date = moment.utc(req.body.previous_timestamp)
+                        } else {
+                            upper_date = moment.utc(data[data.length - 1].timestamp).add(1, 'd')
+                        }
+                        var collecting = false
+                        var finished_collecting = false
+                        for (message = data.length; message > 0; message--) {
+                            if (finished_collecting == false) {
+                                if (!moment.utc(data[message - 1].timestamp).isSame(upper_date, 'd') && moment.utc(data[message - 1].timestamp).diff(upper_date, 's')<0) {
+                                    collecting = true
+                                }
+                                if (collecting == true) {
+                                    return_array.splice(0, 0, data[message - 1])
+                                    if (message > 1) {
+                                        if (return_array.length > 14 && !moment.utc(data[message - 1].timestamp).isSame(moment.utc(data[message - 2].timestamp), 'd')) {
+                                            finished_collecting = true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        console.log("\x1b[42m\x1b[37mSuccessfully collected previous chat logs\x1b[0m");
+                    }
+                    res.send(return_array);
                 })
                 .catch(function(error) {
                     console.log("Couldn't collect previous chat comments \x1b[31m error quering the chat database\x1b[0m:");
@@ -293,7 +318,7 @@ router.post('/delete_photo', function(req, res, next) {
                             .catch(function(error) {
                                 console.log("Couldn't delete \x1b[0m" + req.body.photo_title + "\x1b[31m as there was an error when quering the photos table\x1b[0m:");
                                 console.log(error);
-                                res.send('Ah oh... Something went wrong when deleting ' + req.body.photo_title + '.');
+                           res.send('Ah oh... Something went wrong when deleting ' + req.body.photo_title + '.');
                             });
                     } else {
                         console.log("Couldn't delete \x1b[0m" + req.body.photo_title + "\x1b[0m as " + req.session.passport.user.email + " doesn't have permission");
@@ -340,19 +365,12 @@ router.get('/scorecard', function(req, res, next) {
 });
 
 
-
 router.get('/scorecard/card', function(req, res, next) {
 
         day = req.query.day;
         hole = req.query.hole;
 
        res.render('card', {title: 'Individual Hole', day: day, hole: hole});
-});
-
-router.get('/scorecard/day1_hole1', function(req, res, next) {
-
-    res.render('card', {title: 'Scorecard'});
-
 });
 
 /* General Stuff */
