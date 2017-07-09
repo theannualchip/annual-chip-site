@@ -7,6 +7,7 @@ body {
 img {
     max-width: none;
     max-height: none;
+    image-orientation: from-image;
 }
 
 [contenteditable]:focus {
@@ -430,6 +431,16 @@ img {
     max-height: 100%;
 }
 
+/***************************************************** PHOTOS PAGE *************************************************/
+
+.edit_profile-image {
+    width:100%;
+}
+
+.edit_profile-image img {
+    border-radius: 5px;
+    width:100%;
+}
 
 /***************************************************** HIGHLIGHTS *************************************************/
 

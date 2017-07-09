@@ -9,7 +9,7 @@ $('#js-menu_hamburger').on('click touch', function() {
     }
 });
 
-if (current_page!=null) {
+if (current_page != null) {
     $('#js-' + current_page).toggleClass('is-active', true);
 }
 
@@ -54,7 +54,7 @@ $('#js-photo_upload-name').on("keyup", function() {
 });
 
 $("#js-profile_upload_input").change(function() {
-    $("#js-profile_upload_output").html($(this).val().replace(/^.*[\\\/]/, '')+"<br><br>");
+    $("#js-profile_upload_output").html($(this).val().replace(/^.*[\\\/]/, '') + "<br><br>");
 });
 
 $('#js-photo_upload_close').on('click touch', function() {
@@ -95,4 +95,8 @@ $('.photo_album-image_wrapper').on('click touch', function() {
     }
 })
 
-// CHIT CHAT
+// EDIT PROFILE
+
+$("#js-edit_profile-photo_upload").change(function() {
+    $("#js-edit_profile-photo_upload-name").html('<br>' + $(this).val().replace(/^.*[\\\/]/, '') + "<br>");
+});

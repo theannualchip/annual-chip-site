@@ -12,6 +12,7 @@ var passport = require('passport');
 var bcrypt = require('bcrypt-nodejs');
 var moment = require('moment');
 var multer = require('multer');
+var async = require('async');
 const salt_rounds = 10;
 
 /* MESSAGES */
@@ -105,6 +106,26 @@ var profile_photo_storage = multer.diskStorage({
 })
 
 var upload_profile_picture = multer({ storage: profile_photo_storage });
+
+var profile_photo_update_storage = multer.diskStorage({
+    destination: './public/img/temp_photos/',
+    filename: function(req, file, cb) {
+        if (allowable_image_types.indexOf(path.extname(file.originalname).toLowerCase()) > -1) {
+            get_unique_photo_filename(file.originalname, './public/img/profile_pictures/', 'SELECT profile_photo_title FROM golfers', function(new_file_name) {
+                if (new_file_name == "error") {
+                    cb("Something went wrong uploading " + file.originalname.toLowerCase() + ". Try uploading a different image file, or even renaming it.");
+                } else {
+                    console.log("\x1b[42m\x1b[37mSuccessfully added \x1b[0m \x1b[34m" + new_file_name + "\x1b[0m to photos db");
+                    cb(null, new_file_name);
+                }
+            });
+        } else {
+            cb("We can't work with " + path.extname(file.originalname).toLowerCase() + " files. Try uploading a regular image file.");
+        }
+    }
+})
+
+var edit_profile_picture = multer({ storage: profile_photo_update_storage });
 
 router.post('/user_login', function(req, res, next) {
     passport.authenticate('local', { badRequestMessage: "Looks like you are missing either your email or password." }, function(error, user, info) {
@@ -201,7 +222,7 @@ router.post('/previous_messages',
                         var finished_collecting = false
                         for (message = data.length; message > 0; message--) {
                             if (finished_collecting == false) {
-                                if (!moment.utc(data[message - 1].timestamp).isSame(upper_date, 'd') && moment.utc(data[message - 1].timestamp).diff(upper_date, 's')<0) {
+                                if (!moment.utc(data[message - 1].timestamp).isSame(upper_date, 'd') && moment.utc(data[message - 1].timestamp).diff(upper_date, 's') < 0) {
                                     collecting = true
                                 }
                                 if (collecting == true) {
@@ -339,6 +360,235 @@ router.post('/delete_photo', function(req, res, next) {
     }
 });
 
+router.get('/edit_profile',
+    function(req, res, next) {
+        if (req.isAuthenticated()) {
+            db.query("SELECT username, profile_photo_title FROM golfers WHERE email = $1", [req.session.passport.user.email])
+                .then(function(data) {
+                    if (data.length > 0) {
+                        console.log("\x1b[42m\x1b[37mSuccessfully collected user information for \x1b[0m \x1b[34m" + req.session.passport.user.email + "\x1b[0m");
+                        res.render('edit_profile', { user: req.session.passport.user.username, profile_photo_title: data[0].profile_photo_title, current_page: 'edit_profile' });
+                    } else {
+                        res.redirect('/login');
+                    }
+                })
+                .catch(function(error) {
+                    console.log("Couldn't collect information for \x1b[0m" + req.session.passport.user.email + "\x1b[31m as there was an error when quering the golfers table\x1b[0m:");
+                    console.log(error);
+                    res.render('edit_profile', { error_message: 'Ah oh! Something went wrong, try reloading the page', current_page: 'edit_profile' });
+                    res.send('Ah oh... Something went wrong when deleting ' + req.body.photo_title + '.');
+                });
+
+        } else {
+            res.redirect('/login');
+        }
+    }
+);
+
+router.post('/edit_user_profile', function(req, res, next) {
+    if (req.isAuthenticated()) {
+        error_array = []
+        success_array = []
+        db.query("SELECT profile_photo_title FROM golfers WHERE email = $1", [req.session.passport.user.email])
+            .then(function(photo_data) {
+                if (photo_data.length > 0) {
+                    db.query("SELECT password FROM golfers WHERE email = $1", [req.session.passport.user.email])
+                        .then(function(password_data) {
+                            edit_profile_picture.single('photo_file')(req, res, function(error) {
+                                if (error) {
+                                    console.log("Couldn't process profile update for \x1b[0m" + req.session.passport.user.email + "\x1b[31m as there was an error uploading\x1b[0m:")
+                                    console.log(error)
+                                    error_array.push(error + ' No changes were made.')
+                                    output_notices = {}
+                                    output_notices.error_output = error_array
+                                    output_notices.success_output = success_array
+                                    res.render('edit_profile', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, profile_photo_title: photo_data[0].profile_photo_title, current_page: 'edit_profile', output_notices: output_notices });
+                                    return
+                                } else {
+                                    if (password_data.length > 0) {
+                                        console.log("\x1b[42m\x1b[37mSuccessfully collected user password for \x1b[0m \x1b[34m" + req.session.passport.user.email + "\x1b[0m");
+                                        bcrypt.compare(req.body.password, password_data[0].password, function(err, password_res) {
+                                            if (password_res == true) {
+                                                console.log("\x1b[34m" + req.session.passport.user.email + "\x1b[42m \x1b[37mprovided the correct password\x1b[0m");
+                                                async.parallel({
+                                                        username: function(callback) {
+                                                            if (req.body.username != '') {
+                                                                var update_username = req.body.username.replace(/[^\w\s]/gi, '')
+                                                                if (update_username != req.body.username) {
+                                                                    error_array.push(req.body.username + ' is not valid. Would you like to use ' + update_username + '?')
+                                                                    callback(null)
+                                                                } else {
+                                                                    db.query("SELECT username FROM golfers")
+                                                                        .then(function(usernames) {
+
+                                                                            var username_taken = false
+                                                                            for (row_1 = 0; row_1 < usernames.length; row_1++) {
+                                                                                if (usernames[row_1].username == update_username) {
+                                                                                    username_taken = true
+                                                                                }
+                                                                            }
+                                                                            if (username_taken) {
+                                                                                error_array.push('The username ' + update_username + ' is already taken. Want to try something else?')
+                                                                                callback(null)
+                                                                            } else {
+                                                                                if (username_taken.length > 100) {
+                                                                                    error_array.push('The username ' + update_username + ' is too long. Want to try something less than 100 characters?')
+                                                                                    callback(null)
+                                                                                } else {
+                                                                                    db.query("UPDATE golfers SET username=$1 WHERE email=$2", [update_username, req.session.passport.user.email])
+                                                                                        .then(function(data) {
+                                                                                            console.log("\x1b[42m\x1b[37mSuccessfully updated username for \x1b[0m \x1b[34m" + req.session.passport.user.email + "\x1b[0m");
+                                                                                            success_array.push("Your username is now updated to " + update_username)
+                                                                                            callback(null);
+                                                                                        })
+                                                                                        .catch(function(error) {
+                                                                                            console.log("Couldn't update username for \x1b[34m" + req.session.passport.user.email + "\x1b[31m error quering the golfers database\x1b[0m:");
+                                                                                            console.log(error);
+                                                                                            error_array.push("Something went wrong updating your password, try again.")
+                                                                                            callback(null);
+                                                                                        });
+                                                                                }
+                                                                            }
+                                                                        })
+                                                                        .catch(function(error) {
+                                                                            console.log("Couldn't update username for \x1b[34m" + req.session.passport.user.email + "\x1b[31m error quering the golfers database\x1b[0m:");
+                                                                            console.log(error);
+                                                                            error_array.push("Something went wrong updating your username, try again.")
+                                                                            callback(null);
+                                                                        })
+                                                                }
+                                                            } else {
+                                                                callback(null)
+                                                            }
+                                                        },
+                                                        photo: function(callback) {
+                                                            if (req.file) {
+                                                                db.query("UPDATE golfers SET profile_photo_title=$1 WHERE email=$2", [req.file.filename, req.session.passport.user.email])
+                                                                    .then(function(data) {
+                                                                        fs.rename('./public/img/temp_photos/' + req.file.filename, './public/img/profile_pictures/' + req.file.filename, function() {
+                                                                            console.log("\x1b[42m\x1b[37mSuccessfully updated profile picture for \x1b[0m \x1b[34m" + req.session.passport.user.email + "\x1b[0m");
+                                                                            success_array.push("Your profile picture is now updated.")
+                                                                            callback(null)
+                                                                        })
+
+                                                                    })
+                                                                    .catch(function(error) {
+                                                                        console.log("Couldn't update image for \x1b[34m" + req.session.passport.user.email + "\x1b[31m error quering the golfers database\x1b[0m:");
+                                                                        console.log(error);
+                                                                        error_array.push("Something went wrong updating your password, try again.")
+                                                                        callback(null);
+                                                                    });
+                                                            } else {
+                                                                callback(null);
+                                                            }
+                                                        },
+                                                        password: function(callback) {
+                                                            if (req.body.new_password_1 != '' || req.body.new_password_2 != '') {
+                                                                if (req.body.new_password_1 != req.body.new_password_2) {
+                                                                    error_array.push("It looks like the two new passwords you provided don't match! Maybe have another crack at it friend.")
+                                                                    callback(null);
+                                                                } else {
+                                                                    if (req.body.new_password_1.length > 4) {
+                                                                        bcrypt.genSalt(salt_rounds, function(err, salt) {
+                                                                            console.log(err);
+                                                                            bcrypt.hash(req.body.new_password_1, salt, null, function(err, hash) {
+                                                                                db.query("UPDATE golfers SET password=$1 WHERE email=$2", [hash, req.session.passport.user.email])
+                                                                                    .then(function(data) {
+                                                                                        console.log("\x1b[42m\x1b[37mSuccessfully updated password for \x1b[0m \x1b[34m" + req.session.passport.user.email + "\x1b[0m");
+                                                                                        success_array.push("Your password is now updated")
+                                                                                        req.body.password = req.body.new_password_1
+                                                                                        callback(null);
+                                                                                    })
+                                                                                    .catch(function(error) {
+                                                                                        console.log("Couldn't update password for \x1b[34m" + req.session.passport.user.email + "\x1b[31m error quering the golfers database\x1b[0m:");
+                                                                                        console.log(error);
+                                                                                        error_array.push("Something went wrong updating your password, try again.")
+                                                                                        callback(null);
+                                                                                    })
+                                                                            })
+                                                                        })
+                                                                    } else {
+                                                                        error_array.push("You new password must be at least five characters long. Other than that, whatever you want.")
+                                                                        callback(null);
+                                                                    }
+                                                                }
+                                                            } else {
+                                                                callback(null);
+                                                            }
+                                                        }
+                                                    },
+                                                    function(err, results) {
+                                                        req.body.email = req.session.passport.user.email
+                                                        req.logout()
+                                                        passport.authenticate('local', { badRequestMessage: "Looks like you are missing either your email or password." }, function(error, user, info) {
+                                                            if (error) {
+                                                                console.log('A login error occured')
+                                                                console.log(error)
+                                                            }
+                                                            if (error || !user || user == false) {
+                                                                return res.render('login', { warning: info.message });
+                                                            }
+                                                            req.login(user, loginErr => {
+                                                                if (loginErr) {
+                                                                    return next(loginErr);
+                                                                }
+                                                                req.session.save(function(err) {
+                                                                    console.log("Redirecting \x1b[34m" + req.session.passport.user.email + "\x1b[0m to edit_profile.ejs");
+                                                                    output_notices = {}
+                                                                    output_notices.error_output = error_array
+                                                                    output_notices.success_output = success_array
+                                                                    db.query("SELECT username, is_admin, profile_photo_title FROM golfers WHERE email = $1", [req.session.passport.user.email])
+                                                                        .then(function(return_data) {
+                                                                            if (return_data.length > 0) {
+                                                                                console.log("\x1b[42m\x1b[37mSuccessfully collected updated data for \x1b[0m \x1b[34m" + req.session.passport.user.email + "\x1b[0m");
+                                                                                res.render('edit_profile', { user: return_data[0].username, is_admin: return_data[0].username.is_admin, profile_photo_title: return_data[0].profile_photo_title, current_page: 'edit_profile', output_notices: output_notices });
+                                                                            } else {
+                                                                                res.redirect('/login')
+                                                                            }
+                                                                        })
+                                                                        .catch(function(return_data) {
+                                                                            console.log("Couldn't collect updated information for \x1b[0m" + req.session.passport.user.email + "\x1b[31m as there was an error when quering the golfers table\x1b[0m:");
+                                                                            console.log(error);
+                                                                            res.render('edit_profile', { error_message: 'Ah oh! Something went wrong, try reloading the page', current_page: 'edit_profile' });
+                                                                        })
+                                                                });
+                                                            });
+                                                        })(req, res, next);
+                                                    });
+                                            } else {
+                                                console.log("\x1b[34m" + req.session.passport.user.email + "\x1b[31m wasn't able to edit their profile because their password was wrong\x1b[0m");
+                                                error_array.push("Woops! I don't think that is the correct password. No changes were made.")
+                                                output_notices = {}
+                                                output_notices.error_output = error_array
+                                                output_notices.success_output = success_array
+                                                res.render('edit_profile', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, profile_photo_title: photo_data[0].profile_photo_title, current_page: 'edit_profile', output_notices: output_notices });
+                                                return
+                                            }
+                                        })
+                                    } else {
+                                        res.redirect('/login');
+                                    }
+                                }
+                            });
+                        })
+                        .catch(function(error) {
+                            console.log("Couldn't collect information for \x1b[0m" + req.session.passport.user.email + "\x1b[31m as there was an error when quering the golfers table\x1b[0m:");
+                            console.log(error);
+                            res.render('edit_profile', { error_message: 'Ah oh! Something went wrong, try reloading the page', current_page: 'edit_profile' });
+                        });
+                } else {
+                    res.redirect('/');
+                }
+            })
+            .catch(function() {
+                console.log("Couldn't collect information for \x1b[0m" + req.session.passport.user.email + "\x1b[31m as there was an error when quering the golfers table\x1b[0m:");
+                console.log(error);
+                res.render('edit_profile', { error_message: 'Ah oh! Something went wrong, try reloading the page', current_page: 'edit_profile' });
+            })
+    } else {
+        res.redirect('/');
+    }
+});
 
 /* TOM SECTION. */
 
