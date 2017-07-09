@@ -51,8 +51,10 @@ $(function(){
 		var hole_num = $(this).children('h1').html();
 
 	  	// Go to the hole page (card.ejs) with these parameters
-	  	$.get( "/scorecard", { name: "Tom", Hole: "13" }, function( data ) {
-		    $( "#scorecard_output" ).html( data );
+	  	$.get( "/scorecard/card?day=day_num&hole=hole_num", {day_num: day_num, hole_num: hole_num}, function( data ) {
+		   
+	  		res.render('card', {title: 'Individual Hole', day: day_num, hole: hole_num});
+
 		});
 
 	  	alert("Day" + day_num + " hole number " + hole_num);

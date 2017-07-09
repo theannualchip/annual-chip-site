@@ -65,3 +65,41 @@ exports.format_lboard = function(lboard) {
 	return output;
 
 };
+
+
+exports.format_hole_links = function(day) {
+
+	var output = "<div class='columns is-mobile is-gapless'>"
+
+	var hole_num = 9;
+
+	for (var i=0; i<=hole_num; i++) {
+
+		day = 1
+
+		hole_html = `
+		  <div class="column box-hole" style="background: url('/img/holes/texture/${i}.jpg'); background-size:cover;">
+		    <a href = "/scorecard/card?day=${day}&hole=${i}">
+		      <h1 class='title has-text-centered main_theme-number'> Hole ${i} </h1>
+		    </a> 
+		  </div>
+		`;
+
+		// // Add new column if
+		if( i % 3 == 0) {
+
+			if (i == hole_num) {
+				hole_html += "</div>"
+			} else {
+				hole_html += "</div> <div class='columns is-gapless is-mobile'>"
+			}
+
+		}
+
+		output += hole_html
+
+	}
+
+	return output;
+
+};

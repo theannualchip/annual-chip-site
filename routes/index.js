@@ -339,7 +339,7 @@ router.post('/delete_photo', function(req, res, next) {
                             .catch(function(error) {
                                 console.log("Couldn't delete \x1b[0m" + req.body.photo_title + "\x1b[31m as there was an error when quering the photos table\x1b[0m:");
                                 console.log(error);
-                                res.send('Ah oh... Something went wrong when deleting ' + req.body.photo_title + '.');
+                           res.send('Ah oh... Something went wrong when deleting ' + req.body.photo_title + '.');
                             });
                     } else {
                         console.log("Couldn't delete \x1b[0m" + req.body.photo_title + "\x1b[0m as " + req.session.passport.user.email + " doesn't have permission");
@@ -600,9 +600,12 @@ router.get('/scorecard', function(req, res, next) {
 
             lboard_html = tom_js.format_lboard(data)
 
+            links_html = tom_js.format_hole_links(1)
+
             res.render('scorecard', {
                 title: 'Scorecard',
-                leaderboard: lboard_html
+                leaderboard: lboard_html,
+                links: links_html
             })
         }).catch(error => { console.log(error) })
 
@@ -612,14 +615,13 @@ router.get('/scorecard', function(req, res, next) {
 });
 
 
-router.get('/scorecard/day1_hole1', function(req, res, next) {
+router.get('/scorecard/card', function(req, res, next) {
 
+        day = req.query.day;
+        hole = req.query.hole;
 
-    res.render('card', { title: 'Scorecard' });
-
+       res.render('card', {title: 'Individual Hole', day: day, hole: hole});
 });
-
-
 
 /* General Stuff */
 
