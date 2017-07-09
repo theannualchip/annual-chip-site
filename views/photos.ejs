@@ -11,88 +11,87 @@
 
 <body>
     <% include menu_partial.ejs %>
-    <div class='column full_height background_color-light_grey'>
-        <div class='column has-text-centered'>
-            <h1 class='title main_theme-title'>Photos</h1><br>
-            <label for="js-photo_upload_input" id='js-photo_uploader-album' class='button background_color-light_green'>Want to add a photo?&nbsp;&nbsp;<i class="fa fa-cloud-upload"></i></label>
-        </div>
-        <div class='column has-text-centered hidden_to_begin is-one-third-desktop is-offset-one-third-desktop' id='js-hidden_to_begin'>
-            <div class="card-content">
-                <form method="POST" action='photo_album_upload' enctype="multipart/form-data" id='js-photo_upload-form'>
-                    <div class='level is-mobile'>
-                        <div class='level-left' id='js-photo_upload-input_holder'>
-                            <input type='file' class='level-left hide_input' name='photo_file' id='js-photo_upload_input'>
-                        </div>
-                        <span class="level-right">
+        <div class='column full_height background_color-light_grey'>
+            <div class='column has-text-centered'>
+                <h1 class='title main_theme-title'>Photos</h1>
+                <br>
+                <label for="js-photo_upload_input" id='js-photo_uploader-album' class='button background_color-info_blue'>Want to add a photo?&nbsp;&nbsp;<i class="fa fa-cloud-upload"></i></label>
+            </div>
+            <div class='column has-text-centered hidden_to_begin is-one-third-desktop is-offset-one-third-desktop' id='js-hidden_to_begin'>
+                <div class="card-content">
+                    <form method="POST" name='photo_upload_form' action='photo_album_upload' enctype="multipart/form-data" id='js-photo_upload-form'>
+                        <div class='level is-mobile'>
+                            <div class='level-left' id='js-photo_upload-input_holder'>
+                                <input type='file' class='level-left hide_input' name='photo_file' id='js-photo_upload_input'>
+                            </div>
+                            <span class="level-right">
                             <div class='level border-radius-3 background_color-yellow' id='js-photo_upload_close'> 
                                 <i class="level-item fa fa-times font-small"></i>
                             </div>
                         </span>
-                    </div>
-                    <div id="js-photo_upload_output" class='column is-fullwidth has-text-centered '></div>
-                    <p class="control has-icon">
-                        <input class="input" type="text" id='js-photo_upload-name' name='photo_title' placeholder="Photo Title">
-                        <span class="icon is-small is-left">
+                        </div>
+                        <div id="js-photo_upload_output" class='column is-fullwidth has-text-centered '></div>
+                        <p class="control has-icon">
+                            <input class="input" type="text" id='js-photo_upload-name' name='photo_title' placeholder="Photo Title">
+                            <span class="icon is-small is-left">
                         <i class="fa fa-comments"></i>
                     </span>
-                    </p>
-                    <p class="control">
-                        <button disabled type='submit' id='js-photo_upload-submit' class="button background_color-yellow is-fullwidth" style="display: inline-block">
-                            Upload
-                        </button>
-                    </p>
-                </form>
+                        </p>
+                        <p class="control">
+                            <button disabled type='button' id='js-photo_upload-submit' class="button background_color-yellow is-fullwidth" style="display: inline-block">
+                                <div id='js-photo_upload-button-contents'>
+                                    Upload
+                                </div>
+                            </button>
+                        </p>
+                    </form>
+                </div>
             </div>
-        </div>
-        <br>
-        
-        <div class='column has-text-centered is-one-third-desktop is-offset-one-third-desktop' id='js-photo_upload_delete_warning'>
-            <%if (locals.warning) { %>
-            <div class='notification is-danger has-text-centered' id='js-photo_upload_warning'>
-                <%= warning %>
+            <br>
+            <div class='column has-text-centered is-one-third-desktop is-offset-one-third-desktop' id='js-photo_upload_delete_warning'>
+                <%if (locals.warning) { %>
+                    <div class='notification is-danger has-text-centered' id='js-photo_upload_warning'>
+                        <%= warning %>
+                    </div>
+                    <% } %>
             </div>
-             <% } %>
-        </div>
-       
-        <%if (locals.image_array) { %>
-            <div class="columns is-fullwidth is-multiline" id='js-photo_upload_album'>
-                <%for (row_1=0;row_1<locals.image_array.length;row_1++) { %>
-                
-                <div class='column is-3' id='js-photo_upload_imge_container-<%= locals.image_array[row_1].photo_title %>'>
-                    <div class='column'>
-                        <h3 class='title'><%= locals.image_array[row_1].short_title %></h3>
-                        <h3 class='subtitle'>Uploaded by <%= locals.image_array[row_1].uploaded_user %></h3>
-                        <%if (locals.is_admin) { %>
-                        <span class="tag is-danger on_hover_pointer" id='js-photo_upload_delete-<%= locals.image_array[row_1].photo_title %>'>
+            <%if (locals.image_array) { %>
+                <div class="columns is-fullwidth is-multiline" id='js-photo_upload_album'>
+                    <%for (row_1=0;row_1<locals.image_array.length;row_1++) { %>
+                        <div class='column is-3' id='js-photo_upload_imge_container-<%= locals.image_array[row_1].photo_title %>'>
+                            <div class='column'>
+                                <h3 class='title'><%= locals.image_array[row_1].short_title %></h3>
+                                <h3 class='subtitle'>Uploaded by <%= locals.image_array[row_1].uploaded_user %></h3>
+                                <%if (locals.is_admin) { %>
+                                    <span class="tag is-danger on_hover_pointer" id='js-photo_upload_delete-<%= locals.image_array[row_1].photo_title %>'>
                             Admin Rights! Delete?&nbsp;&nbsp;
-                            <i class="fa fa-trash fa-inverse font-small"></i>
-                        </span><br>
-                        <% } else if (locals.image_array[row_1].your_photo) { %>
-                        <span class="tag is-danger on_hover_pointer" id='js-photo_upload_delete-<%= locals.image_array[row_1].photo_title %>'>
+                            <div><i class="fa fa-trash fa-inverse font-small"></i></div>
+                        </span>
+                                    <br>
+                                    <% } else if (locals.image_array[row_1].your_photo) { %>
+                                        <span class="tag is-danger on_hover_pointer" id='js-photo_upload_delete-<%= locals.image_array[row_1].photo_title %>'>
                             Your Photo! Delete?&nbsp;&nbsp;
-                            <i class="fa fa-trash fa-inverse font-small"></i>
-                        </span><br>
-                        <% } else { %>
-                        <br>
-                        <% } %>
-                    </div>
-                    <div class='column'>
-                        <div class='photo_album-image_wrapper'>
-                            <img src='/img/photo_album/<%= locals.image_array[row_1].photo_title %>' class='photo_album-image'/>
+                            <div><i class="fa fa-trash fa-inverse font-small"></i></div>
+                        </span>
+                                        <br>
+                                        <% } else { %>
+                                            <br>
+                                            <% } %>
+                            </div>
+                            <div class='column'>
+                                <div class='photo_album-image_wrapper'>
+                                    <img src='/img/photo_album/<%= locals.image_array[row_1].photo_title %>' class='photo_album-image' />
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <% } %>
                 </div>
                 <% } %>
-            </div>
-            <% } %>
         </div>
         </div>
 </body>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>
 <script src="/javascripts/sam.js"></script>
-<script src="/javascripts/extras/load_image.js"></script>
 <script>
 var socket = io();
 

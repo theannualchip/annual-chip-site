@@ -41,10 +41,9 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 

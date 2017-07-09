@@ -9,7 +9,13 @@ $('#js-menu_hamburger').on('click touch', function() {
     }
 });
 
-if (current_page != null) {
+var current_page_exists = true;
+try { current_page; } catch (e) {
+    if (e.name == "ReferenceError") {
+        current_page_exists = false;
+    }
+}
+if (current_page_exists) {
     $('#js-' + current_page).toggleClass('is-active', true);
 }
 
@@ -64,12 +70,14 @@ $('#js-photo_upload_close').on('click touch', function() {
     $("#js-hidden_to_begin").toggleClass('hidden_to_begin', true);
 });
 
-$('#js-photo_upload-form').on('submit', function() {
-    $('#js-photo_upload-submit').html('<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>');
+$('#js-photo_upload-submit').on('click touch', function() {
+    $('#js-photo_upload-button-contents').html('<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>');
+    document.photo_upload_form.submit()
 });
 
 $('.on_hover_pointer').on('click touch', function() {
     photo_title = this.id.substring(23, this.id.length);
+    $($(this).children()[0]).html('<i class="fa fa-cog fa-spin font-small fa-fw"></i>')
     $.ajax({
             method: "POST",
             url: "/delete_photo",
@@ -86,11 +94,14 @@ $('.on_hover_pointer').on('click touch', function() {
 
 $('.photo_album-image_wrapper').on('click touch', function() {
     if ($(this).hasClass('full_screen_image')) {
+        $(this).toggleClass('photo_album-image_wrapper', true);
         $(this).toggleClass('full_screen_image', false);
+
         $(this).children().css('margin-top', 'auto');
 
     } else {
         $(this).toggleClass('full_screen_image', true);
+        $(this).toggleClass('photo_album-image_wrapper', false);
         $(this).children().css('margin-top', ($(this).height() - $(this).children().height()) / 2 + "px");
     }
 })
