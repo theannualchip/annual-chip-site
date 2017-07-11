@@ -71,19 +71,29 @@ module.exports = function(message, message_type, arguments_array) {
     } else {
         output += background_blue + white + 'Debug:' + reset + ' '
     }
-    for (char = 0; char < message.length - 1; char++) {
-        if (message[char] == '$' && !isNaN(message[char + 1])) {
-            if ((message[char + 1] - 1) < arguments_array.length) {
-                output += arguments_color + JSON.stringify(arguments_array[message[char + 1] - 1]) + reset
-            } else {
-                output += arguments_color + '{missing arguement: ' + (message[char + 1] - 1) + '}' + reset
-            }
-        } else if (!(message[char - 1] == '$' && !isNaN(message[char]))) {
-            output += message[char]
+    if (arguments_array.length==0) {
+        if (typeof(message)=='object') {
+            console.log(output + reverse + 'object' + reset)
+            console.log(message)
+        } else {
+            console.log(output + message)
         }
-    }
-    if (!(message[message.length - 2] == '$' && !isNaN(message[message.length - 1])) || message.length < 2) {
-        output += message[message.length - 1]
+        return
+    } else {
+        for (char = 0; char < message.length - 1; char++) {
+            if (message[char] == '$' && !isNaN(message[char + 1])) {
+                if ((message[char + 1] - 1) < arguments_array.length) {
+                    output += arguments_color + JSON.stringify(arguments_array[message[char + 1] - 1]) + reset
+                } else {
+                    output += arguments_color + '{missing arguement: ' + (message[char + 1] - 1) + '}' + reset
+                }
+            } else if (!(message[char - 1] == '$' && !isNaN(message[char]))) {
+                output += message[char]
+            }
+        }
+        if (!(message[message.length - 2] == '$' && !isNaN(message[message.length - 1])) || message.length < 2) {
+            output += message[message.length - 1]
+        }
     }
     console.log(output)
 }

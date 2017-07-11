@@ -39,8 +39,15 @@ const salt_rounds = 10;
     // This small function is simply to refactor the authentication call to take the 'else' statement
     // out of every route.
 
-function authenticate(req, res, callback) {
+function authenticate(req, res, page, callback) {
     if (req.isAuthenticated()) {
+        res.locals.standard_return={
+            user: req.session.passport.user.username, 
+            is_admin: req.session.passport.user.is_admin, 
+        }
+        if (page) {
+            res.locals.standard_return.current_page = page
+        }
         callback()
     } else {
         res.redirect('/login');
@@ -71,7 +78,7 @@ router.get('/login', function(req, res, next) {
 
 router.get('/',
     function(req, res, next) {
-        authenticate(req, res, function() {
+        authenticate(req, res, 'chit_chat', function() {
             fs.readdir('./public/img/loading_images/', function(error, images) {
                 if (error) {
                     log("Couldn't collect read files in ./public/img/loading_images/ because of an error:", 'err')
@@ -85,7 +92,7 @@ router.get('/',
                         }
                     })
                     todays_photo = '/img/loading_images/' + gif_array[Math.min(Math.floor(Math.random() * gif_array.length), gif_array.length - 1)]
-                    res.render('index', { user: req.session.passport.user.username, user_email: req.session.passport.user.email, is_admin: req.session.passport.user.is_admin, current_page: 'chit_chat', loading_image: todays_photo });
+                    res.render('index', { user: req.session.passport.user.username, user_email: req.session.passport.user.email, loading_image: todays_photo });
                 }
             })
         })
@@ -98,8 +105,8 @@ router.get('/',
     // This route simply suthenticates the session and if successful renders the constitution.ejs screen.
 
 router.get('/constitution', function(req, res, next) {
-    authenticate(req, res, function() {
-        res.render('constitution', { is_admin: req.session.passport.user.is_admin, current_page: 'constitution' });
+    authenticate(req, res, 'constitution', function() {
+        res.render('constitution');
     })
 })
 
@@ -119,21 +126,21 @@ router.get('/constitution', function(req, res, next) {
     // along with the profile information.
 
 router.get('/profile/:email', function(req, res, next) {
-    authenticate(req, res, function() {
+    authenticate(req, res, null, function() {
         db.query("SELECT profile_photo_title, email, last_active::varchar, username FROM golfers WHERE email=$1", [decodeURIComponent(req.params.email)])
             .then(function(data) {
                 if (data.length > 0) {
                     log("Successfully collected user info for $1", 'suc', [decodeURIComponent(req.params.email)]);
-                    res.render('profile', { is_admin: req.session.passport.user.is_admin, user_info: data[0] });
+                    res.render('profile', { user_info: data[0] });
                 } else {
                     log("Couldn't find a user with email $1 in the golfers database", 'wrn', [decodeURIComponent(req.params.email)]);
-                    res.render('profile', { is_admin: req.session.passport.user.is_admin, warning: "Woops! It doesn't look like we have a user with email " + decodeURIComponent(req.params.email) });
+                    res.render('profile', {warning: "Woops! It doesn't look like we have a user with email " + decodeURIComponent(req.params.email) });
                 }
             })
             .catch(function(error) {
                 log("Couldn't find $1 in database as there was an error when quering the golfers table:", 'wrn', [decodeURIComponent(req.params.email)]);
                 console.log(error);
-                res.render('profile', { is_admin: req.session.passport.user.is_admin, warning: "Woops! Something went wrong, try refreshing the page." });
+                res.render('profile', { warning: "Woops! Something went wrong, try refreshing the page." });
             });
     })
 })
@@ -152,12 +159,12 @@ router.get('/profile/:email', function(req, res, next) {
     // 'edit_profile.ejs' page is returned with the accompanying data.
 
 router.get('/edit_profile', function(req, res, next) {
-    authenticate(req, res, function() {
+    authenticate(req, res, 'edit_profile', function() {
         db.query("SELECT username, profile_photo_title FROM golfers WHERE email = $1", [req.session.passport.user.email])
             .then(function(data) {
                 if (data.length > 0) {
                     log("Successfully collected user information for $1",'suc',[req.session.passport.user.email]);
-                    res.render('edit_profile', { user: req.session.passport.user.username, profile_photo_title: data[0].profile_photo_title, current_page: 'edit_profile' });
+                    res.render('edit_profile', { user: req.session.passport.user.username, profile_photo_title: data[0].profile_photo_title});
                 } else {
                     res.redirect('/login');
                 }
@@ -165,7 +172,7 @@ router.get('/edit_profile', function(req, res, next) {
             .catch(function(error) {
                 log("Couldn't collect information for $1 as there was an error when quering the golfers table:",'err',[req.session.passport.user.email]);
                 console.log(error);
-                res.render('edit_profile', { error_message: 'Ah oh! Something went wrong, try reloading the page', current_page: 'edit_profile' });
+                res.render('edit_profile', { error_message: 'Ah oh! Something went wrong, try reloading the page'});
             })
     })
 })
@@ -185,7 +192,7 @@ router.get('/edit_profile', function(req, res, next) {
     // array. 
 
 router.get('/photos', function(req, res, next) {
-    authenticate(req, res, function() {
+    authenticate(req, res, 'photos', function() {
         db.query("SELECT p.photo_title, p.short_title, g.email, g.username FROM photos as p, golfers as g WHERE p.uploaded_user_email=g.email AND image_context='album'")
             .then(function(data) {
                 if (data.length > 0) {
@@ -201,16 +208,16 @@ router.get('/photos', function(req, res, next) {
                             log("Can't find the photo $1 in the photo_album folder", 'wrn', [data[row_1].photo_title]);
                         }
                     }
-                    res.render('photos', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, current_page: 'photos', image_array: image_array });
+                    res.render('photos', { user: req.session.passport.user.username, image_array: image_array });
                 } else {
                     log("Looks like there are no photos in the table, rendering page without any",'inf');
-                    res.render('photos', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, current_page: 'photos', warning:"Looks like there aren't any photos yet. Maybe you could upload one?"});
+                    res.render('photos', { user: req.session.passport.user.username, warning:"Looks like there aren't any photos yet. Maybe you could upload one?"});
                 }
             })
             .catch(function(error) {
                 log("Couldn't find any photos as there was an error when quering the photos table:",'err');
                 console.log(error);
-                res.render('photos', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, current_page: 'photos', warning: 'Ah oh! Something went wrong, try refreshing the page.' });
+                res.render('photos', { user: req.session.passport.user.username, warning: 'Ah oh! Something went wrong, try refreshing the page.' });
             });
     })
 })
@@ -227,8 +234,38 @@ router.get('/photos', function(req, res, next) {
     // admin rights). If this is successful we send 'admin.ejs'.
 
 router.get('/admin', function(req, res, next) {
-    authenticate(req, res, function() {
+    authenticate(req, res, 'admin', function() {
         db.query("SELECT is_admin FROM golfers WHERE email=$1",[req.session.passport.user.email])
+            .then(function(data) {
+                if (data.length>0) {
+                    if (data[0].is_admin) {
+                        res.render('admin', { user: req.session.passport.user.username});
+                    } else {
+                        log("Someone tried to access the admin page without admin rights user $1",'wrn',[req.session.passport.user.email])
+                        res.redirect('/');
+                    }
+                } else {
+                    res.redirect('/');
+                }
+            })
+            .catch(function(error) {
+                log("Couldn't validate that $1 has admin rights as there was an error querying the golfers table:",'err',[req.session.passport.user.email]);
+                console.log(error);
+                res.redirect('/');
+            })
+    })
+})
+
+    // Bets Page
+    //
+    // The '/bets' page contains all current bets. It is intended as a place for people to view bets as well
+    // as action bets (accept, claim etc).
+    //
+    // 
+
+router.get('/bets', function(req, res, next) {
+    authenticate(req, res, 'bets', function() {
+        /*db.query("SELECT is_admin FROM golfers WHERE email=$1",[req.session.passport.user.email])
             .then(function(data) {
                 if (data.length>0) {
                     if (data[0].is_admin) {
@@ -246,6 +283,8 @@ router.get('/admin', function(req, res, next) {
                 console.log(error);
                 res.redirect('/');
             })
+        */
+        res.render('bets', { user: req.session.passport.user.username});
     })
 })
 
