@@ -15,21 +15,13 @@ body {
     margin-top: 60px;
 }
 
-.paper {
-  background: #fff;
-  box-shadow:
-    /* The top layer shadow */
-    0 -1px 1px rgba(0,0,0,0.15),
-    /* The second layer */
-    0 -10px 0 -5px #eee,
-    /* The second layer shadow */
-    0 -10px 1px -4px rgba(0,0,0,0.15),
-     /* The third layer */
-    0 -20px 0 -10px #eee,
-    /* The third layer shadow */
-    0 -20px 1px -9px rgba(0,0,0,0.15);
-    /* Padding for demo purposes */
-    padding: 30px;
+.regular-input {
+   font-family: 'Roboto', sans-serif;
+   color: white;
+   font-size:20pt;
+   display:flex;
+   justify-content:center;
+   align-items:center;
 }
 
 .img-circle {
@@ -43,8 +35,6 @@ body {
 .img-circle:hover {
     box-shadow: 0 5px 5px rgb(255,207,121);
 }
-
-
 
 /* FLICKETY SCROLL BAR */
 
@@ -79,8 +69,21 @@ body {
   height: 150px;
   display: table-cell;
   vertical-align: middle;
-  background: url('/img/holes/texture/1.jpg');
   background-size: cover;
+}
+
+.hole-details {
+  border: 2px solid #fff;
+  height: 150px;
+  display: table-cell;
+  vertical-align: middle;
+  background-size: cover;
+}
+
+.top-left {
+  margin-top: 5px;
+  margin-left:5px;
+  float: left;
 }
 /*  border-radius: 1px 1px 1px 1px;
   -webkit-box-shadow: 0 1px 2px #777;

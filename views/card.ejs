@@ -14,87 +14,96 @@
 	<!-- <section class="hero is-dark container is-fluid"> -->
 	<section class="hero is-alt is-bold is-dark">
 		<div class="hero-body">
-			<div class="container">
 
-				<div class="columns is-mobile">
+			<h1 class="title"> Day <%= day %> > Hole <%= hole %> </h1>
+
+		</div>
+
+	</section>
+
+	<section>
+
+		<div class = "columns is-mobile">
+
+			<div class="column hole-details center-div" style="background-color:#BEEE9E">
+
+				<div class="columns">
+
+					<div class="column is-3 center-div">
+						<img src="/img/holes/distance.png">
+					</div>
 
 					<div class="column is-3">
-
-						<h1 class="title"> <small>Hole</small><%= hole %> </h1>
-
+						<span class="tag is-white is-medium"> 445m </span>
 					</div>
-					<div class="column is-3 is-offset-6">
-						<h1 class="title">
-							<small>Day</small><%= day %>
-						</h1>
 
-
-					</div>
 
 				</div>
 
-				<br>
+			</div>
 
-				<div class="columns is-mobile">
-					<div class="column ">
-						<span> Par: <span class="hole-stats"> 3 </span> </span>
+			<div class="column hole-details center-div" style="background-color:#71D161">
+
+				<div class="columns">
+
+					<div class="column is-3 center-div">
+						<img src="/img/holes/par.png">
+					</div>
+
+					<div class="column is-3">
+						<span class="tag is-white is-medium"> 3 </span>
+					</div>
+
+
+				</div>
+
+			</div>
+
+
+		</div>
+
+		<div class = "columns is-mobile">
+
+			<div class="column hole-details center-div" style="background-color:#5AB953">
+
+
+
+				<div class="columns">
+
+					<div class="column center-div">
+						<img src="/img/holes/top-score.png">
 					</div>
 
 					<div class="column">
-						<p> Meters: <span class="hole-stats"> 355 </span> </span>
-						</div>
+						<span class="tag is-white is-medium"> TBD </span>
 					</div>
 
 
 				</div>
-			</section>
 
-			<br>
+			</div>
 
-			<section>
-				<div class="container is-fluid">
-					<nav class="panel">
-						<p class="panel-heading">
-							Widget
-						</p>
-						<p class="panel-tabs">
-							<a class="is-active">Stats</a>
-							<a> Map </a>
-							<a> Your Score </a>
-							<a> Compass</a>
-						</p>
-						<a class="panel-block is-active">
-							<span class="panel-icon">
-								<i class="fa fa-book"></i>
-							</span>
-							bulma
-						</a>
-						<a class="panel-block">
-							<span class="panel-icon">
-								<i class="fa fa-book"></i>
-							</span>
-							marksheet
-						</a>
-						<a class="panel-block">
-							<span class="panel-icon">
-								<i class="fa fa-book"></i>
-							</span>
-							minireset.css
-						</a>
-						<label class="panel-block">
-							<input type="checkbox">
-							Remember me
-						</label>
-						<div class="panel-block">
-							<button class="button is-primary is-outlined is-fullwidth">
-								Reset all filters
-							</button>
-						</div>
-					</nav>
+			<div class="column hole-details center-div" style="background-color:#49A34B">
+
+				<div class="columns">
+
+					<div class="column center-div">
+						<img src="/img/holes/golf.png">
+					</div>
+
+					<div class="column">
+						<span class="tag is-white is-medium"> 3rd thing </span>
+					</div>
+
 
 				</div>
-			</section>
+			</div>
 
-		</body>
 
-		</html>
+		</div>
+
+	</section>
+
+</body>
+
+</html>
