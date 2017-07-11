@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include head.ejs %>
+        <title>
+            <% if (locals.user_info) { %>
+                <%= user_info.username %> - Profile
+            <% } else { %>
+                Woops! Something went wrong.
+            <% } %>
+        </title>
+        <link rel='stylesheet' href='/stylesheets/sam.css' />
+</head>
+
+<body>
+    <% include menu_partial.ejs %>
+    <% if (locals.user_info) { %>
+        <section class="hero is-alt is-fullheight background_color-light_grey">
+            <div class="hero-body">
+                <div class="column is-one-third-desktop is-offset-one-third-desktop">
+                    <div class="card-content">
+                        <h1 class="title has-text-centered is-large main_theme-title">
+                            <%= user_info.username %>
+                        </h1>
+                        <br>
+                        <div class='edit_profile-image'>
+                            <img src='/img/profile_pictures/<%= user_info.profile_photo_title %>' />
+                        </div>
+                        <br>
+                        <p class='column background_color-grey'>
+                            Email
+                            <br>
+                            <%= user_info.email %>
+                        </p>
+                        <p id='js-profile-last_active' class='column background_color-grey'>
+                            Last Online
+                            <br>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    <% } %>
+    <% if (locals.warning) { %>
+        <div class='column background-color-danger_pink'>
+            <%= warning %>
+        </div>
+    <% } %>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascripts/sam.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script>
+$('#js-profile-last_active').append(moment('<%= user_info.last_active %>').format('Do MMMM YYYY h:mm a'))
+</script>
+
+</html>

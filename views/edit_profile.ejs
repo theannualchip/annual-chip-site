@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html class='background_color-light_grey'>
+    <head>
+        <% include head.ejs %>
+        <title>
+            <% if(locals.error_message) { %>
+                Woops!
+            <% } else { %>
+                Edit profile for <%= user %>
+            <% } %>
+        </title>
+        <link rel='stylesheet' href='/stylesheets/sam.css' />
+    </head>
+    <body>
+
+        <% include menu_partial.ejs %>
+        <% if(locals.error_message) { %>
+            <br>
+            <div class='column background-color-danger_pink'><%=error_message%></div>
+        <% } else { %>
+            <section class="hero is-alt is-fullheight background_color-light_grey">
+                <div class="hero-body">
+                    <div class="column is-one-third-desktop is-offset-one-third-desktop">
+                        <div class="card-content">
+                            <h1 class="title has-text-centered is-large main_theme-title">
+                                <%=user%>
+                            </h1>
+                            <br>
+                            <div class='edit_profile-image'>
+                                <img src='/img/profile_pictures/<%=profile_photo_title%>' />
+                            </div>
+                            <br>
+                            <% if (locals.output_notices) { %>
+                                <% if (locals.output_notices.error_output.length>0) { %>
+                                    <div class='notification is-danger has-text-centered'>  
+                                        <% for (row_1=0;row_1<locals.output_notices.error_output.length;row_1++) { %>
+                                            <% if (row_1>0) { %>
+                                                <br>
+                                            <% } %>
+                                            <%= output_notices.error_output[row_1] %>
+                                        <% } %> 
+                                    </div>
+                                <% } %>
+                                <%if (locals.output_notices.success_output.length>0) { %>
+                                    <div class='notification is-info has-text-centered'>
+                                        <% for (row_1=0;row_1<locals.output_notices.success_output.length;row_1++) { %>
+                                            <% if (row_1>0) { %>
+                                                <br>
+                                            <% } %>
+                                            <%= output_notices.success_output[row_1] %>
+                                        <% } %>
+                                    </div>
+                                <% } %>
+                            <% } %>
+                            <form method="POST" action='submit_profile_update' enctype="multipart/form-data">
+                                Want to change your name?
+                                <p class="control has-icon">
+                                    <input class="input" type="text" name='username' placeholder="<%=user%>">
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                </p>
+                                <br>
+                                <label for="js-edit_profile-photo_upload" id='js-edit_profile-photo_upload-label' class='button background_color-grey is-fullwidth'><span class="icon is-small is-left"><i class="fa fa-camera fa-lg"></i></span>&nbsp;&nbsp;Want to change your photo?</label>
+                                <input type='file' class='level-left hide_input' name='photo_file' id='js-edit_profile-photo_upload'>
+                                <p id='js-edit_profile-photo_upload-name'>
+                                </p>
+                                <br>
+                                Want to change your password?
+                                <p class="control has-icon">
+                                    <input class="input" type="password" name='new_password_1' placeholder="Password Update">
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-lock"></i>
+                                    </span>
+                                </p>
+                                <p class="control has-icon">
+                                    <input class="input" type="password" name='new_password_2' placeholder="Repeat Your New Password">
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-lock"></i>
+                                    </span>
+                                </p>
+                                <br>
+                                Enter your current password to allow changes:
+                                <p class="control has-icon">
+                                    <input class="input" type="password" name='password' placeholder="Current Password">
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-key"></i>
+                                    </span>
+                                </p>
+                                <br>
+                                <p class="control" id='js-edit_profile-submit_button'>
+                                    <button type='submit' class="button is-medium is-fullwidth background_color-yellow" style="display: inline-block" onclick="edit_profile()">
+                                        Update Profile
+                                    </button>
+                                </p>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+            </section>
+        <% } %>
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/sam.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+</html>

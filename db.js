@@ -1,6 +1,6 @@
-
 var pgp = require('pg-promise')();
 var dotenv = require('dotenv');
+var log = require('./routes/abstracted_functions/log.js')
 
 dotenv.load();
 
@@ -12,7 +12,6 @@ const database_object = {
     password: process.env.db_password
 };
 
-console.log("Connected to database: \x1b[33m" + database_object.database + " \x1b[0m(\x1b[34m" + database_object.host + "\x1b[0m)");
+log("Connected to database: $1 at $2", 'inf', [database_object.database, database_object.host]);
+
 module.exports = pgp(database_object);
-
-

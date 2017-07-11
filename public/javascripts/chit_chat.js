@@ -42,7 +42,7 @@ function create_chat_break(previous_timestamp) {
     } else if (moment(previous_timestamp).add(1, 'd').isSame(moment(), 'd')) {
         date_output = 'Yesterday'
     } else {
-        date_output = moment(previous_timestamp).format('D MMMM YY')
+        date_output = moment(previous_timestamp).format('Do MMMM YY')
     }
     var html_output = `<div class='column is-full-width'>
         <span class='chit_chat-time_stamp_break'>
@@ -76,7 +76,6 @@ function message_publisher(message_array, callback) {
                     }
                 } else {
                     if (!$($($('#js-chat_output').children()[0]).children()[0]).hasClass('chit_chat-time_stamp_break')) {
-                        console.log($($('#js-chat_output').children()[0]).html())
                         $('#js-chat_output').prepend(create_chat_break(previous_timestamp))
                     }
                     $('#js-chat_output').prepend(output_chat_message(current_message.username, current_message.profile_photo_title, current_message.comment, current_message.timestamp))
@@ -127,7 +126,7 @@ socket.on('online update', function(return_object) {
     html_output = ''
     for (row_1 = 0; row_1 < return_object.online.length; row_1++) {
         if (return_object.online[row_1].email != variables.user_email) {
-            html_output += `<div class='column is-full-width side_bar_container background_color-info_blue'>
+            html_output += `<a class='div_highlight-color_grey' href='/profile/${encodeURIComponent(return_object.online[row_1].email)}'><div class='column is-full-width side_bar_container background_color-info_blue'>
                 <div class='side_bar_image'>
                     <img class='ensure_square-side_bar' src='/img/profile_pictures/${return_object.online[row_1].profile_photo_title}'/>
                 </div>
@@ -136,7 +135,7 @@ socket.on('online update', function(return_object) {
                     <br>
                     &nbsp;
                 </div>
-            </div>`
+            </div></a>`
         } else {
             update_own_profile(return_object.online[row_1])
         }
@@ -148,7 +147,7 @@ socket.on('online update', function(return_object) {
             } else {
                 last_online = moment.utc(return_object.offline[row_1].last_active).local().format('D/MM/YY');
             }
-            html_output += `<div class='column is-full-width side_bar_container background_color-grey'>
+            html_output += `<a class='div_highlight-color_grey' href='/profile/${encodeURIComponent(return_object.offline[row_1].email)}'><div class='column is-full-width side_bar_container background_color-grey'>
                 <div class='side_bar_image'>
                     <img class='ensure_square-side_bar black_and_white_img' src='/img/profile_pictures/${return_object.offline[row_1].profile_photo_title}'/>
                 </div>
@@ -157,7 +156,7 @@ socket.on('online update', function(return_object) {
                     <br>
                     Last Online ${last_online}
                 </div>
-            </div>`
+            </div></a>`
         }
     }
     $('#js-chat_side_bar').html(html_output);

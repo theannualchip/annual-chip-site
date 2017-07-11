@@ -32,6 +32,7 @@ var io = require('socket.io').listen(server);
 
 require('../routes/sockets')(io);
 app.io=io;
+
 /**
  * Normalize a port into a number, string, or false.
  */

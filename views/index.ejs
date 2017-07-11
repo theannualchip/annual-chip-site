@@ -8,6 +8,7 @@
             <%= user %> to The Annual Chip In
         </title>
         <link rel='stylesheet' href='/stylesheets/sam.css' />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0" />
 </head>
 <body>
 
@@ -69,10 +70,7 @@
 <script>
     var variables = <%- JSON.stringify(locals) %>;
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>
 <script src="/javascripts/sam.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
 <script src="/javascripts/chit_chat.js"></script>
 </html>

@@ -7,6 +7,7 @@ body {
 img {
     max-width: none;
     max-height: none;
+    image-orientation: from-image;
 }
 
 [contenteditable]:focus {
@@ -430,6 +431,16 @@ img {
     max-height: 100%;
 }
 
+/***************************************************** PHOTOS PAGE *************************************************/
+
+.edit_profile-image {
+    width:100%;
+}
+
+.edit_profile-image img {
+    border-radius: 5px;
+    width:100%;
+}
 
 /***************************************************** HIGHLIGHTS *************************************************/
 
@@ -484,6 +495,10 @@ img {
     background-color: #92edbf;
 }
 
+.div_highlight-color_grey {
+    color:#4a4a4a;
+}
+
 .green_text {
     color: #2C6700;
 }
@@ -522,6 +537,10 @@ img {
 
 .toggle-display_none {
     display: none;
+}
+
+.toggle-display_inline_block {
+    display: inline-block;
 }
 
 .toggle-text_place_holder {
