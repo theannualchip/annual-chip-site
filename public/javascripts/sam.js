@@ -1,24 +1,3 @@
-// nav
-
-$('#js-menu_hamburger').on('click touch', function() {
-    console.log($('#js-drop_down_menu').position().top);
-    if ($('#js-drop_down_menu').position().top == -330) {
-        $('#js-drop_down_menu').animate({ top: 53 }, 500);
-    } else {
-        $('#js-drop_down_menu').animate({ top: -330 }, 500);
-    }
-});
-
-var current_page_exists = true;
-try { current_page; } catch (e) {
-    if (e.name == "ReferenceError") {
-        current_page_exists = false;
-    }
-}
-if (current_page_exists) {
-    $('#js-' + current_page).toggleClass('is-active', true);
-}
-
 // full height
 
 function resize_to_full() {

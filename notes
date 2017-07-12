@@ -49,6 +49,21 @@
 	Master Password: the_annual_chip
 	DB Name: the_annual_chip
 
+	** Bets Table **
+
+		CREATE TABLE bets(
+			gambler_1 VARCHAR, 
+			gambler_2 VARCHAR, 
+			judge VARCHAR, 
+			amount REAL, 
+			bet_comment VARCHAR, 
+			date_created TIMESTAMP WITH TIME ZONE, 
+			accepted BOOLEAN, 
+			date_accepted TIMESTAMP WITH TIME ZONE, 
+			winner VARCHAR, 
+			date_won TIMESTAMP WITH TIME ZONE
+		);
+
 	** Golf Scores Table **
 		CREATE TABLE scores(
 		   username varchar(50),
@@ -83,6 +98,7 @@
 
 	    INSERT INTO photos (photo_title, uploaded_user, date_uploaded)
 	    VALUES ('gimp.jpg', 'Gimp', to_date('2017-06-21', 'YYYY-MM-DD'));
+
 
 
 

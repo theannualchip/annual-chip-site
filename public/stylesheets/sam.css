@@ -64,6 +64,7 @@ img {
     background-color: #E5E4D7;
     opacity: 0.9;
     padding: 5px;
+    overflow-y:scroll;
 }
 
 .menu-label-update {

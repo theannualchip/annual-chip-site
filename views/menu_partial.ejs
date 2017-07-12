@@ -1,50 +1,78 @@
 <div class="main_theme-nav background_color-yellow">
-        <div class="nav-left">
-            <div class="nav-item">
-                <a href="/">
-                    <h3 class="title has-text-centered main_theme-title-smaller">
+    <div class="nav-left">
+        <div class="nav-item">
+            <a href="/">
+                <h3 class="title has-text-centered main_theme-title-smaller">
                         The Annual Chip In
                     </h3>
-                </a>
-            </div>
-        </div>
-        <div id="js-menu_hamburger" class="main_theme-nav-hamburger">
-            <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
+            </a>
         </div>
     </div>
-    <div id='js-drop_down_menu' class='main_theme-drop_menu_container'>
-        <aside class="menu">
-            <p class="menu-label-update">
-                Main Events
-            </p>
-            <ul class="menu-list">
-                <li><a href="/" id='js-chit_chat'>The Chit-Chat</a></li>
-                <li><a>The Scorecard</a></li>
-            </ul>
-            <p class="menu-label-update">
-                Soft Skills
-            </p>
-            <ul class="menu-list">
-                <li><a id='js-constitution' href='/constitution'>Constitution</a></li>
-                <li><a id='js-photos' href='/photos'>Photos</a></li>
-                <li><a id='js-edit_profile' href='/edit_profile'>Edit Profile</a></li>
-                <li><a href="/login">Log Out</a></li>
-            </ul>
-            <%if (locals.is_admin) { %>
+    <div id="js-menu_hamburger" class="main_theme-nav-hamburger">
+        <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
+    </div>
+</div>
+<div id='js-drop_down_menu' class='main_theme-drop_menu_container'>
+    <aside class="menu">
+        <p class="menu-label-update">
+            Main Events
+        </p>
+        <ul class="menu-list">
+            <li><a id='js-chit_chat' href='/'>The Chit-Chat</a></li>
+            <li><a id= 'js-score_card' href='/scorecard'>The Scorecard</a></li>
+            <li><a id= 'js-bets' href='/bets'>Bets</a></li>
+        </ul>
+        <p class="menu-label-update">
+            Soft Skills
+        </p>
+        <ul class="menu-list">
+            <li><a id='js-constitution' href='/constitution'>Constitution</a></li>
+            <li><a id='js-photos' href='/photos'>Photos</a></li>
+            <li><a id='js-edit_profile' href='/edit_profile'>Edit Profile</a></li>
+            <li><a href="/login">Log Out</a></li>
+        </ul>
+        <%if (locals.standard_return) { %>
+            <%if (locals.standard_return.is_admin) { %>
                 <br>
-                
-                    <ul class="menu-list">
-                        <div class='admin_warning'>
+                <ul class="menu-list">
+                    <div class='admin_warning'>
                         <li><a id='js-admin' href="/admin">Admin Privileges</a></li>
-                        </div>
-                    </ul>
-               
+                    </div>
+                </ul>
             <% } %>
-        </aside>
-    </div>
-    <%if (locals.current_page) { %>
-    <script>
-        current_page='<%= current_page %>';
-    </script>
-    <% } %>
-    <div class='menu_buffer'></div>
+        <% } %>
+    </aside>
+</div>
+<%if (locals.standard_return) { %>
+    <%if (locals.standard_return.current_page) { %>
+        <script>
+            $('#js-<%= standard_return.current_page %>').toggleClass('is-active', true);
+        </script>
+    <% } %> 
+<% } %> 
+<script>
+    $('#js-drop_down_menu').css('top',-$('#js-drop_down_menu').height() + 'px')
+    $('#js-menu_hamburger').on('click touch', function() {
+        if ($('#js-drop_down_menu').position().top == -$('#js-drop_down_menu').height()) {
+            $('#js-drop_down_menu').animate({
+                top: 53
+            }, 500);
+        } else {
+            $('#js-drop_down_menu').animate({
+                top: -$('#js-drop_down_menu').height()
+            }, 500);
+        }
+    })
+    function reset_menu_max() {
+        if ($(window).height()<($('#js-drop_down_menu').height()+53)) {
+            $('#js-drop_down_menu').css('max-height',($(window).height()-53) + 'px')
+        } else {
+            $('#js-drop_down_menu').css('max-height','none')
+        }
+    }
+    $(window).resize(function() {
+        reset_menu_max();
+    })
+    reset_menu_max()
+</script>
+<div class='menu_buffer'></div>
