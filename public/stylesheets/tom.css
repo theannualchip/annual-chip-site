@@ -1,5 +1,6 @@
 body {
 	font-family: 'Roboto', sans-serif;
+  background-color: #e5e4d7;
 }
 
 .main_theme-title {
@@ -46,6 +47,14 @@ body {
   counter-increment: gallery-cell;
 }
 
+.score .gallery-cell {
+  width: 45%;
+  height: 100px;
+  margin-right: 10px;
+  /*background: #E5E4D7;*/
+  counter-increment: gallery-cell;
+}
+
 .button__badge {
   background-color: #FFCF79;
   border-radius: 2px;
@@ -65,7 +74,7 @@ body {
 
 .box-hole {
   background: #fff;
-  border: 2px solid #fff;
+  border: 2px solid #e5e4d7;
   height: 150px;
   display: table-cell;
   vertical-align: middle;

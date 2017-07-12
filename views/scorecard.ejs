@@ -24,55 +24,29 @@
 <div class="container is-fluid is-fullwidth">
   <%- leaderboard %>
 </div>
-<br>
 
-<!-- <div class="tabs is-toggle is-fullwidth">
-  <ul>
-    <li class="is-active">
-      <a>
-        <span class="icon is-small"><i class="fa fa-ellipsis-v"></i></span>
-        <span class = "day-label">Day 1</span>
-      </a>
-    </li>
-    <li>
-      <a>
-        <span class="icon is-small"><i class="fa fa-hand-peace-o"></i></span>
-        <span class = "day-label">Day 2</span>
-      </a>
-    </li>
-    <li>
-      <a>
-        <span class="icon is-small"><i class="fa fa-cubes"></i></span>
-        <span class = "day-label">Day 3</span>
-      </a>
-    </li>
-  </ul>
-</div>
+<br> <br>
 
--->
-
-<br> 
-
-<div class="is-fullwidth center-div">
-<div class="field">
-  <p class="control is-fullwidth">
-    <span class="select is-large">
-      <select>
-        <option> Day 1</option>
-        <option> Day 2</option>
-        <option> Day 3</option>
-
+<div class="field has-addons">
+  <p class="control is-expanded">
+    <span class="select is-fullwidth">
+      <select name="day">
+        <option value="1">Day 1</option>
+        <option value="2">Day 2</option>
+        <option value="3">Day 3</option>
       </select>
     </span>
   </p>
+  <p class="control">
+    <button id="update" type="submit" class="button background_color-yellow">Update</button>
+  </p>
 </div>
-
-</div>
-
-
 
 <!-- BODY OF SCOREBOARD -->
-<%- links %>
+<div id="hole_links">
+  <% var links = links %>
+  <%- links[0] %>
+</div>
 
 <script src="/javascripts/extras/flickity.pkgd.min.js"></script>
 

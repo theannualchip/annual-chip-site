@@ -627,7 +627,7 @@ router.get('/scorecard', function(req, res, next) {
 
             lboard_html = tom_js.format_lboard(data)
 
-            links_html = tom_js.format_hole_links(1)
+            links_html = tom_js.format_hole_links()
 
             res.render('scorecard', {
                 title: 'Scorecard',
@@ -647,7 +647,16 @@ router.get('/scorecard/card', function(req, res, next) {
     day = req.query.day;
     hole = req.query.hole;
 
-    res.render('card', { title: 'Individual Hole', day: day, hole: hole });
+    tom_js.get_hole_scores(db, day, hole)
+        .then(data => {
+
+            scores_html = tom_js.format_hole_scores(data)
+
+            res.render('card', { title: 'Individual Hole', day: day, hole: hole, scores: scores_html });
+
+        }).catch(error => { console.log(error) })
+
+
 });
 
 /* General Stuff */
