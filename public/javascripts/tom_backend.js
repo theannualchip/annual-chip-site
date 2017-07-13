@@ -79,11 +79,11 @@ exports.format_lboard = function(lboard) {
 		  <div class="gallery-cell center-div has-text-centered">
 		    <div>
 		      <div>
-		        <img class="img-circle" src="/img/profile_pictures/${pic_name}">
+		        <img class="lboard_image" src="/img/profile_pictures/${pic_name}">
 		        <span class="button__badge">${rank}</span>
 		      </div>
-		      <div><strong> ${name} </strong></div>
-		      <div><strong> ${score} </strong></div>
+		      <div><strong style="font-size:10pt"> ${name} </strong></div>
+		      <div><strong style="font-size:8pt"> ${score} </strong></div>
 		    </div>  
 		  </div>
 		`;
@@ -109,16 +109,15 @@ exports.format_hole_scores = function(scores) {
 		var score = scores[i].score;
 		var pic_name = scores[i].profile_photo_title;
 
-		if (score == 99) { score = "Not yet played"}
+		if (score == 99) { score = "TBD"}
 
 		flick_cell_element = `
 		  <div class="score gallery-cell center-div has-text-centered">
 		    <div>
 		      <div>
-		        <img class="img-circle" src="/img/profile_pictures/${pic_name}">
+		        <img class="lboard_image" src="/img/profile_pictures/${pic_name}">
 		      </div>
-		      <div><strong> ${name} </strong></div>
-		      <div> ${score} </div>
+		      <div><span class="tag is-dark"> ${name}: ${score} </span> </div>
 		    </div>  
 		  </div>
 		`;

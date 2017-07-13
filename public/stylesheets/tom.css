@@ -3,6 +3,19 @@ body {
   background-color: #e5e4d7;
 }
 
+.leader-board {
+  -webkit-box-shadow: 10px 10px 23px -8px rgba(199,199,199,1);
+  -moz-box-shadow: 10px 10px 23px -8px rgba(199,199,199,1);
+  box-shadow: 10px 10px 23px -8px rgba(199,199,199,1);
+  border-radius: 29px 29px 29px 29px;
+  -moz-border-radius: 29px 29px 29px 29px;
+  -webkit-border-radius: 29px 29px 29px 29px;
+  border: 0px none #000000;
+  background-color: #f5f5f0;
+  height: 175px;
+  padding-top: 20px;
+  }
+
 .main_theme-title {
     text-shadow: 2px 2px #E5E4D7, 4px 4px #aeac84;
     font-size:24pt;
@@ -33,9 +46,24 @@ body {
 }
 
 
-.img-circle:hover {
+.lboard_image {
+    width: 60px;
+    height: 60px;
+    border-radius: 7px;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.22);
+}
+
+.lboard_image:hover {
     box-shadow: 0 5px 5px rgb(255,207,121);
 }
+
+.input-circle {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  background-color: #FFF;\
+}
+
 
 /* FLICKETY SCROLL BAR */
 
@@ -56,14 +84,15 @@ body {
 }
 
 .button__badge {
-  background-color: #FFCF79;
+  background-color: #ff7a7a;
+/*  #FFCF79*/
   border-radius: 2px;
   color: white;
   padding: 1px 3px;
   font-size: 10px;
   position: absolute; /* Position the badge within the relatively positioned button */
-  top: 5px;
-  right: 34%;
+  top: -1px;
+  right: 28%;
 }
 
 /* END FLICKETY SCROLL BAR  */
@@ -82,8 +111,8 @@ body {
 }
 
 .hole-details {
-  border: 2px solid #fff;
-  height: 150px;
+  border: 1px solid #fff;
+  height: 100px;
   display: table-cell;
   vertical-align: middle;
   background-size: cover;

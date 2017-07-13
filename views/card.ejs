@@ -6,98 +6,118 @@
 		<%= title %>
 	</title>
 	<link rel='stylesheet' href='/stylesheets/tom.css'/>
+	<link rel='stylesheet' href='/stylesheets/sam.css' />
 	<link rel="stylesheet" href="/stylesheets/extras/flickity.css" media="screen">
 	<script type="text/javascript" src="/javascripts/tom_frontend.js"></script>
 </head>
 
 <body>
 
-	<section class="hero">
-		<div class="hero-body background_color-grey">
-			<nav class="breadcrumb is-large">
-				<ul>
-					<li><a href="/scorecard">Day <%= day %> </a></li>
-					<li class="is-active"><a>Hole <%= hole %> </a></li>
-				</ul>
-			</nav>
+	<!-- Include Header -->
+
+	<% include menu_partial.ejs %>
+
+<!-- 	<section class="hero">
+	<div class="hero-body background_color-grey"> -->
+		<nav class="breadcrumb is-large">
+			<ul>
+				<li><a href="/scorecard">Day <%= day %> </a></li>
+				<li class="is-active"><a>Hole <%= hole %> </a></li>
+			</ul>
+		</nav>
+<!-- 		</div>
+</section> -->
+<section>
+
+	<div class = "columns is-mobile">
+
+		<div class="column hole-details center-div" style="background-color:#ffedcc">
+
+			<div class="columns is-mobile">
+
+				<div class="column">
+					<span class="tag is-white"> Distance </span>
+				</div>
+
+				<div class="column center-div">
+					<img src="/img/holes/distance.png">
+				</div>
+
+				<div class="column">
+					<span class="tag is-white"> 445m </span>
+				</div>
+
+
+			</div>
 		</div>
-	</section>
+	</div>
 
-	<br>
-	<h1 class="main_theme-title"> The Breakdown </h1>	
-	<br>
-	<section>
+	<div class = "columns is-mobile">
 
-		<div class = "columns is-mobile">
+		<div class="column hole-details center-div" style="background-color: #cdcbb2">
 
-			<div class="column hole-details center-div" style="background-color:#ffedcc">
-
-				<div class="columns">
-
-					<div class="column is-3 center-div">
-						<img src="/img/holes/distance.png">
-					</div>
-
-					<div class="column is-3">
-						<span class="tag is-white is-medium"> 445m </span>
-					</div>
+			<div class="columns is-mobile">
 
 
+				<div class="column">
+					<span class="tag is-white"> Par </span>
+				</div>
+
+				<div class="column center-div">
+					<img src="/img/holes/par.png">
+				</div>
+
+				<div class="column">
+					<span class="tag is-white"> 3 </span>
 				</div>
 
 			</div>
-
-			<div class="column hole-details center-div" style="background-color: #cdcbb2">
-
-				<div class="columns">
-
-					<div class="column is-3 center-div">
-						<img src="/img/holes/par.png">
-					</div>
-
-					<div class="column is-3">
-						<span class="tag is-white is-medium"> 3 </span>
-					</div>
-
-
-				</div>
-
-			</div>
-
 
 		</div>
-
-		<div class = "columns is-mobile">
-
-			<div class="column hole-details center-div" style="background-color:#ffcf79">
+	</div>
 
 
+	<div class = "columns is-mobile">
 
-				<div class="columns">
+		<div class="column hole-details center-div" style="background-color:#ffcf79">
 
-					<div class="column center-div">
-						<img src="/img/holes/top-score.png">
-					</div>
-
-					<div class="column">
-						<span class="tag is-white is-medium"> TBD </span>
-					</div>
+			<div class="columns is-mobile">
 
 
+				<div class="column">
+					<span class="tag is-white"> Best </span>
+				</div>
+
+				<div class="column center-div">
+					<img src="/img/holes/top-score.png">
+				</div>
+
+				<div class="column">
+					<span class="tag is-white"> TBD </span>
 				</div>
 
 			</div>
 
-			<div class="column hole-details center-div" style="background-color:#f5f5f0">
+		</div>
+	</div>
 
-				<div class="columns">
 
-					<div class="column center-div">
-						
-						<img class="img-circle" src="/img/profile_pictures/tom.jpg">
-					</div>
+	<div class = "columns is-mobile">
+		<div class="column hole-details center-div" style="background-color:#f5f5f0">
 
-					<div class="column container is-fluid">
+			<div class="columns is-mobile">
+
+				<div class="column is-6">
+
+					<img class="img-circle" src="/img/profile_pictures/tom.jpg">
+				</div>
+
+				<div class="column is-6">
+
+					<div class="input-circle"></div>
+				</div>
+
+<!-- 					<div class="column container is-fluid">
 						
 						<div class="field has-addons">
 							<p class="control">
@@ -108,22 +128,17 @@
 									strokes
 								</a>
 							</p>
-						</div>
+						</div> -->
 					</div>
-
 
 				</div>
 			</div>
-
-
 		</div>
 
 	</section>
 	<br>
-	<h1 class="main_theme-title"> Submitted Scores </h1>	
-	<br>
-
-	<div class="container is-fluid is-fullwidth">
+	<h1 class="main_theme-title "> Who's Played </h1>
+	<div class="leader-board container is-fluid is-fullwidth">
 		<%- scores %>
 	</div>
 
