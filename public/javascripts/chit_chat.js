@@ -55,33 +55,37 @@ function create_chat_break(previous_timestamp) {
 
 function message_publisher(message_array, callback) {
     if (message_array != null) {
-        if (message_array.length > 0) {
-            if ($('#js-chat_output').children().length == 0) {
-                last_message = message_array[message_array.length - 1]
-                $('#js-chat_output').html(output_chat_message(last_message.username, last_message.profile_photo_title, last_message.comment, last_message.timestamp))
-                starting_message = message_array.length - 1
-            } else {
-                starting_message = message_array.length
-            }
-            for (message = starting_message; message > 0; message--) {
+        if (typeof(message_array)=='string') {
+            $('#js-chat_output').prepend(message_array)
+        } else {
+            if (message_array.length > 0) {
+                if ($('#js-chat_output').children().length == 0) {
+                    last_message = message_array[message_array.length - 1]
+                    $('#js-chat_output').html(output_chat_message(last_message.username, last_message.profile_photo_title, last_message.comment, last_message.timestamp))
+                    starting_message = message_array.length - 1
+                } else {
+                    starting_message = message_array.length
+                }
+                for (message = starting_message; message > 0; message--) {
 
-                previous_user = $($('#js-chat_output').find('.comment_title-user')[0]).html().trim()
-                previous_timestamp = $($('#js-chat_output').find('.comment_title-time')[0]).attr('id')
-                current_message = message_array[message - 1]
-                if (moment(previous_timestamp).isSame(moment(current_message.timestamp), 'd')) {
-                    if (previous_user == current_message.username) {
-                        $($('#js-chat_output').find('.comment_message')[0]).prepend(`<div>${escape_html(current_message.comment)}</div>`)
+                    previous_user = $($('#js-chat_output').find('.comment_title-user')[0]).html().trim()
+                    previous_timestamp = $($('#js-chat_output').find('.comment_title-time')[0]).attr('id')
+                    current_message = message_array[message - 1]
+                    if (moment(previous_timestamp).isSame(moment(current_message.timestamp), 'd')) {
+                        if (previous_user == current_message.username) {
+                            $($('#js-chat_output').find('.comment_message')[0]).prepend(`<div>${escape_html(current_message.comment)}</div>`)
+                        } else {
+                            $('#js-chat_output').prepend(output_chat_message(current_message.username, current_message.profile_photo_title, current_message.comment, current_message.timestamp))
+                        }
                     } else {
+                        if (!$($($('#js-chat_output').children()[0]).children()[0]).hasClass('chit_chat-time_stamp_break')) {
+                            $('#js-chat_output').prepend(create_chat_break(previous_timestamp))
+                        }
                         $('#js-chat_output').prepend(output_chat_message(current_message.username, current_message.profile_photo_title, current_message.comment, current_message.timestamp))
                     }
-                } else {
-                    if (!$($($('#js-chat_output').children()[0]).children()[0]).hasClass('chit_chat-time_stamp_break')) {
-                        $('#js-chat_output').prepend(create_chat_break(previous_timestamp))
-                    }
-                    $('#js-chat_output').prepend(output_chat_message(current_message.username, current_message.profile_photo_title, current_message.comment, current_message.timestamp))
                 }
+                $('#js-chat_output').prepend(create_chat_break(message_array[0].timestamp))
             }
-            $('#js-chat_output').prepend(create_chat_break(message_array[0].timestamp))
         }
     }
     callback()

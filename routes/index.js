@@ -24,7 +24,7 @@ var async = require('async');
 var tom_js = require("../public/javascripts/tom_backend.js");
 var db = require("../db.js");
 var passport_setup = require('./abstracted_functions/passport_setup.js');
-var chat_bot = require('./chat_bot.js');
+var chat_bot = require('./abstracted_functions/chat_bot.js');
 var image_uploaders = require('./abstracted_functions/image_upload_objects.js')
 var log = require('./abstracted_functions/log.js');
 
@@ -34,16 +34,16 @@ const salt_rounds = 10;
 
 /****************************************** GLOBAL FUNCTIONS *************************************/
 
-    // authenticate()
-    //
-    // This small function is simply to refactor the authentication call to take the 'else' statement
-    // out of every route.
+// authenticate()
+//
+// This small function is simply to refactor the authentication call to take the 'else' statement
+// out of every route.
 
 function authenticate(req, res, page, callback) {
     if (req.isAuthenticated()) {
-        res.locals.standard_return={
-            user: req.session.passport.user.username, 
-            is_admin: req.session.passport.user.is_admin, 
+        res.locals.standard_return = {
+            user: req.session.passport.user.username,
+            is_admin: req.session.passport.user.is_admin,
         }
         if (page) {
             res.locals.standard_return.current_page = page
@@ -56,10 +56,10 @@ function authenticate(req, res, page, callback) {
 
 /************************************* GET REQUESTS FOR MAIN PAGES *******************************/
 
-    // Login Page
-    //
-    // The '/login' page is the main login screen. This route first first ends the current session,
-    // then simply renders the login.ejs screen.
+// Login Page
+//
+// The '/login' page is the main login screen. This route first first ends the current session,
+// then simply renders the login.ejs screen.
 
 router.get('/login', function(req, res, next) {
     req.session.destroy(function(err) {
@@ -67,14 +67,14 @@ router.get('/login', function(req, res, next) {
     });
 })
 
-    // Chat Page
-    //
-    // The '/' page is the chat room. This purpose of this route it to simple provide the loading screen.
-    // The rest of the information for the chat is collected through AJAX queries and sockets (see POSTs section
-    // below and ./sockets.js).
-    // First we authenticate the users session, if this fails then redirect them to the login screen. Otherwise, 
-    // loop through the loading_images folder (./img/loading_images) and collect all gifs. Then randomly choose
-    // one and send index.ejs to the client.
+// Chat Page
+//
+// The '/' page is the chat room. This purpose of this route it to simple provide the loading screen.
+// The rest of the information for the chat is collected through AJAX queries and sockets (see POSTs section
+// below and ./sockets.js).
+// First we authenticate the users session, if this fails then redirect them to the login screen. Otherwise, 
+// loop through the loading_images folder (./img/loading_images) and collect all gifs. Then randomly choose
+// one and send index.ejs to the client.
 
 router.get('/',
     function(req, res, next) {
@@ -99,10 +99,10 @@ router.get('/',
     }
 );
 
-    // Constitution Page
-    //
-    // The '/constution' page is a very simple page with the static constitution on it. 
-    // This route simply suthenticates the session and if successful renders the constitution.ejs screen.
+// Constitution Page
+//
+// The '/constution' page is a very simple page with the static constitution on it. 
+// This route simply suthenticates the session and if successful renders the constitution.ejs screen.
 
 router.get('/constitution', function(req, res, next) {
     authenticate(req, res, 'constitution', function() {
@@ -110,20 +110,20 @@ router.get('/constitution', function(req, res, next) {
     })
 })
 
-    // Profile Pages
-    //
-    // The '/profile/:email' page displays any users 'profile'. 
-    // Currently this only includes a photo, email address, username and a last_active field.
-    // Post-BETA release the aim is to also include the following:
-    //
-    // current score for this years match, previous victories, current bets on, total exposure to 
-    // current bets, number of chat posts.
-    //
-    // The url contains a parameter which includes a URIencoded version of the desired profile email
-    // address. To render the page, the accessing user is first authenticated, then a query is run 
-    // to collect information about the profile which is requested (based on the url), if this query
-    // is successful (i.e. there exists a profile with such an email address) then 'profile.ejs' is returned
-    // along with the profile information.
+// Profile Pages
+//
+// The '/profile/:email' page displays any users 'profile'. 
+// Currently this only includes a photo, email address, username and a last_active field.
+// Post-BETA release the aim is to also include the following:
+//
+// current score for this years match, previous victories, current bets on, total exposure to 
+// current bets, number of chat posts.
+//
+// The url contains a parameter which includes a URIencoded version of the desired profile email
+// address. To render the page, the accessing user is first authenticated, then a query is run 
+// to collect information about the profile which is requested (based on the url), if this query
+// is successful (i.e. there exists a profile with such an email address) then 'profile.ejs' is returned
+// along with the profile information.
 
 router.get('/profile/:email', function(req, res, next) {
     authenticate(req, res, null, function() {
@@ -134,7 +134,7 @@ router.get('/profile/:email', function(req, res, next) {
                     res.render('profile', { user_info: data[0] });
                 } else {
                     log("Couldn't find a user with email $1 in the golfers database", 'wrn', [decodeURIComponent(req.params.email)]);
-                    res.render('profile', {warning: "Woops! It doesn't look like we have a user with email " + decodeURIComponent(req.params.email) });
+                    res.render('profile', { warning: "Woops! It doesn't look like we have a user with email " + decodeURIComponent(req.params.email) });
                 }
             })
             .catch(function(error) {
@@ -145,55 +145,55 @@ router.get('/profile/:email', function(req, res, next) {
     })
 })
 
-    // Edit Profile Page
-    //
-    // The '/edit_profile' page displays a form which allows a user to update aspects of the account including:
-    //
-    // username, password and profile picture
-    //
-    // Note that this is simply returning the form with some placeholder data reflecting the user's current
-    // settings. The actual updating occurs via a POST request (see /submit_profile_update POSTs section below). To render the form
-    // the user is first authenticated, then a query is run to collect the current profile information (username,
-    // photo) based on the session email. (Noting that obviously one must only be able to update their own 
-    // profile - hence why we use the session email as it is authenticated). If this query is successful the 
-    // 'edit_profile.ejs' page is returned with the accompanying data.
+// Edit Profile Page
+//
+// The '/edit_profile' page displays a form which allows a user to update aspects of the account including:
+//
+// username, password and profile picture
+//
+// Note that this is simply returning the form with some placeholder data reflecting the user's current
+// settings. The actual updating occurs via a POST request (see /submit_profile_update POSTs section below). To render the form
+// the user is first authenticated, then a query is run to collect the current profile information (username,
+// photo) based on the session email. (Noting that obviously one must only be able to update their own 
+// profile - hence why we use the session email as it is authenticated). If this query is successful the 
+// 'edit_profile.ejs' page is returned with the accompanying data.
 
 router.get('/edit_profile', function(req, res, next) {
     authenticate(req, res, 'edit_profile', function() {
         db.query("SELECT username, profile_photo_title FROM golfers WHERE email = $1", [req.session.passport.user.email])
             .then(function(data) {
                 if (data.length > 0) {
-                    log("Successfully collected user information for $1",'suc',[req.session.passport.user.email]);
-                    res.render('edit_profile', { user: req.session.passport.user.username, profile_photo_title: data[0].profile_photo_title});
+                    log("Successfully collected user information for $1", 'suc', [req.session.passport.user.email]);
+                    res.render('edit_profile', { user: req.session.passport.user.username, profile_photo_title: data[0].profile_photo_title });
                 } else {
                     res.redirect('/login');
                 }
             })
             .catch(function(error) {
-                log("Couldn't collect information for $1 as there was an error when quering the golfers table:",'err',[req.session.passport.user.email]);
+                log("Couldn't collect information for $1 as there was an error when quering the golfers table:", 'err', [req.session.passport.user.email]);
                 console.log(error);
-                res.render('edit_profile', { error_message: 'Ah oh! Something went wrong, try reloading the page'});
+                res.render('edit_profile', { error_message: 'Ah oh! Something went wrong, try reloading the page' });
             })
     })
 })
 
-    // Photos Page
-    //
-    // The '/photos' page serves two purposes: primarily it is an album of previously uploaded photos which
-    // users can look at, secondly it contains a form for uploading new photos. Note that this uploading is
-    // is handled by a POST request (see /photo_album_upload in the POSTs section below).
-    //
-    // Note also that photos may be deleted by either someone with admin rights, or the user who uploaded it.
-    //
-    // We begin by authenticating the user. If this is successful we query the 'photos' table for all photos.
-    // We can then loop through the 'photo_album' folder checking that all the photos that are in the 'photos'
-    // table are indeed in the folder. Where they are we push to an array the photo title, location and whether
-    // or not it was uploaded by that user. Once this is done we can send the 'photos.ejs' page along with this
-    // array. 
+// Photos Page
+//
+// The '/photos' page serves two purposes: primarily it is an album of previously uploaded photos which
+// users can look at, secondly it contains a form for uploading new photos. Note that this uploading is
+// is handled by a POST request (see /photo_album_upload in the POSTs section below).
+//
+// Note also that photos may be deleted by either someone with admin rights, or the user who uploaded it.
+//
+// We begin by authenticating the user. If this is successful we query the 'photos' table for all photos.
+// We can then loop through the 'photo_album' folder checking that all the photos that are in the 'photos'
+// table are indeed in the folder. Where they are we push to an array the photo title, location and whether
+// or not it was uploaded by that user. Once this is done we can send the 'photos.ejs' page along with this
+// array. 
 
 router.get('/photos', function(req, res, next) {
     authenticate(req, res, 'photos', function() {
-        db.query("SELECT p.photo_title, p.short_title, g.email, g.username FROM photos as p, golfers as g WHERE p.uploaded_user_email=g.email AND image_context='album'")
+        db.query("SELECT p.photo_title, p.short_title, g.email, g.username FROM photos as p, golfers as g WHERE p.uploaded_user_email=g.email")
             .then(function(data) {
                 if (data.length > 0) {
                     image_array = [];
@@ -210,38 +210,38 @@ router.get('/photos', function(req, res, next) {
                     }
                     res.render('photos', { user: req.session.passport.user.username, image_array: image_array });
                 } else {
-                    log("Looks like there are no photos in the table, rendering page without any",'inf');
-                    res.render('photos', { user: req.session.passport.user.username, warning:"Looks like there aren't any photos yet. Maybe you could upload one?"});
+                    log("Looks like there are no photos in the table, rendering page without any", 'inf');
+                    res.render('photos', { user: req.session.passport.user.username, warning: "Looks like there aren't any photos yet. Maybe you could upload one?" });
                 }
             })
             .catch(function(error) {
-                log("Couldn't find any photos as there was an error when quering the photos table:",'err');
+                log("Couldn't find any photos as there was an error when quering the photos table:", 'err');
                 console.log(error);
                 res.render('photos', { user: req.session.passport.user.username, warning: 'Ah oh! Something went wrong, try refreshing the page.' });
             });
     })
 })
 
-    // Admin Page
-    //
-    // The '/admin' page is only accessable to users with is_admin set to true. It is designed to contain 
-    // several forms which perform administrative functions such as:
-    //
-    // creating a new user, sending emails to all users, reseting the scorecards or chat conversations
-    //
-    // Currently this only contains the New User form. To render the page we first authenticate the user,
-    // then query the 'golfers' table to check that they have is_admin=true (i.e. they do in fact have
-    // admin rights). If this is successful we send 'admin.ejs'.
+// Admin Page
+//
+// The '/admin' page is only accessable to users with is_admin set to true. It is designed to contain 
+// several forms which perform administrative functions such as:
+//
+// creating a new user, sending emails to all users, reseting the scorecards or chat conversations
+//
+// Currently this only contains the New User form. To render the page we first authenticate the user,
+// then query the 'golfers' table to check that they have is_admin=true (i.e. they do in fact have
+// admin rights). If this is successful we send 'admin.ejs'.
 
 router.get('/admin', function(req, res, next) {
     authenticate(req, res, 'admin', function() {
-        db.query("SELECT is_admin FROM golfers WHERE email=$1",[req.session.passport.user.email])
+        db.query("SELECT is_admin FROM golfers WHERE email=$1", [req.session.passport.user.email])
             .then(function(data) {
-                if (data.length>0) {
+                if (data.length > 0) {
                     if (data[0].is_admin) {
-                        res.render('admin', { user: req.session.passport.user.username});
+                        res.render('admin', { user: req.session.passport.user.username });
                     } else {
-                        log("Someone tried to access the admin page without admin rights user $1",'wrn',[req.session.passport.user.email])
+                        log("Someone tried to access the admin page without admin rights user $1", 'wrn', [req.session.passport.user.email])
                         res.redirect('/');
                     }
                 } else {
@@ -249,174 +249,223 @@ router.get('/admin', function(req, res, next) {
                 }
             })
             .catch(function(error) {
-                log("Couldn't validate that $1 has admin rights as there was an error querying the golfers table:",'err',[req.session.passport.user.email]);
+                log("Couldn't validate that $1 has admin rights as there was an error querying the golfers table:", 'err', [req.session.passport.user.email]);
                 console.log(error);
                 res.redirect('/');
             })
     })
 })
 
-    // Bets Page
-    //
-    // The '/bets' page contains all current bets. It is intended as a place for people to view bets as well
-    // as action bets (accept, claim etc).
-    //
-    // 
+// Bets Page
+//
+// The '/bets' page contains all current bets. It is intended as a place for people to view bets as well
+// as action bets (accept, claim etc).
+//
+// This will be added * AFTER * invites are sent out.
 
-router.get('/bets', function(req, res, next) {
+/*router.get('/bets', function(req, res, next) {
     authenticate(req, res, 'bets', function() {
-        /*db.query("SELECT is_admin FROM golfers WHERE email=$1",[req.session.passport.user.email])
-            .then(function(data) {
-                if (data.length>0) {
-                    if (data[0].is_admin) {
-                        res.render('admin', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, current_page: 'admin' });
-                    } else {
-                        log("Someone tried to access the admin page without admin rights user $1",'wrn',[req.session.passport.user.email])
-                        res.redirect('/');
-                    }
-                } else {
-                    res.redirect('/');
-                }
-            })
-            .catch(function(error) {
-                log("Couldn't validate that $1 has admin rights as there was an error querying the golfers table:",'err',[req.session.passport.user.email]);
-                console.log(error);
-                res.redirect('/');
-            })
-        */
         res.render('bets', { user: req.session.passport.user.username});
     })
-})
+})*/
 
 /********************************** POST REQUESTS FOR VARIOUS THINGS *****************************/
 
+// User Login
+//
+// User login is the post request that gets called when a user logs in for the first time from 
+// /login.ejs. The user is first authenticated via the 'local' strategy which is defined in the
+// /abstracted_functions/passport_setup.js file (see passport.user()). If the authentication fails
+// the user is returned to /login with a warning (eiter missing info or password wrong). Otherwise
+// the user is redirected to '/' (i.e. the chat page).
+
 router.post('/user_login', function(req, res, next) {
-    passport.authenticate('local', { badRequestMessage: "Looks like you are missing either your email or password." }, function(error, user, info) {
+    missing_data_message = "Looks like you are missing either your email or password."
+    passport.authenticate('local', { badRequestMessage: missing_data_message }, function(error, user, info) {
         if (error || !user || user == false) {
             return res.render('login', { warning: info.message });
         }
         req.login(user, loginErr => {
             if (loginErr) {
-                return next(loginErr);
+                return next(loginErr)
             }
             req.session.save(function(err) {
-                console.log("Redirecting \x1b[34m" + req.session.passport.user.email + "\x1b[0m to index.ejs");
+                log('Redirecting $1 to index.ejs', 'inf', [req.session.passport.user.email])
                 return res.redirect('/');
             });
         });
     })(req, res, next);
 });
 
-router.post('/user_signup', function(req, res, next) {
-    if (req.isAuthenticated() && req.session.passport.user.is_admin) {
-        image_uploaders.upload_profile_picture.single('photo_file')(req, res, function(error) {
-            if (error) {
-                console.log(error);
-                res.render('admin', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, current_page: 'admin', sign_up_success: error });
-                return
-            } else {
-                if (req.body.is_admin) {
-                    is_admin = true;
-                } else {
-                    is_admin = false;
-                }
-                console.log("Creating new user: \x1b[34m" + JSON.stringify(req.body) + "\x1b[0m");
-                bcrypt.genSalt(salt_rounds, function(err, salt) {
-                    console.log(err);
-                    bcrypt.hash(req.body.password, salt, null, function(err, hash) {
-                        console.log(err);
-                        db.query("INSERT INTO golfers (username,email,password,is_admin,profile_photo_title) VALUES ($1,$2,$3,$4,$5)", [req.body.username, req.body.email, hash, is_admin, req.file.filename])
-                            .then(function(data) {
-                                console.log("\x1b[42m\x1b[37mSuccessfully created user for\x1b[0m \x1b[34m" + JSON.stringify(req.body) + "\x1b[0m");
-                                res.render('admin', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, current_page: 'admin', sign_up_success: "Success! Signed up " + req.body.email + "." });
-                            })
-                            .catch(function(error) {
-                                console.log("Couldn't sign up user \x1b[34m" + JSON.stringify(req.body) + "\x1b[31m error quering the golfers database\x1b[0m:");
-                                console.log(error);
-                                res.render('admin', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, current_page: 'admin', sign_up_success: "Couldn't sign up user as there was an error quering the golfers database." });
-                            });
-                    });
-                });
-            }
-        });
-    } else {
-        res.redirect('/');
-    }
-});
+// User Sign Up
+//
+// User sign up is accessed via the '/admin' page and is intended for intialising profiles for
+// new members to the Annual Chip In. The '/admin' page provides a form which takes an email,
+// username, profile photo, password and is_admin bool. On receipt of this information, the 
+// session submitting the request is authenticated and then checked to confirm they are an 
+// admin. If they are the request is passed to the multer uploader (image_uploaders.) which 
+// is located in abstracted_functions/image_upload_objects.js. This uplaoder is for dealing
+// with multipart forms (i.e. forms that contain files to be uploaded). Once this process is 
+// complete the new user information is added to the 'golfers' table, when this is finished the 
+// '/admin' page is rendered. 
 
-router.post('/previous_messages',
-    function(req, res, next) {
-        if (req.isAuthenticated()) {
-            db.query("SELECT c.user_email, c.comment, c.timestamp, g.username, g.profile_photo_title FROM chat as c, golfers as g WHERE c.user_email=g.email ORDER BY c.timestamp")
-                .then(function(data) {
-                    return_array = []
-                    if (data.length > 0) {
-                        if (req.body.previous_timestamp) {
-                            upper_date = moment.utc(req.body.previous_timestamp)
-                        } else {
-                            upper_date = moment.utc(data[data.length - 1].timestamp).add(1, 'd')
-                        }
-                        var collecting = false
-                        var finished_collecting = false
-                        for (message = data.length; message > 0; message--) {
-                            if (finished_collecting == false) {
-                                if (!moment.utc(data[message - 1].timestamp).isSame(upper_date, 'd') && moment.utc(data[message - 1].timestamp).diff(upper_date, 's') < 0) {
-                                    collecting = true
+router.post('/user_signup', function(req, res, next) {
+    authenticate(req, res, 'admin', function() {
+        db.query("SELECT is_admin FROM golfers WHERE email=$1", [req.session.passport.user.email])
+            .then(function(data) {
+                if (data.length > 0) {
+                    if (data[0].is_admin) {
+                        image_uploaders.upload_profile_picture.single('photo_file')(req, res, function(error) {
+                            if (error) {
+                                log('There was an error uploading the profile photo:', 'err')
+                                console.log(error);
+                                res.render('admin', { user: req.session.passport.user.username, sign_up_success: error });
+                                return
+                            } else {
+                                if (req.body.is_admin) {
+                                    is_admin = true;
+                                } else {
+                                    is_admin = false;
                                 }
-                                if (collecting == true) {
-                                    return_array.splice(0, 0, data[message - 1])
-                                    if (message > 1) {
-                                        if (return_array.length > 14 && !moment.utc(data[message - 1].timestamp).isSame(moment.utc(data[message - 2].timestamp), 'd')) {
-                                            finished_collecting = true
-                                        }
+                                log("Creating new user: $1", 'inf', [JSON.stringify(req.body)]);
+                                bcrypt.genSalt(salt_rounds, function(err, salt) {
+                                    console.log(err);
+                                    bcrypt.hash(req.body.password, salt, null, function(err, hash) {
+                                        console.log(err);
+                                        db.query("INSERT INTO golfers (username,email,password,is_admin,profile_photo_title) VALUES ($1,$2,$3,$4,$5)", [req.body.username, req.body.email, hash, is_admin, req.file.filename])
+                                            .then(function(data) {
+                                                log("Successfully created user for $1", 'suc', [JSON.stringify(req.body)]);
+                                                res.render('admin', { user: req.session.passport.user.username, sign_up_success: "Success! Signed up " + req.body.email + "." });
+                                            })
+                                            .catch(function(error) {
+                                                log("Couldn't sign up user $1 error quering the golfers database:", 'err', [JSON.stringify(req.body)]);
+                                                console.log(error);
+                                                res.render('admin', { user: req.session.passport.user.username, sign_up_success: "Couldn't sign up user as there was an error quering the golfers database." });
+                                            });
+                                    });
+                                });
+                            }
+                        });
+                    } else {
+                        log("Someone tried to access the admin page without admin rights user $1", 'wrn', [req.session.passport.user.email])
+                        res.redirect('/');
+                    }
+                } else {
+                    res.redirect('/');
+                }
+            })
+            .catch(function(error) {
+                log("Couldn't validate that $1 has admin rights as there was an error querying the golfers table:", 'err', [req.session.passport.user.email]);
+                console.log(error);
+                res.redirect('/');
+            })
+    })
+})
+
+// Previous Messages
+//
+// The previous messages route is for loading previous chat history from the 'chats' table and sending
+// it to the user. It is called from the Chit Chat page automatically on load, but then also if the user
+// requests older chats. Where it is these older chats that are requested the request will include a 
+// 'previous_timestamp' variable which will mark when to collect prior to.
+//
+// The process first authenticates the user, if this is successful the 'chats' table is then queried to 
+// collect all previous chats. Once these are collected, the array is parsed to collect only chats prior 
+// to the 'previous_timestamp' variable. The process will continue until at least 15 chats have been collected.
+// However, once 15 have been collected the script will continue to collect the remainder of the last days
+// chats (i.e. if 14 chats are collected and the 15 is on a new day, the rest of this day will also be collected).
+// This is to provide a more user friendly experience whereby a user doesn't have to request multiple times for
+// the one conversation where that conversation takes place on the same day.
+
+
+router.post('/previous_messages', function(req, res, next) {
+    authenticate(req, res, 'chit_chat', function() {
+        db.query("SELECT c.user_email, c.comment, c.timestamp, g.username, g.profile_photo_title FROM chat as c, golfers as g WHERE c.user_email=g.email ORDER BY c.timestamp")
+            .then(function(data) {
+                var return_array = []
+                if (data.length > 0) {
+                    if (req.body.previous_timestamp) {
+                        upper_date = moment.utc(req.body.previous_timestamp)
+                    } else {
+                        upper_date = moment.utc(data[data.length - 1].timestamp).add(1, 'd')
+                    }
+                    var collecting = false
+                    var finished_collecting = false
+                    for (message = data.length; message > 0; message--) {
+                        if (finished_collecting == false) {
+                            if (!moment.utc(data[message - 1].timestamp).isSame(upper_date, 'd') && moment.utc(data[message - 1].timestamp).diff(upper_date, 's') < 0) {
+                                collecting = true
+                            }
+                            if (collecting == true) {
+                                return_array.splice(0, 0, data[message - 1])
+                                if (message > 1) {
+                                    if (return_array.length > 14 && !moment.utc(data[message - 1].timestamp).isSame(moment.utc(data[message - 2].timestamp), 'd')) {
+                                        finished_collecting = true
                                     }
                                 }
                             }
                         }
-                        console.log("\x1b[42m\x1b[37mSuccessfully collected previous chat logs\x1b[0m");
                     }
-                    res.send(return_array);
-                })
-                .catch(function(error) {
-                    console.log("Couldn't collect previous chat comments \x1b[31m error quering the chat database\x1b[0m:");
-                    console.log(error);
-                    res.send('index', { user: req.session.passport.user.username, user_email: req.session.passport.user.email, is_admin: req.session.passport.user.is_admin, current_page: 'chit_chat', error_message: "Woops! Something went wrong." });
-                });
-        } else {
-            res.redirect('/login');
-        }
-    }
-);
+                    log("Successfully collected previous chat logs for $1", 'suc', [req.session.passport.user.email]);
+                }
+                res.send(return_array);
+            })
+            .catch(function(error) {
+                log("Couldn't collect previous chat comments for $1 error quering the chat database:", 'err', [req.session.passport.user.email]);
+                console.log(error);
+                res.send("Whoops! Something went wrong.");
+            });
+    })
+})
+
+// Photo Album Upload
+//
+// This request is to upload a photo to go in the photo album on '/photos'. It is called after a form on
+// '/photos' is submitted. The user is first authenticated, if this is successful the 'image_uploaders.'
+// is called (see abstracted_functions/image_upload_objects.js for a full explaination of how this works).
+// This function returns some information about the uploaded file including its new filename, as well as the
+// other request data. The photo is then inserted into the 'photos' table including the uploaded user, 
+// timestamp and short_title. If all of this is successful the user is redirected to '/photos' which reloads 
+// the page, this time including the new photo.
 
 router.post('/photo_album_upload', function(req, res, next) {
-    if (req.isAuthenticated()) {
+    authenticate(req, res, 'photos', function() {
         image_uploaders.upload_photo_album.single('photo_file')(req, res, function(error) {
             if (error) {
-                console.log(error);
-                res.render('photos', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, current_page: 'photos', warning: error });
+                log('$1 has an error uploading the photo album photo:', 'err', [req.session.passport.user.email])
+                console.log(error)
+                res.render('photos', { user: req.session.passport.user.username, warning: error })
                 return
             } else {
-                console.log("\x1b[42m\x1b[37mSuccessfully uploaded \x1b[0m \x1b[34m" + req.file.originalname + "\x1b[0m");
-                db.query("INSERT INTO photos (photo_title,date_uploaded,uploaded_user_email,image_context,short_title) VALUES ($1,$2,$3,$4,$5)", [req.file.filename, moment.utc(), req.session.passport.user.email, "album", req.body.photo_title])
+                log("Successfully uploaded $1 to the photos table", 'suc', [req.file.originalname]);
+                db.query("INSERT INTO photos (photo_title, date_uploaded, uploaded_user_email, short_title) VALUES ($1,$2,$3,$4)", [req.file.filename, moment.utc(), req.session.passport.user.email, req.body.photo_title])
                     .then(function(data) {
-                        console.log("\x1b[42m\x1b[37mSuccessfully added \x1b[0m \x1b[34m" + req.file.filename + "\x1b[0m to the photos table");
-                        res.redirect('/photos');
+                        log("Successfully added $1 to the photos table", 'suc', [req.file.filename])
+                        res.redirect('/photos')
                     })
                     .catch(function(error) {
-                        console.log("Couldn't upload \x1b[34m" + req.file.filename + "\x1b[31m error quering the photos database\x1b[0m:");
-                        console.log(error);
-                        res.redirect('/photos');
-                    });
+                        log("Couldn't upload $1 error quering the photos database:", 'err', [req.file.filename])
+                        console.log(error)
+                        res.redirect('/photos')
+                    })
             }
-        });
-    } else {
-        res.redirect('/');
-    }
-});
+        })
+    })
+})
+
+// Delete Photo From Photo Album
+//
+// This request is to allow either an admin or the user who uploaded a photo to delete it. It is called
+// from the '/photos' page. The user is first authenticated. Information about the photo they are trying to
+// delete is collected by querying the 'photos' table. The user is then checked to see that they are
+// either an admin or that they own the photo which they are trying to delete. If either of these is true then
+// the photo is first removed from the 'photos' table and then deleted from the folder (./public/img/photo_album/).
+// When this is complete a 'success' signal is sent back to the client which in turn removes the image from the 
+// photos page.
 
 router.post('/delete_photo', function(req, res, next) {
-    if (req.isAuthenticated()) {
-        console.log(req.session.passport.user.email + " is attempting to delete \x1b[0m" + req.body.photo_title + "\x1b[0m");
+    authenticate(req, res, null, function() {
+        log("$1 is attempting to delete $2", 'inf', [req.session.passport.user.email, req.body.photo_title]);
         db.query("SELECT uploaded_user_email FROM photos WHERE photo_title=$1", [req.body.photo_title])
             .then(function(data) {
                 if (data.length > 0) {
@@ -424,237 +473,237 @@ router.post('/delete_photo', function(req, res, next) {
                         db.query("DELETE FROM photos WHERE photo_title=$1", [req.body.photo_title])
                             .then(function(data) {
                                 fs.unlinkSync('./public/img/photo_album/' + req.body.photo_title);
-                                console.log("\x1b[42m\x1b[37mSuccessfully deleted \x1b[0m \x1b[34m" + req.body.photo_title + "\x1b[0m");
+                                log("$1 successfully deleted $2", 'suc', [req.session.passport.user.email, req.body.photo_title]);
                                 res.send('success');
                             })
                             .catch(function(error) {
-                                console.log("Couldn't delete \x1b[0m" + req.body.photo_title + "\x1b[31m as there was an error when quering the photos table\x1b[0m:");
+                                log("$1 couldn't delete $2 as there was an error when quering the photos table:", 'err', [req.session.passport.user.email, req.body.photo_title]);
                                 console.log(error);
-                                res.send('Ah oh... Something went wrong when deleting ' + req.body.photo_title + '.');
+                                res.send('Whoops! Something went wrong when deleting ' + req.body.photo_title + '.');
                             });
                     } else {
-                        console.log("Couldn't delete \x1b[0m" + req.body.photo_title + "\x1b[0m as " + req.session.passport.user.email + " doesn't have permission");
-                        res.send("Doesn't look like you have permission to delete " + req.body.photo_title + '.');
+                        log("Couldn't delete $1 as $2 doesn't have permission", 'wrn', [req.body.photo_title, req.session.passport.user.email]);
+                        res.send("Whoops! Doesn't look like you have permission to delete " + req.body.photo_title + '.');
                     }
                 } else {
-                    console.log("Couldn't find \x1b[0m" + req.body.photo_title + "\x1b[0m in the photos table");
-                    res.send('Ah oh... Something went wrong when deleting ' + req.body.photo_title + '.');
+                    log("Couldn't find $1 in the photos table", 'err', [req.body.photo_title]);
+                    res.send('Whoops! Something went wrong when deleting ' + req.body.photo_title + '.');
                 }
             })
             .catch(function(error) {
-                console.log("Couldn't find \x1b[0m" + req.body.photo_title + "\x1b[31m as there was an error when quering the photos table\x1b[0m:");
+                console.log("Couldn't find $1 as there was an error when quering the photos table:", 'err', [req.body.photo_title]);
                 console.log(error);
-                res.send('Ah oh... Something went wrong when deleting ' + req.body.photo_title + '.');
-            });
-    } else {
-        res.redirect('/');
-    }
-});
+                res.send('Whoops! Something went wrong when deleting ' + req.body.photo_title + '.');
+            })
+    })
+})
+
+// Profile Updates
+//
+// This request is called from the '/edit_profile' page which allows users to update their username,
+// password and profile photo. For this a multipart form is sent to the server which may include blank fields
+// where the user only wants to update certain fields.
+//
+// The process begins by authenticating the user by calling authenticate(). If this is successful a query is
+// made to the 'golfers' table to collect the users password hash and current profile photo file. From here,
+// the Multer library is used (see ./abstracted_functions/image_upload_objects.js for a full explaination) to
+// pass the multi part form which may or may not include an image. If there is an error processing the request
+// at this point it is because the file type is not an image. In this case the edit_profile page is returned with
+// an error noting that that file type is not valid. Where an error is not thrown this means either that the
+// image was uploaded into ./img/temp_photos correctly, or that there was no file included in the request (i.e.
+// the user doesn't wish to update their profile photo).
+//
+// In the case of no error, the users password hash is compared to the provided password to double check they are
+// the who they claim. When this passes three function are called in parallel: username, photo and password:
+//
+// username - this checks if the user has provided an updated username. If they have there are two checks performed:
+// that the username is not already taken (to avoid confusion in the chat) and that the username is valid (only contains
+// alphanumeric characters, is 4 or more but less than 100 characters long). If these tests pass then the new username
+// is inserted in the 'golfers' table.
+//
+// photo - this inserts the photo filename into the 'golfers' table and then moves the photo from ./img/temp_photos
+// to ./img/profile_pictures.
+//
+// password - this checks if the user has provided an updated password in either of the password fields. Note that
+// the /edit_profile page requires the user to repeat their new password. This process first checks that the two
+// passwords match, were they do the bcrypt library is used to create a hash of the new password and this is then
+// uploaded into the 'golfers' db. 
+//
+// Once all three of these functions run the users session is terminated with req.logout(), the session is restarted
+// using passport.authenticate() just as if they had logged in for the first time. This is done to reset the details
+// in their session (including username). If this is successful the /edit_profile page is returned along with 
+// notifications on what has been updated.
 
 router.post('/submit_profile_update', function(req, res, next) {
-    if (req.isAuthenticated()) {
+    authenticate(req, res, 'edit_profile', function() {
         error_array = []
         success_array = []
-        db.query("SELECT profile_photo_title FROM golfers WHERE email = $1", [req.session.passport.user.email])
-            .then(function(photo_data) {
-                if (photo_data.length > 0) {
-                    db.query("SELECT password FROM golfers WHERE email = $1", [req.session.passport.user.email])
-                        .then(function(password_data) {
-                            image_uploaders.edit_profile_picture.single('photo_file')(req, res, function(error) {
-                                if (error) {
-                                    console.log("Couldn't process profile update for \x1b[0m" + req.session.passport.user.email + "\x1b[31m as there was an error uploading\x1b[0m:")
-                                    console.log(error)
-                                    error_array.push(error + ' No changes were made.')
-                                    output_notices = {}
-                                    output_notices.error_output = error_array
-                                    output_notices.success_output = success_array
-                                    res.render('edit_profile', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, profile_photo_title: photo_data[0].profile_photo_title, current_page: 'edit_profile', output_notices: output_notices });
-                                    return
-                                } else {
-                                    if (password_data.length > 0) {
-                                        console.log("\x1b[42m\x1b[37mSuccessfully collected user password for \x1b[0m \x1b[34m" + req.session.passport.user.email + "\x1b[0m");
-                                        bcrypt.compare(req.body.password, password_data[0].password, function(err, password_res) {
-                                            if (password_res == true) {
-                                                console.log("\x1b[34m" + req.session.passport.user.email + "\x1b[42m \x1b[37mprovided the correct password\x1b[0m");
-                                                async.parallel({
-                                                        username: function(callback) {
-                                                            if (req.body.username != '') {
-                                                                var update_username = req.body.username.replace(/[^\w\s]/gi, '')
-                                                                if (update_username != req.body.username) {
-                                                                    error_array.push(req.body.username + ' is not valid. Would you like to use ' + update_username + '?')
-                                                                    callback(null)
-                                                                } else {
-                                                                    db.query("SELECT username FROM golfers")
-                                                                        .then(function(usernames) {
-
-                                                                            var username_taken = false
-                                                                            for (row_1 = 0; row_1 < usernames.length; row_1++) {
-                                                                                if (usernames[row_1].username == update_username) {
-                                                                                    username_taken = true
-                                                                                }
-                                                                            }
-                                                                            if (username_taken) {
-                                                                                error_array.push('The username ' + update_username + ' is already taken. Want to try something else?')
-                                                                                callback(null)
-                                                                            } else {
-                                                                                if (username_taken.length > 100) {
-                                                                                    error_array.push('The username ' + update_username + ' is too long. Want to try something less than 100 characters?')
-                                                                                    callback(null)
-                                                                                } else {
-                                                                                    db.query("UPDATE golfers SET username=$1 WHERE email=$2", [update_username, req.session.passport.user.email])
-                                                                                        .then(function(data) {
-                                                                                            console.log("\x1b[42m\x1b[37mSuccessfully updated username for \x1b[0m \x1b[34m" + req.session.passport.user.email + "\x1b[0m");
-                                                                                            success_array.push("Your username is now updated to " + update_username)
-                                                                                            callback(null);
-                                                                                        })
-                                                                                        .catch(function(error) {
-                                                                                            console.log("Couldn't update username for \x1b[34m" + req.session.passport.user.email + "\x1b[31m error quering the golfers database\x1b[0m:");
-                                                                                            console.log(error);
-                                                                                            error_array.push("Something went wrong updating your password, try again.")
-                                                                                            callback(null);
-                                                                                        });
-                                                                                }
-                                                                            }
-                                                                        })
-                                                                        .catch(function(error) {
-                                                                            console.log("Couldn't update username for \x1b[34m" + req.session.passport.user.email + "\x1b[31m error quering the golfers database\x1b[0m:");
-                                                                            console.log(error);
-                                                                            error_array.push("Something went wrong updating your username, try again.")
-                                                                            callback(null);
-                                                                        })
-                                                                }
-                                                            } else {
+        db.query("SELECT password, profile_photo_title FROM golfers WHERE email = $1", [req.session.passport.user.email])
+            .then(function(previous_user_data) {
+                if (previous_user_data.length > 0) {
+                    image_uploaders.edit_profile_picture.single('photo_file')(req, res, function(error) {
+                        if (error) {
+                            log("Couldn't process profile update for $1 as there was an error uploading:", 'err', [req.session.passport.user.email])
+                            console.log(error)
+                            res.render('edit_profile', { user: req.session.passport.user.username, profile_photo_title: previous_user_data[0].profile_photo_title, output_notices: { error_output: [error + ' No changes were made.'], success_output: [] } });
+                            return
+                        } else {
+                            log("Successfully collected user password for $1", 'suc', [req.session.passport.user.email]);
+                            bcrypt.compare(req.body.password, previous_user_data[0].password, function(err, password_res) {
+                                if (password_res == true) {
+                                    log("$1 provided the correct password", 'suc', [req.session.passport.user.email]);
+                                    async.parallel({
+                                        username: function(callback) {
+                                            if (req.body.username != '') {
+                                                var update_username = req.body.username.replace(/[^\w\s]/gi, '')
+                                                if (update_username != req.body.username) {
+                                                    error_array.push(req.body.username + ' is not valid. Would you like to use ' + update_username + '?')
+                                                    callback(null)
+                                                } else if (req.body.username.length < 4) {
+                                                    error_array.push(req.body.username + ' is not 4 or more characters long. Try something longer.')
+                                                    callback(null)
+                                                } else if (update_username.length > 100) {
+                                                    error_array.push('The username ' + update_username + ' is too long. Want to try something less than 100 characters?')
+                                                    callback(null)
+                                                } else {
+                                                    db.query("SELECT username FROM golfers WHERE username = $1", [update_username])
+                                                        .then(function(usernames) {
+                                                            if (usernames.length > 0) {
+                                                                error_array.push('The username ' + update_username + ' is already taken. Want to try something else?')
                                                                 callback(null)
-                                                            }
-                                                        },
-                                                        photo: function(callback) {
-                                                            if (req.file) {
-                                                                db.query("UPDATE golfers SET profile_photo_title=$1 WHERE email=$2", [req.file.filename, req.session.passport.user.email])
+                                                            } else {
+                                                                db.query("UPDATE golfers SET username=$1 WHERE email=$2", [update_username, req.session.passport.user.email])
                                                                     .then(function(data) {
-                                                                        fs.rename('./public/img/temp_photos/' + req.file.filename, './public/img/profile_pictures/' + req.file.filename, function() {
-                                                                            console.log("\x1b[42m\x1b[37mSuccessfully updated profile picture for \x1b[0m \x1b[34m" + req.session.passport.user.email + "\x1b[0m");
-                                                                            success_array.push("Your profile picture is now updated.")
-                                                                            callback(null)
-                                                                        })
-
+                                                                        log("Successfully updated username for $1", 'suc', [req.session.passport.user.email]);
+                                                                        success_array.push("Your username is now updated to " + update_username)
+                                                                        callback(null);
                                                                     })
                                                                     .catch(function(error) {
-                                                                        console.log("Couldn't update image for \x1b[34m" + req.session.passport.user.email + "\x1b[31m error quering the golfers database\x1b[0m:");
+                                                                        log("Couldn't update username for $1 error quering the golfers database:", 'err', [req.session.passport.user.email]);
                                                                         console.log(error);
                                                                         error_array.push("Something went wrong updating your password, try again.")
                                                                         callback(null);
-                                                                    });
-                                                            } else {
-                                                                callback(null);
+                                                                    })
                                                             }
-                                                        },
-                                                        password: function(callback) {
-                                                            if (req.body.new_password_1 != '' || req.body.new_password_2 != '') {
-                                                                if (req.body.new_password_1 != req.body.new_password_2) {
-                                                                    error_array.push("It looks like the two new passwords you provided don't match! Maybe have another crack at it friend.")
-                                                                    callback(null);
-                                                                } else {
-                                                                    if (req.body.new_password_1.length > 4) {
-                                                                        bcrypt.genSalt(salt_rounds, function(err, salt) {
-                                                                            console.log(err);
-                                                                            bcrypt.hash(req.body.new_password_1, salt, null, function(err, hash) {
-                                                                                db.query("UPDATE golfers SET password=$1 WHERE email=$2", [hash, req.session.passport.user.email])
-                                                                                    .then(function(data) {
-                                                                                        console.log("\x1b[42m\x1b[37mSuccessfully updated password for \x1b[0m \x1b[34m" + req.session.passport.user.email + "\x1b[0m");
-                                                                                        success_array.push("Your password is now updated")
-                                                                                        req.body.password = req.body.new_password_1
-                                                                                        callback(null);
-                                                                                    })
-                                                                                    .catch(function(error) {
-                                                                                        console.log("Couldn't update password for \x1b[34m" + req.session.passport.user.email + "\x1b[31m error quering the golfers database\x1b[0m:");
-                                                                                        console.log(error);
-                                                                                        error_array.push("Something went wrong updating your password, try again.")
-                                                                                        callback(null);
-                                                                                    })
-                                                                            })
-                                                                        })
-                                                                    } else {
-                                                                        error_array.push("You new password must be at least five characters long. Other than that, whatever you want.")
-                                                                        callback(null);
-                                                                    }
-                                                                }
-                                                            } else {
-                                                                callback(null);
-                                                            }
-                                                        }
-                                                    },
-                                                    function(err, results) {
-                                                        req.body.email = req.session.passport.user.email
-                                                        req.logout()
-                                                        passport.authenticate('local', { badRequestMessage: "Looks like you are missing either your email or password." }, function(error, user, info) {
-                                                            if (error) {
-                                                                console.log('A login error occured')
-                                                                console.log(error)
-                                                            }
-                                                            if (error || !user || user == false) {
-                                                                return res.render('login', { warning: info.message });
-                                                            }
-                                                            req.login(user, loginErr => {
-                                                                if (loginErr) {
-                                                                    return next(loginErr);
-                                                                }
-                                                                req.session.save(function(err) {
-                                                                    console.log("Redirecting \x1b[34m" + req.session.passport.user.email + "\x1b[0m to edit_profile.ejs");
-                                                                    output_notices = {}
-                                                                    output_notices.error_output = error_array
-                                                                    output_notices.success_output = success_array
-                                                                    db.query("SELECT username, is_admin, profile_photo_title FROM golfers WHERE email = $1", [req.session.passport.user.email])
-                                                                        .then(function(return_data) {
-                                                                            if (return_data.length > 0) {
-                                                                                console.log("\x1b[42m\x1b[37mSuccessfully collected updated data for \x1b[0m \x1b[34m" + req.session.passport.user.email + "\x1b[0m");
-                                                                                res.render('edit_profile', { user: return_data[0].username, is_admin: return_data[0].username.is_admin, profile_photo_title: return_data[0].profile_photo_title, current_page: 'edit_profile', output_notices: output_notices });
-                                                                            } else {
-                                                                                res.redirect('/login')
-                                                                            }
-                                                                        })
-                                                                        .catch(function(return_data) {
-                                                                            console.log("Couldn't collect updated information for \x1b[0m" + req.session.passport.user.email + "\x1b[31m as there was an error when quering the golfers table\x1b[0m:");
-                                                                            console.log(error);
-                                                                            res.render('edit_profile', { error_message: 'Ah oh! Something went wrong, try reloading the page', current_page: 'edit_profile' });
-                                                                        })
-                                                                });
-                                                            });
-                                                        })(req, res, next);
+                                                        })
+                                                        .catch(function(error) {
+                                                            log("Couldn't update username for $1 error quering the golfers database:", 'err', [req.session.passport.user.email]);
+                                                            console.log(error);
+                                                            error_array.push("Something went wrong updating your username, try again.")
+                                                            callback(null);
+                                                        })
+                                                }
+                                            } else {
+                                                callback(null)
+                                            }
+                                        },
+                                        photo: function(callback) {
+                                            if (req.file) {
+                                                db.query("UPDATE golfers SET profile_photo_title=$1 WHERE email=$2", [req.file.filename, req.session.passport.user.email])
+                                                    .then(function(data) {
+                                                        fs.rename('./public/img/temp_photos/' + req.file.filename, './public/img/profile_pictures/' + req.file.filename, function() {
+                                                            log("Successfully updated profile picture for $1", 'suc', [req.session.passport.user.email]);
+                                                            success_array.push("Your profile picture is now updated.")
+                                                            callback(null)
+                                                        })
+                                                    })
+                                                    .catch(function(error) {
+                                                        log("Couldn't update image for $1 error quering the golfers database:", 'err', [req.session.passport.user.email]);
+                                                        console.log(error);
+                                                        error_array.push("Something went wrong updating your password, try again.")
+                                                        callback(null);
                                                     });
                                             } else {
-                                                console.log("\x1b[34m" + req.session.passport.user.email + "\x1b[31m wasn't able to edit their profile because their password was wrong\x1b[0m");
-                                                error_array.push("Woops! I don't think that is the correct password. No changes were made.")
-                                                output_notices = {}
-                                                output_notices.error_output = error_array
-                                                output_notices.success_output = success_array
-                                                res.render('edit_profile', { user: req.session.passport.user.username, is_admin: req.session.passport.user.is_admin, profile_photo_title: photo_data[0].profile_photo_title, current_page: 'edit_profile', output_notices: output_notices });
-                                                return
+                                                callback(null);
                                             }
-                                        })
-                                    } else {
-                                        res.redirect('/login');
-                                    }
+                                        },
+                                        password: function(callback) {
+                                            if (req.body.new_password_1 != '' || req.body.new_password_2 != '') {
+                                                if (req.body.new_password_1 != req.body.new_password_2) {
+                                                    error_array.push("It looks like the two new passwords you provided don't match! Maybe have another crack at it friend.")
+                                                    callback(null);
+                                                } else {
+                                                    if (req.body.new_password_1.length > 4) {
+                                                        bcrypt.genSalt(salt_rounds, function(err, salt) {
+                                                            console.log(err);
+                                                            bcrypt.hash(req.body.new_password_1, salt, null, function(err, hash) {
+                                                                db.query("UPDATE golfers SET password=$1 WHERE email=$2", [hash, req.session.passport.user.email])
+                                                                    .then(function(data) {
+                                                                        log("Successfully updated password for $1", 'suc', [req.session.passport.user.email]);
+                                                                        success_array.push("Your password is now updated")
+                                                                        req.body.password = req.body.new_password_1
+                                                                        callback(null);
+                                                                    })
+                                                                    .catch(function(error) {
+                                                                        log("Couldn't update password for $1 error quering the golfers database:", 'err', [req.session.passport.user.email]);
+                                                                        console.log(error);
+                                                                        error_array.push("Something went wrong updating your password, try again.")
+                                                                        callback(null);
+                                                                    })
+                                                            })
+                                                        })
+                                                    } else {
+                                                        error_array.push("You new password must be at least five characters long. Other than that, whatever you want.")
+                                                        callback(null);
+                                                    }
+                                                }
+                                            } else {
+                                                callback(null);
+                                            }
+                                        }
+                                    }, function(err, results) {
+                                        req.body.email = req.session.passport.user.email
+                                        req.logout()
+                                        passport.authenticate('local', { badRequestMessage: "Looks like you are missing either your email or password." }, function(error, user, info) {
+                                            if (error || !user || user == false) {
+                                                log("$1 had trouble reestablishing a session after updating their profile, this shouldn't have happened", 'err', [req.session.passport.user.email])
+                                                return res.render('login', { warning: info.message });
+                                            }
+                                            req.login(user, loginErr => {
+                                                if (loginErr) {
+                                                    return next(loginErr);
+                                                }
+                                                req.session.save(function(err) {
+                                                    log("Redirecting $1 to /edit_profile", 'inf', [req.session.passport.user.email]);
+                                                    output_notices = { error_output: error_array, success_output: success_array }
+                                                    db.query("SELECT username, is_admin, profile_photo_title FROM golfers WHERE email = $1", [req.session.passport.user.email])
+                                                        .then(function(return_data) {
+                                                            if (return_data.length > 0) {
+                                                                log("Successfully collected updated data for $1", 'suc', [req.session.passport.user.email]);
+                                                                res.render('edit_profile', { user: return_data[0].username, profile_photo_title: return_data[0].profile_photo_title, output_notices: output_notices });
+                                                            } else {
+                                                                res.redirect('/login')
+                                                            }
+                                                        })
+                                                        .catch(function(return_data) {
+                                                            log("Couldn't collect updated information for $1 as there was an error when quering the golfers table:", 'err', [req.session.passport.user.email]);
+                                                            console.log(error);
+                                                            res.render('edit_profile', { error_message: 'Whoops! Something went wrong, try reloading the page' });
+                                                        })
+                                                });
+                                            });
+                                        })(req, res, next);
+                                    });
+                                } else {
+                                    log("$1 wasn't able to edit their profile because their password was wrong", 'err', [req.session.passport.user.email]);
+                                    output_notices = { success_array: [], error_array: ["Woops! I don't think that is the correct password. No changes were made."] }
+                                    res.render('edit_profile', { user: req.session.passport.user.username, profile_photo_title: photo_data[0].profile_photo_title, output_notices: output_notices });
+                                    return
                                 }
-                            });
-                        })
-                        .catch(function(error) {
-                            console.log("Couldn't collect information for \x1b[0m" + req.session.passport.user.email + "\x1b[31m as there was an error when quering the golfers table\x1b[0m:");
-                            console.log(error);
-                            res.render('edit_profile', { error_message: 'Ah oh! Something went wrong, try reloading the page', current_page: 'edit_profile' });
-                        });
+                            })
+                        }
+                    })
                 } else {
-                    res.redirect('/');
+                    res.redirect('/login');
                 }
             })
             .catch(function() {
-                console.log("Couldn't collect information for \x1b[0m" + req.session.passport.user.email + "\x1b[31m as there was an error when quering the golfers table\x1b[0m:");
+                log("Couldn't collect information for $1 as there was an error when quering the golfers table:", 'err', [req.session.passport.user.email]);
                 console.log(error);
-                res.render('edit_profile', { error_message: 'Ah oh! Something went wrong, try reloading the page', current_page: 'edit_profile' });
+                res.render('edit_profile', { error_message: 'Ah oh! Something went wrong, try reloading the page' });
             })
-    } else {
-        res.redirect('/');
-    }
-});
+    })
+})
 
 /* TOM SECTION. */
 
@@ -689,6 +738,6 @@ router.get('/scorecard/card', function(req, res, next) {
     res.render('card', { title: 'Individual Hole', day: day, hole: hole });
 });
 
-/* General Stuff */
+/******************************************* MODULE EXPORTS **************************************/
 
 module.exports = router;
