@@ -1,12 +1,36 @@
 body {
 	font-family: 'Roboto', sans-serif;
+  background-color: #e5e4d7;
 }
+
+.leader-board {
+  -webkit-box-shadow: 10px 10px 23px -8px rgba(199,199,199,1);
+  -moz-box-shadow: 10px 10px 23px -8px rgba(199,199,199,1);
+  box-shadow: 10px 10px 23px -8px rgba(199,199,199,1);
+  border-radius: 29px 29px 29px 29px;
+  -moz-border-radius: 29px 29px 29px 29px;
+  -webkit-border-radius: 29px 29px 29px 29px;
+  border: 0px none #000000;
+  background-color: #f5f5f0;
+  height: 160px;
+  padding:5px;
+  }
 
 .main_theme-title {
     text-shadow: 2px 2px #E5E4D7, 4px 4px #aeac84;
     font-size:24pt;
     font-family: 'Pacifico', cursive;
 }
+
+.main_theme-subtitle {
+  text-shadow: 2px 2px #E5E4D7, 4px 4px #aeac84;
+  font-size:24pt;
+  font-family: 'Pacifico', cursive;
+  text-align: center;
+  margin-bottom: 10px
+
+}
+
 
 .main_theme-number {
     font-size:24pt;
@@ -32,14 +56,31 @@ body {
 }
 
 
-.img-circle:hover {
+.lboard_image {
+    width: 60px;
+    height: 60px;
+    border-radius: 7px;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.22);
+}
+
+.lboard_image:hover {
     box-shadow: 0 5px 5px rgb(255,207,121);
 }
+
+
 
 /* FLICKETY SCROLL BAR */
 
 .gallery-cell {
-  width: 35%;
+  width: 25%;
+  height: 120px;
+  margin-right: 10px;
+  /*background: #E5E4D7;*/
+  counter-increment: gallery-cell;
+}
+
+.score .gallery-cell {
+  width: 45%;
   height: 100px;
   margin-right: 10px;
   /*background: #E5E4D7;*/
@@ -47,25 +88,35 @@ body {
 }
 
 .button__badge {
-  background-color: #FFCF79;
+  background-color: #ff7a7a;
+/*  #FFCF79*/
   border-radius: 2px;
   color: white;
   padding: 1px 3px;
   font-size: 10px;
   position: absolute; /* Position the badge within the relatively positioned button */
-  top: 5px;
-  right: 34%;
+  top: -1px;
+  right: 23%;
 }
 
 /* END FLICKETY SCROLL BAR  */
 
-
-
 /* Grid LAYOUT */
+#hole_links {
+  padding:10px;
+  padding-top: 0px;
+  margin-top: 2px;
+}
+
+.field {
+  margin-bottom: 0px !important;
+  padding-left: 10px;
+  padding-right: 10px;
+}
 
 .box-hole {
   background: #fff;
-  border: 2px solid #fff;
+  border: 2px solid #e5e4d7;
   height: 150px;
   display: table-cell;
   vertical-align: middle;
@@ -73,11 +124,19 @@ body {
 }
 
 .hole-details {
-  border: 2px solid #fff;
-  height: 150px;
-  display: table-cell;
-  vertical-align: middle;
-  background-size: cover;
+  padding:15px;
+  border: 1px solid #fff;
+  color: #FFF;
+  text-align: center;
+}
+
+.hole-details img {
+    display : block;
+    margin : auto;
+}
+
+.hole-stat {
+  font-size: 28pt;
 }
 
 .top-left {
@@ -117,25 +176,46 @@ body {
   display: flex;
 }
 
-.hole-stats { 
-    text-decoration-line: underline;
-    text-decoration-style: dashed;
-    text-decoration-color: white;
+
+
+/*****************************************************************************************/
+/* SCORE INPUT*/
+
+.score-input input {
+  border: none;
+  background: transparent;
+  width: 50px;
+  padding: 8px;
+  text-align: center;
+}
+
+.score-input button {
+  
+}
+
+.score-input .is-active input {
+  
+}
+.score-input .is-active input {
+  
+}
+
+.slider {
+    position: absolute;
+    display:block;
+    left: 0;
+    top:90%;
+    margin:0 auto;
+    height: 2px;
+    background-color: #000;
+    width: 100%;
+    transition: width 1s ease;
 }
 
 
-/* Forms and Inputs */
-
-/*.score-input {
-  color: white;
-  width: 600px;
-  max-width: 80%;
-  display: none;
-  border-bottom-color: white;
-}*/
 
 
-/* SCORE INPUT VERSION 1 */
+/*****************************************************************************************/
 
 
 /* BULMA ALTERATIONS */
