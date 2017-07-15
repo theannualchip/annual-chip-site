@@ -17,125 +17,88 @@
 
 	<% include menu_partial.ejs %>
 
-<!-- 	<section class="hero">
-	<div class="hero-body background_color-grey"> -->
 		<nav class="breadcrumb is-large">
 			<ul>
 				<li><a href="/scorecard">Day <%= day %> </a></li>
 				<li class="is-active"><a>Hole <%= hole %> </a></li>
 			</ul>
 		</nav>
-<!-- 		</div>
-</section> -->
-<section>
 
-	<div class = "columns is-mobile">
 
-		<div class="column hole-details center-div" style="background-color:#ffedcc">
+
+		<div class="hole-details is-fullwidth" style="background-color:#ffedcc">
 
 			<div class="columns is-mobile">
 
-				<div class="column">
-					<span class="tag is-white"> Distance </span>
+				<div class="column is-4">
+					<img class="image is-32x32" src="/img/holes/distance.png">
+					<span > Distance </span>
 				</div>
 
-				<div class="column center-div">
-					<img src="/img/holes/distance.png">
-				</div>
-
-				<div class="column">
-					<span class="tag is-white"> 445m </span>
+				<div class="column is-8 center-div">
+					<span class = "hole-stat"> 445m </span>
 				</div>
 
 
 			</div>
 		</div>
-	</div>
 
-	<div class = "columns is-mobile">
-
-		<div class="column hole-details center-div" style="background-color: #cdcbb2">
+		<div class="hole-details is-fullwidth" style="background-color:#cdcbb2">
 
 			<div class="columns is-mobile">
 
-
-				<div class="column">
-					<span class="tag is-white"> Par </span>
+				<div class="column is-4">
+					<img class="image is-32x32" src="/img/holes/par.png">
+					<span class="is-white"> Par </span>
 				</div>
 
-				<div class="column center-div">
-					<img src="/img/holes/par.png">
+				<div class="column is-8 center-div">
+					<span class = "hole-stat"> 4 </span>
 				</div>
 
-				<div class="column">
-					<span class="tag is-white"> 3 </span>
-				</div>
 
 			</div>
-
 		</div>
-	</div>
 
 
-	<div class = "columns is-mobile">
-
-		<div class="column hole-details center-div" style="background-color:#ffcf79">
+		<div class="hole-details is-fullwidth" style="background-color:#ffcf79">
 
 			<div class="columns is-mobile">
 
-
-				<div class="column">
-					<span class="tag is-white"> Best </span>
+				<div class="column is-4">
+					<img class="image is-32x32" src="/img/holes/top-score.png">
+					<span class="is-white"> Top Score </span>
 				</div>
 
-				<div class="column center-div">
-					<img src="/img/holes/top-score.png">
+				<div class="column is-8 center-div">
+					<span class = "hole-stat"> TBD </span>
 				</div>
 
-				<div class="column">
-					<span class="tag is-white"> TBD </span>
-				</div>
 
 			</div>
-
 		</div>
-	</div>
 
 
-	<div class = "columns is-mobile">
-		<div class="column hole-details center-div" style="background-color:#f5f5f0">
+		<div class="hole-details is-fullwidth" style="background-color:#f5f5f0">
 
 			<div class="columns is-mobile">
 
-				<div class="column is-6">
+				<div class="column is-4">
 
-					<img class="img-circle" src="/img/profile_pictures/tom.jpg">
+					<img class="image img-circle" src="/img/profile_pictures/tom.jpg">
 				</div>
 
-				<div class="column is-6">
-
-					<div class="input-circle"></div>
+				<div class="column is-8 center-div">
+					<div class="score-input">
+<!-- 					<button class="score-input"> Test </button>
+ -->  					<input class="score-input"></input>
+				</div>
 				</div>
 
-<!-- 					<div class="column container is-fluid">
-						
-						<div class="field has-addons">
-							<p class="control">
-								<input class="input" type="text" placeholder="4">
-							</p>
-							<p class="control">
-								<a class="button is-static">
-									strokes
-								</a>
-							</p>
-						</div> -->
-					</div>
 
-				</div>
 			</div>
 		</div>
 
-	</section>
 	<br>
 	<h1 class="main_theme-title "> Who's Played </h1>
 	<div class="leader-board container is-fluid is-fullwidth">

@@ -57,12 +57,6 @@ body {
     box-shadow: 0 5px 5px rgb(255,207,121);
 }
 
-.input-circle {
-  border-radius: 50%;
-  height: 50px;
-  width: 50px;
-  background-color: #FFF;\
-}
 
 
 /* FLICKETY SCROLL BAR */
@@ -97,10 +91,7 @@ body {
 
 /* END FLICKETY SCROLL BAR  */
 
-
-
 /* Grid LAYOUT */
-
 .box-hole {
   background: #fff;
   border: 2px solid #e5e4d7;
@@ -111,11 +102,19 @@ body {
 }
 
 .hole-details {
+  padding:15px;
   border: 1px solid #fff;
-  height: 100px;
-  display: table-cell;
-  vertical-align: middle;
-  background-size: cover;
+  color: #FFF;
+  text-align: center;
+}
+
+.hole-details img {
+    display : block;
+    margin : auto;
+}
+
+.hole-stat {
+  font-size: 28pt;
 }
 
 .top-left {
@@ -155,25 +154,11 @@ body {
   display: flex;
 }
 
-.hole-stats { 
-    text-decoration-line: underline;
-    text-decoration-style: dashed;
-    text-decoration-color: white;
-}
 
 
 /* Forms and Inputs */
 
-/*.score-input {
-  color: white;
-  width: 600px;
-  max-width: 80%;
-  display: none;
-  border-bottom-color: white;
-}*/
 
-
-/* SCORE INPUT VERSION 1 */
 
 
 /* BULMA ALTERATIONS */
