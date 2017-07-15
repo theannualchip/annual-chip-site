@@ -108,8 +108,12 @@ exports.format_hole_scores = function(scores) {
 		var name = scores[i].username;
 		var score = scores[i].score;
 		var pic_name = scores[i].profile_photo_title;
+		var tag_ = "is-success"
 
-		if (score == 99) { score = "TBD"}
+		if (score == 99) { 
+			tag_ = "is-dark"
+			score = "TBD"
+		}
 
 		flick_cell_element = `
 		  <div class="score gallery-cell center-div has-text-centered">
@@ -117,7 +121,7 @@ exports.format_hole_scores = function(scores) {
 		      <div>
 		        <img class="lboard_image" src="/img/profile_pictures/${pic_name}">
 		      </div>
-		      <div><span class="tag is-dark"> ${name}: ${score} </span> </div>
+		      <div><span class="tag ${tag_}"> ${name}: ${score} </span> </div>
 		    </div>  
 		  </div>
 		`;

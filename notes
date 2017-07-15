@@ -84,6 +84,74 @@
 		    VALUES ('Sammy B', 1, 2, 6);
 
 	
+	** Hole Info Table **
+
+	CREATE TABLE hole_info(
+		course VARCHAR(50),
+		hole INTEGER,
+		par INTEGER,
+		distance INTEGER,
+		pro_tip VARCHAR(500),
+		hole_diagram VARCHAR(50),
+	    PRIMARY KEY(course, hole)
+	);
+
+
+		* Flinders Golf Course Data *
+			INSERT INTO hole_info (course, hole, par, distance, pro_tip,hole_diagram)
+		    	VALUES ('flinders', 1, 4, 230, 'Short par 4 to ease you into your round. Classic risk and reward as it invites you “have a go” at the well guarded green.','na');
+
+			INSERT INTO hole_info (course, hole, par, distance, pro_tip,hole_diagram)
+		    	VALUES ('flinders', 2, 4, 290, 'Tough tee shot with OOB down the left side and a fairway bunker on the right. Approach shot is into narrow entrance guarded by bunkers on either side.','na');
+
+			INSERT INTO hole_info (course, hole, par, distance, pro_tip,hole_diagram)
+		    	VALUES ('flinders', 3, 3, 189, 'Long par 3 with all the trouble pin high and beyond. Par is more easily achieved if short of the green rather than long.','na');
+
+			INSERT INTO hole_info (course, hole, par, distance, pro_tip,hole_diagram)
+		    	VALUES ('flinders', 4, 4, 256, 'Risk and reward personified here. Almost as if the flag is waving at you enticing you to have a go. It’s dead left and long and there’s also 2 coffins to contend with. One is 150 metres from the tee which swallows any mishit tee shots and the other just before the green to swallow mishit approaches. Both offer unpredictable lies. Leave the Superman cloak in the bag, play safe and don’t leave yourself a downhill putt.','na');
+
+			INSERT INTO hole_info (course, hole, par, distance, pro_tip,hole_diagram)
+		    	VALUES ('flinders', 5, 5, 419, 'Reachable Par 5 all dependent on the tee shot. Tight driving hole with OOB on left side and lots of fairway bunkers to catch your ball. Take time to enjoy the view on your left hand side.','na');
+
+			INSERT INTO hole_info (course, hole, par, distance, pro_tip,hole_diagram)
+		    	VALUES ('flinders', 6, 4, 349, 'Tough Par 4 uphill all the way again with OOB on left hand side. Club selection is key as approach shots not hit to the middle of green or beyond usually roll back off the sloping green.','na');
+
+			INSERT INTO hole_info (course, hole, par, distance, pro_tip,hole_diagram)
+		    	VALUES ('flinders', 7, 4, 394, 'Great looking long Par 4 slightly uphill with difficult tee shot, needing to be long to avoid the dam on the right. Always wise to take an extra club into this green as the uphill slope is deceiving.','na');
+
+			INSERT INTO hole_info (course, hole, par, distance, pro_tip,hole_diagram)
+		    	VALUES ('flinders', 8, 4, 315, 'Another great driving hole. Beware fairway bunkers awaiting any ball left side of a sloping fairway on this dog leg left hole and the green side bunkers on right are a must to avoid.','na');
+
+			INSERT INTO hole_info (course, hole, par, distance,pro_tip, hole_diagram)
+		    	VALUES ('flinders', 9, 3, 161, 'Par 3 at the top of the course and club selection varies depending on wind. There never feels like there’s much wind on the protected tee but there always is. Much easier to make a 3 if your tee shot is from short of the green. Phil Mickelson can’t get up and down from the green side trap left!','na');
+
+			INSERT INTO hole_info (course, hole, par, distance,pro_tip, hole_diagram)
+		    	VALUES ('flinders', 10, 4, 312,'Straightforward Par 4 with tricky green sloping from back to front. Leave an uphill putt.', 'na');
+
+			INSERT INTO hole_info (course, hole, par, distance,pro_tip, hole_diagram)
+		    	VALUES ('flinders', 11, 4, 257, 'Well protected Par 4 which favours the long hitters. Long and down the left side offers the easier approach. Short hitters might prefer laying up down the left side as green is almost impossible to land anything other than a wedge on, if you want the ball to stay on the green.','na');
+
+			INSERT INTO hole_info (course, hole, par, distance, pro_tip,hole_diagram)
+		    	VALUES ('flinders', 12, 3, 124, 'Beautiful tee shot fully exposed to the elements. With bunkers front and left, grassy hollows to the right and a sloping green to the ocean, par is difficult to achieve if the green is missed.','na');
+
+			INSERT INTO hole_info (course, hole, par, distance, pro_tip,hole_diagram)
+		    	VALUES ('flinders', 13, 4, 342, 'Tight dog leg left with lots of risk and reward on offer. Drive over the corner of the left trees will allow a short iron in, whereas the short hitters will face a long blind second shot.','na');
+
+			INSERT INTO hole_info (course, hole, par, distance, pro_tip,hole_diagram)
+		    	VALUES ('flinders', 14, 3, 128, 'Par 3 that can be anything from Driver to Sandwedge depending on conditions. Better short than long here as trees protect the back end of the green.','na');
+
+			INSERT INTO hole_info (course, hole, par, distance, pro_tip,hole_diagram)
+		    	VALUES ('flinders', 15, 5, 454, 'Long Par 5 aptly named in the cooler months of the year. The hole is just as you see it and the green can be reached in 2, but is more receptive to a short iron into it.','na');
+
+			INSERT INTO hole_info (course, hole, par, distance, pro_tip,hole_diagram)
+		    	VALUES ('flinders', 16, 4, 298, 'A driver isn’t always needed as this tight fairway is guarded by Pines down the left and 3 bunkers down the right. Wind conditions play a part in the approach. Beware!','na');
+
+			INSERT INTO hole_info (course, hole, par, distance, pro_tip,hole_diagram)
+		    	VALUES ('flinders', 17, 3, 159, 'Long Par 3 with most of the trouble long. Play short rather than long.','na');
+
+			INSERT INTO hole_info (course, hole, par, distance, pro_tip,hole_diagram)
+		    	VALUES ('flinders', 18, 4, 290, 'Tough tee shot to an uphill dogleg left fairway, with trouble all around. Lots of cards ruined on this hole. Longer hitter might be advised to lay up with a hybrid to avoid running thru fairway into trees. On approach, not many up and downs happen from over the green.','na');
+
 	** Photos Table **
 
 	Starting with the pics stored locally and manually entering the log details

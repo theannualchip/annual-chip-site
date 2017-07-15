@@ -17,13 +17,16 @@
 
 	<% include menu_partial.ejs %>
 
+	<h1 class="main_theme-subtitle"> Day  <%= day %> > Hole <%= hole %>  </h1>
+
+<!-- 
 		<nav class="breadcrumb is-large">
 			<ul>
 				<li><a href="/scorecard">Day <%= day %> </a></li>
 				<li class="is-active"><a>Hole <%= hole %> </a></li>
 			</ul>
 		</nav>
-
+ -->
 
 
 		<div class="hole-details is-fullwidth" style="background-color:#ffedcc">
@@ -71,7 +74,7 @@
 				</div>
 
 				<div class="column is-8 center-div">
-					<span class = "hole-stat"> TBD </span>
+					<span class = "hole-stat"> T Bish </span>
 				</div>
 
 
@@ -91,7 +94,10 @@
 				<div class="column is-8 center-div">
 					<div class="score-input">
 <!-- 					<button class="score-input"> Test </button>
- -->  					<input class="score-input"></input>
+ -->  					
+ 						<input></input>
+ 						<button id="log" type="submit" class="button background_color-yellow"> Log </button>
+
 				</div>
 				</div>
 
@@ -100,11 +106,11 @@
 		</div>
 
 	<br>
-	<h1 class="main_theme-title "> Who's Played </h1>
+	<h1 class="main_theme-subtitle"> Who's Played </h1>
 	<div class="leader-board container is-fluid is-fullwidth">
 		<%- scores %>
 	</div>
-
+	<br>
 
 
 	<script src="/javascripts/extras/flickity.pkgd.min.js"></script>
