@@ -67,35 +67,22 @@ $(function(){
 // Respond to day update
 $(function(){
 
-	// Want to respond to a click on the .box-hole class
+	// Want to respond to updating the day
 	$('#update').on('click',function(){
 
-		alert($(this).parent().parent().find(".control").find("select :selected").html());
-
-		// var links = <%= links %>;
-
+		// The html of the selected option in the day select
 		var day_string = $(this).parent().parent().find(".control").find("select :selected").html();
+
+		// Regex out the day number
 		var day_num = day_string.match(/[0-9]/);
 
+		// Find the html of the hole links for the right day
+		// index starts at 0 hence the -1
+		var html_ = variables.links[day_num-1];
 
-		alert(day_num);
-		$("#hole_links").html(links[day_num-1]);
+		// Update HTML of hole links thing
+		 $("#hole_links").html(html_);
 
-	 //    // Find the day number
-	 //    var day_string = $(".is-active").find(".day-label").html();
-	 //    var day_num = day_string.match(/[0-9]/)
-
-	 //  	// Find the hole number
-		// var hole_num = $(this).children('h1').html();
-
-	 //  	// Go to the hole page (card.ejs) with these parameters
-	 //  	$.get( "/scorecard/card?day=day_num&hole=hole_num", {day_num: day_num, hole_num: hole_num}, function( data ) {
-		   
-	 //  		res.render('card', {title: 'Individual Hole', day: day_num, hole: hole_num});
-
-		// });
-
-	 //  	alert("Day" + day_num + " hole number " + hole_num);
 	 });
 
 

@@ -21,7 +21,7 @@
 <!-- Small Leaderboard Scroller -->
 <h1 class="main_theme-subtitle"> Current Standings </h1>
 
-<div class="leader-board container is-fluid is-fullwidth">
+<div class="leader-board">
   <%- leaderboard %>
 </div>
 
@@ -46,11 +46,14 @@
 
 <!-- BODY OF SCOREBOARD -->
 <div id="hole_links">
-  <% var links = links %>
   <%- links[0] %>
 </div>
 
 <script src="/javascripts/extras/flickity.pkgd.min.js"></script>
+
+<script>
+    var variables = <%- JSON.stringify(locals) %>;
+</script>
 
 </body>
 

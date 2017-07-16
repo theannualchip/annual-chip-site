@@ -686,15 +686,39 @@ router.get('/scorecard/card', function(req, res, next) {
     day = req.query.day;
     hole = req.query.hole;
 
+    // Get current scores from the database
     tom_js.get_hole_scores(db, day, hole)
         .then(data => {
 
-            scores_html = tom_js.format_hole_scores(data)
+            var scores_html_ = tom_js.format_hole_scores(data);
 
-            res.render('card', { title: 'Individual Hole', day: day, hole: hole, scores: scores_html });
+            var top_scorer_ = tom_js.top_scorer(data);
+
+            // Get hole info from the database
+            tom_js.get_hole_info(db, day, hole)
+                .then(data => {
+
+                    details = JSON.stringify(data);
+
+                    var distance_ = data[0].distance;
+                    var par_ = data[0].par;
+                    var pro_tip_ = data[0].pro_tip;
+
+                    // Render the card with the right data
+                    res.render('card', { 
+                                title: 'Hole Scoracard', 
+                                day: day, 
+                                hole: hole, 
+                                scores: scores_html_,
+                                distance: distance_,
+                                par: par_,
+                                top_scorer: top_scorer_,
+                                pro_tip: pro_tip_ });
+
+                }).catch(error => { console.log(error) })
+
 
         }).catch(error => { console.log(error) })
-
 
 });
 

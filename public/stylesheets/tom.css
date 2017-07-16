@@ -13,7 +13,10 @@ body {
   border: 0px none #000000;
   background-color: #f5f5f0;
   height: 160px;
-  padding:5px;
+  padding:10px;
+  margin-left:10px;
+  margin-right:10px;
+
   }
 
 .main_theme-title {
@@ -125,7 +128,7 @@ body {
 
 .hole-details {
   padding:15px;
-  border: 1px solid #fff;
+  border: 0.5px solid #fff;
   color: #FFF;
   text-align: center;
 }
@@ -137,6 +140,11 @@ body {
 
 .hole-stat {
   font-size: 28pt;
+}
+
+.pro-tip {
+  font-size: 10pt;
+  text-align: right;
 }
 
 .top-left {
