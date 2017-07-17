@@ -34,23 +34,12 @@ body {
 
 }
 
-
 .main_theme-number {
     font-size:24pt;
     color:white;
     font-family: 'Pacifico', cursive;
     margin-top: 60px;
 }
-
-.regular-input {
-   font-family: 'Roboto', sans-serif;
-   color: white;
-   font-size:20pt;
-   display:flex;
-   justify-content:center;
-   align-items:center;
-}
-
 .img-circle {
     border-radius: 50%;
     height: 50px;
@@ -189,16 +178,36 @@ body {
 /*****************************************************************************************/
 /* SCORE INPUT*/
 
+#input-pic {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .score-input input {
+  font-family: 'Roboto', sans-serif;
   border: none;
+  color: white;
+  font-size:24pt;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   background: transparent;
   width: 50px;
   padding: 8px;
   text-align: center;
 }
 
+.score-input input:hover {
+
+}
+
+.score-input input.is-active {
+  border: 2px solid #CCDCB0;
+}
+
 .score-input button {
-  
+/*  border:none;
+*/  background-color: transparent;
 }
 
 .score-input .is-active input {

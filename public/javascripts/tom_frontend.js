@@ -87,3 +87,20 @@ $(function(){
 
 
 });
+
+
+
+// Respond to day update
+$(function(){
+
+	// Want to respond to updating the day
+	$('#input-pic').on('click',function(){
+
+		alert("ello");
+
+		$('.score-input input').toggleClass('is-active');
+
+	 });
+
+
+});
