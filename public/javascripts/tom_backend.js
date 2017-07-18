@@ -93,6 +93,20 @@ exports.get_short_lboard = function(db_connection, day) {
 };
 
 
+exports.log_score = function(db_connection, user, hole, day, score) {
+
+	db = db_connection;
+
+	query_string = `
+	INSERT INTO scores (username, day, hole, score)
+    	VALUES ({user}, {day}, {hole}, {score});
+	`
+	result = db.query(query_string)
+
+	return result;
+
+};
+
 
 //  +++++++++++++++++++++++++++++++++++++
 //  WEB CONTENT CREATION FUNCTIONS

@@ -722,6 +722,24 @@ router.get('/scorecard/card', function(req, res, next) {
 
 });
 
+
+router.post("/scorecard/card",  function(req, res, next) {
+
+    var user = req.user.username;
+    var hole = req.body.hole;
+    var day = req.body.day;
+    var score = req.body.score;
+
+    tom_js.log_score(db, user, hole, day, score)
+    .then(data => {
+
+        // Do nothing
+
+    }).catch(error => {console.log("Something went awry")})
+
+
+});
+
 /* General Stuff */
 
 module.exports = router;

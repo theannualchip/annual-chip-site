@@ -44,9 +44,12 @@ body {
     border-radius: 50%;
     height: 50px;
     width: 50px;
-    box-shadow: 0 5px 5px rgba(0,0,0,0.22);
-}
+/*    box-shadow: 0 5px 5px rgba(0,0,0,0.22);
+*/}
 
+.img-circle.is-a                                                                                                      /////////        /ctive {
+    box-shadow: 0 5px 5px rgb(255,207,121);
+}
 
 .lboard_image {
     width: 60px;
@@ -178,9 +181,33 @@ body {
 /*****************************************************************************************/
 /* SCORE INPUT*/
 
+.circler {
+  position: absolute;
+  top: 13px;
+  left: 62px;
+  width: 65px;
+  height: 67px;
+  z-index:200;
+}
+
 #input-pic {
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+#input-pic.is-active {
+  border: 4px solid #CCDCB0;
+}
+
+.piccer {
+
+  position:relative;
+
+}
+
+.stats-container {
+  width:580px;
+  margin:10px;
 }
 
 .score-input input {
@@ -193,22 +220,46 @@ body {
   align-items:center;
   background: transparent;
   width: 50px;
+  height: 50px;
   padding: 8px;
   text-align: center;
 }
 
-.score-input input:hover {
-
+.score-input input.is-active {
+  border-bottom: 2px solid #FFF;
+/*  border-radius: 50%;
+  -webkit-box-shadow: 0px 0px 9px 9px rgba(255,255,255,0.64);
+  -moz-box-shadow: 0px 0px 9px 9px rgba(255,255,255,0.64);
+  box-shadow: 0px 0px 9px 9px rgba(255,255,255,0.64);
+}*/
 }
 
-.score-input input.is-active {
-  border: 2px solid #CCDCB0;
+.score-input input:focus {
+  outline:none;
 }
 
 .score-input button {
-/*  border:none;
-*/  background-color: transparent;
+  font-family: 'Roboto', sans-serif;
+  color: transparent;
+  margin-left: 10px;
+  border:none;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: transparent;
 }
+
+.score-input button.is-active {
+  border: 2px solid white;
+  background-color: white;
+  color: #498D5B;
+  font-weight: bold;
+}
+
+.score-input button:focus {
+  outline:none;
+}
+
 
 .score-input .is-active input {
   

@@ -18,118 +18,128 @@
 	<% include menu_partial.ejs %>
 
 	<br>
+	<div class="stats-container">
 	<h1 class="main_theme-subtitle"> Day  <%= day %> : Hole <%= hole %>  </h1>
-	<br>
+
+		<br>
 
 
 
-	<!-- #FFE680 YELLOW-->
-	<!-- #D0F0C0 GREEN -->
-	<div class="hole-details is-fullwidth" style="background-color:#CCDCB0">
+		<!-- #FFE680 YELLOW-->
+		<!-- #D0F0C0 GREEN -->
+		<div class="hole-details is-fullwidth" style="background-color:#CCDCB0">
 
-		<div class="columns is-mobile">
+			<div class="columns is-mobile">
 
-			<div class="column is-4">
-				<img class="image is-32x32" src="/img/holes/distance.png">
-				<span > Distance </span>
+				<div class="column is-4">
+					<img class="image is-32x32" src="/img/holes/distance.png">
+					<span > Distance </span>
+				</div>
+
+				<div class="column is-8 center-div">
+					<span class = "hole-stat"> <%= distance %>m </span>
+				</div>
+
+
 			</div>
-
-			<div class="column is-8 center-div">
-				<span class = "hole-stat"> <%= distance %>m </span>
-			</div>
-
-
 		</div>
-	</div>
 
-	<!-- #9dc183 GREEN--> 
-	<!-- #cdcbb2 YELLOW -->
-	<div class="hole-details is-fullwidth" style="background-color:#AACD92">
+		<!-- #9dc183 GREEN--> 
+		<!-- #cdcbb2 YELLOW -->
+		<div class="hole-details is-fullwidth" style="background-color:#AACD92">
 
-		<div class="columns is-mobile">
+			<div class="columns is-mobile">
 
-			<div class="column is-4">
-				<img class="image is-32x32" src="/img/holes/par.png">
-				<span class="is-white"> Par </span>
+				<div class="column is-4">
+					<img class="image is-32x32" src="/img/holes/par.png">
+					<span class="is-white"> Par </span>
+				</div>
+
+				<div class="column is-8 center-div">
+					<span class = "hole-stat"> <%= par %> </span>
+				</div>
+
+
 			</div>
-
-			<div class="column is-8 center-div">
-				<span class = "hole-stat"> <%= par %> </span>
-			</div>
-
-
 		</div>
-	</div>
 
-	<!-- #4CBB17 GREEN -->
-	<!-- F9BC06 YELLOW -->
-	<div class="hole-details is-fullwidth" style="background-color:#81BD74">
+		<!-- #4CBB17 GREEN -->
+		<!-- F9BC06 YELLOW -->
+		<div class="hole-details is-fullwidth" style="background-color:#81BD74">
 
-		<div class="columns is-mobile">
+			<div class="columns is-mobile">
 
-			<div class="column is-4">
-				<img class="image is-32x32" src="/img/holes/top-score.png">
-				<span class="is-white"> Top Score </span>
+				<div class="column is-4">
+					<img class="image is-32x32" src="/img/holes/top-score.png">
+					<span class="is-white"> Top Score </span>
+				</div>
+
+				<div class="column is-8 center-div">
+					<span class = "hole-stat"> <%= top_scorer %> </span>
+				</div>
+
 			</div>
-
-			<div class="column is-8 center-div">
-				<span class = "hole-stat"> <%= top_scorer %> </span>
-			</div>
-
 		</div>
-	</div>
 
-	<!-- FFE680 YELLOW -->
-	<!-- #2E8B57 GREEN -->
-	<div class="hole-details is-fullwidth" style="background-color:#58AC5C">
+		<!-- FFE680 YELLOW -->
+		<!-- #2E8B57 GREEN -->
+		<div class="hole-details is-fullwidth" style="background-color:#58AC5C">
 
-		<div class="columns is-mobile">
+			<div class="columns is-mobile">
 
-			<div class="column is-4">
-				<img class="image is-32x32" src="/img/holes/idea.png">
-				<span class="is-white"> Pro Tip </span>
+				<div class="column is-4">
+					<img class="image is-32x32" src="/img/holes/idea.png">
+					<span class="is-white"> Pro Tip </span>
+				</div>
+
+				<div class="column is-8 center-div">
+					<span class = "pro-tip"> <%= pro_tip %> </span>
+				</div>
+
+
 			</div>
-
-			<div class="column is-8 center-div">
-				<span class = "pro-tip"> <%= pro_tip %> </span>
-			</div>
-
-
 		</div>
-	</div>
 
-	<!-- 498D5B GREEN -->
-	<!-- f5f5f0 Grey -->
-	<div class="hole-details is-fullwidth" style="background-color:#498D5B">
+		<!-- 498D5B GREEN -->
+		<!-- f5f5f0 Grey -->
+		<div class="hole-details is-fullwidth" style="background-color:#498D5B">
 
-		<div class="columns is-mobile">
+			<div class="columns is-mobile">
 
-			<div class="column is-4">
+				<div class="column is-4 piccer">
 
-				<img id="input-pic" class="image img-circle" src="/img/profile_pictures/tom.jpg">
-			</div>
-
-			<div class="column is-8 center-div">
-				<div class="score-input is-fullwidth center-div">				
-					<input></input>
-					<button id="log" type="submit"> Log </button>
+					<img id="input-pic" class="image img-circle" src="/img/profile_pictures/tom.jpg">
+					<img class="circler" src="/img/holes/ring.gif">
 
 				</div>
+
+				<div class="column is-8 center-div">
+					<div class="score-input is-fullwidth center-div">				
+						<input></input>
+						<button id="log" type="submit"> </button>
+
+					</div>
+				</div>
+
+
 			</div>
-
-
 		</div>
-	</div>
 
-	<br>
-	<h1 class="main_theme-subtitle"> Who's Played </h1>
-	<div class="leader-board container is-fluid is-fullwidth">
-		<%- scores %>
+
+		<br>
+		<h1 class="main_theme-subtitle"> Who's Played </h1>
+		<div class="leader-board container is-fluid is-fullwidth">
+			<%- scores %>
+		</div>
+		<br>
 	</div>
-	<br>
 
 
 	<script src="/javascripts/extras/flickity.pkgd.min.js"></script>
+
+<script>
+    var variables = <%- JSON.stringify(locals) %>;
+</script>
 
 </body>
 
