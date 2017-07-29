@@ -1,3 +1,14 @@
+
+/******************************************** CONTENTS ********************************************/
+
+//............(1) Photos Page
+
+/******************************************* PHOTOS PAGE ******************************************/
+
+
+
+/********************************************* OLD CODE *******************************************/
+
 // full height
 
 function resize_to_full() {
@@ -64,7 +75,7 @@ $('.on_hover_pointer').on('click touch', function() {
         })
         .done(function(return_status) {
             if (return_status != 'success') {
-                $('#js-photo_upload_delete_warning').html("<div class='notification is-danger has-text-centered'>" + return_status + "</div>");
+                $('#js-photo_upload_delete_warning').html("<div class='notification bc-danger_pink has-text-centered'>" + return_status + "</div>");
             } else {
                 $('#js-photo_upload_imge_container-' + photo_title.replace(/(:|\.|\[|\]|,|=|@)/g, "\\$1")).remove();
             }

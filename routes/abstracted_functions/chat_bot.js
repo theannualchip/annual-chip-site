@@ -1,10 +1,11 @@
 /************************************* THIRD PARTY DEPENDANCIES **********************************/
 
-var moment = require('moment');
+var moment = require('moment')
 
 /**************************************** ABSTRACTED FUNCTIONS ***********************************/
 
-var db = require("../../db.js");
+var db = require("../../db.js")
+var log = require("./log.js")
 
 /******************************************** MAIN SCRIPT ****************************************/
 
@@ -19,11 +20,11 @@ var db = require("../../db.js");
 module.exports = function(req, message) {
     db.query("INSERT INTO chat (user_email,comment,timestamp) VALUES ($1,$2,$3)", ['chat_bot', message, moment.utc()])
         .then(function(data) {
-            console.log("\x1b[42m\x1b[37mSuccessfully added \x1b[0m \x1b[34m" + new_file_name + "\x1b[0m to photos db");
+            log("Successfully added chat bot message $1 to the chat db",'s',[message]);
             req.app.io.emit('chat message', { username: "Chat Bot", message: message, profile_photo_title: 'chat_bot.jpg', timestamp: moment.utc() });
         })
         .catch(function(error) {
-            console.log("Couldn't upload chat bot message \x1b[34m" + message + "\x1b[31m error quering the chat database\x1b[0m:");
+            log("Couldn't upload chat bot message $1 error quering the chat database:",'e',[message]);
             console.log(error);
         });
 }

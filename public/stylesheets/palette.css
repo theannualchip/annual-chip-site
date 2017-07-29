@@ -1,0 +1,71 @@
+/* MAIN FONT */
+
+document {
+	color:#4a4a4a;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color:#4a4a4a;
+    background-color: #e5e4d7;
+}
+
+a {
+    color:#7a9cff;
+}
+
+p > a {
+	color:#7a9cff;
+}
+
+p > a:hover {
+	color:white;
+}
+
+/* HEADINGS */
+
+.chip_heading-large {
+	font-family: 'Pacifico', cursive;
+	font-size:24pt;
+	text-shadow: 2px 2px #e5e4d7, 4px 4px #aeac84;
+}
+
+.chip_heading-small {
+    font-family: 'Pacifico', cursive;
+	font-size:16pt;
+	text-shadow: 2px 2px #e5e4d7, 4px 4px #aeac84;
+}
+
+/* BACKGROUND COLORS */
+
+.bc-grey {
+    background-color: #e5e4d7;
+}
+
+.bc-light_grey {
+    background-color: #f5f5f0;
+}
+
+.bc-accent_grey {
+    background-color: #cdcbb2;
+}
+
+.bc-yellow {
+    background-color: #ffcf79;
+}
+
+.bc-light_yellow {
+    background-color: #ffedcc;
+}
+
+/* NOTIFICATIONS */
+
+.bc-danger_pink {
+    background-color: #ff7a7a;
+    color: white;
+}
+
+.bc-info_blue {
+    background-color: #7a9cff;
+    color: white;
+}

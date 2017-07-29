@@ -3,19 +3,20 @@
 
 <head>
     <% include head.ejs %>
-        <title>
-            Photos - The Annual Chip In
-        </title>
-        <link rel='stylesheet' href='/stylesheets/sam.css' />
+    <title>
+        Photos - The Annual Chip In
+    </title>
+    <link rel='stylesheet' href='/stylesheets/sam.css' />
+    <link rel='stylesheet' href='/stylesheets/palette.css' />
 </head>
 
 <body>
     <% include menu_partial.ejs %>
-        <div class='column full_height background_color-light_grey'>
+        <div class='column full_height bc-light_grey'>
             <div class='column has-text-centered'>
-                <h1 class='title main_theme-title'>Photos</h1>
+                <h1 class='title chip_heading-large'>Photos</h1>
                 <br>
-                <label for="js-photo_upload_input" id='js-photo_uploader-album' class='button background_color-info_blue'>Want to add a photo?&nbsp;&nbsp;<i class="fa fa-cloud-upload"></i></label>
+                <label for="js-photo_upload_input" id='js-photo_uploader-album' class='button bc-info_blue'>Want to add a photo?&nbsp;&nbsp;<i class="fa fa-cloud-upload"></i></label>
             </div>
             <div class='column has-text-centered hidden_to_begin is-one-third-desktop is-offset-one-third-desktop' id='js-hidden_to_begin'>
                 <div class="card-content">
@@ -25,7 +26,7 @@
                                 <input type='file' class='level-left hide_input' name='photo_file' id='js-photo_upload_input'>
                             </div>
                             <span class="level-right">
-                            <div class='level border-radius-3 background_color-yellow' id='js-photo_upload_close'> 
+                            <div class='level border-radius-3 bc-yellow' id='js-photo_upload_close'> 
                                 <i class="level-item fa fa-times font-small"></i>
                             </div>
                         </span>
@@ -38,7 +39,7 @@
                     </span>
                         </p>
                         <p class="control">
-                            <button disabled type='button' id='js-photo_upload-submit' class="button background_color-yellow is-fullwidth" style="display: inline-block">
+                            <button disabled type='button' id='js-photo_upload-submit' class="button bc-yellow is-fullwidth" style="display: inline-block">
                                 <div id='js-photo_upload-button-contents'>
                                     Upload
                                 </div>
@@ -50,7 +51,7 @@
             <br>
             <div class='column has-text-centered is-one-third-desktop is-offset-one-third-desktop' id='js-photo_upload_delete_warning'>
                 <%if (locals.warning) { %>
-                    <div class='notification is-danger has-text-centered' id='js-photo_upload_warning'>
+                    <div class='notification bc-danger_pink has-text-centered' id='js-photo_upload_warning'>
                         <%= warning %>
                     </div>
                     <% } %>
@@ -63,13 +64,13 @@
                                 <h3 class='title'><%= locals.image_array[row_1].short_title %></h3>
                                 <h3 class='subtitle'>Uploaded by <%= locals.image_array[row_1].uploaded_user %></h3>
                                 <%if (locals.is_admin) { %>
-                                    <span class="tag is-danger on_hover_pointer" id='js-photo_upload_delete-<%= locals.image_array[row_1].photo_title %>'>
+                                    <span class="tag bc-danger_pink on_hover_pointer" id='js-photo_upload_delete-<%= locals.image_array[row_1].photo_title %>'>
                             Admin Rights! Delete?&nbsp;&nbsp;
                             <div><i class="fa fa-trash fa-inverse font-small"></i></div>
                         </span>
                                     <br>
                                     <% } else if (locals.image_array[row_1].your_photo) { %>
-                                        <span class="tag is-danger on_hover_pointer" id='js-photo_upload_delete-<%= locals.image_array[row_1].photo_title %>'>
+                                        <span class="tag bc-danger_pink on_hover_pointer" id='js-photo_upload_delete-<%= locals.image_array[row_1].photo_title %>'>
                             Your Photo! Delete?&nbsp;&nbsp;
                             <div><i class="fa fa-trash fa-inverse font-small"></i></div>
                         </span>
@@ -92,12 +93,4 @@
 </body>
 </body>
 <script src="/javascripts/sam.js"></script>
-<script>
-var socket = io();
-
-socket.on('chat message', function(msg) {
-    console.log("<%= user %>: " + " " + msg + "<br>");
-})
-</script>
-
 </html>

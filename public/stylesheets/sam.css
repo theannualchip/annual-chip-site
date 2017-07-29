@@ -30,7 +30,7 @@ img {
 }
 
 .main_theme-title-smaller {
-    text-shadow: 2px 2px #FFCF79, 4px 4px #996300;
+    text-shadow: 2px 2px #FFCF79, 4px 4px #aeac84;
     font-size: 16pt;
     font-family: 'Pacifico', cursive;
 }
@@ -39,6 +39,14 @@ img {
     font-size: 18pt;
     font-family: 'Pacifico', cursive;
     text-shadow: 3px 3px #E5E4D7;
+}
+
+.main_theme-nav-hamburger {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+    text-shadow: 1px 1px #FFCF79, 2px 2px #aeac84;
 }
 
 .main_theme-nav-hamburger:hover {
@@ -72,16 +80,8 @@ img {
     padding: 10px 0 10px;
 }
 
-.main_theme-nav-hamburger {
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    cursor: pointer;
-    text-shadow: 1px 1px #FFCF79, 2px 2px #996300;
-}
-
 .admin_warning {
-    background-color: #ff3860;
+    background-color: #ff7a7a;
     color: white;
     border-radius: 2px;
 }
@@ -222,19 +222,6 @@ img {
     float: left;
 }
 
-.side_bar-username {
-    text-shadow: 2px 2px #FFCF79, 4px 4px #996300;
-    font-size: 14pt;
-    font-family: 'Pacifico', cursive;
-    text-align: center;
-    margin-bottom:20px;
-}
-
-.side_bar-username a {
-    color:#3273dc;
-    font-size:12pt;
-}
-
 .side_bar-profile_container {
     border-radius: 5px;
 }
@@ -315,7 +302,7 @@ img {
 
 .chit_chat-chat_input-bet:hover, .chit_chat-chat_input-send:hover {
     cursor:pointer;
-    background-color:#ff3860;
+    background-color:#ff7a7a;
 }
 
 .chit_chat-input_container {
@@ -393,7 +380,7 @@ img {
 }
 
 .chat_output-request_messages-button:hover {
-    background-color:#3273dc;
+    background-color:#7a9cff;
     color:white;
     cursor:pointer;
 }
@@ -432,7 +419,7 @@ img {
     max-height: 100%;
 }
 
-/***************************************************** PHOTOS PAGE *************************************************/
+/***************************************************** EDIT PROFILE PAGE *************************************************/
 
 .edit_profile-image {
     width:100%;
@@ -473,15 +460,6 @@ img {
     background-color: #ffedcc;
 }
 
-.background_color-dark_green {
-    background-color: #2C6700;
-}
-
-.background_color-light_green {
-    background-color: #00b300;
-    color: white;
-}
-
 .background-color-danger_pink {
     background-color: #ff3860;
     color: white;
@@ -492,11 +470,7 @@ img {
     color: white;
 }
 
-.background_color-golf_green {
-    background-color: #92edbf;
-}
-
-.div_highlight-color_grey {
+.text-color_grey {
     color:#4a4a4a;
 }
 
@@ -533,8 +507,11 @@ img {
     filter: grayscale(1);
 }
 
+.margin_top_and_bottom {
+    padding:5px;
+}
 
-/* TOGGLES */
+/***************************************************** TOGGLES *************************************************/
 
 .toggle-display_none {
     display: none;
@@ -546,8 +523,4 @@ img {
 
 .toggle-text_place_holder {
     color:#b3b3b3;
-}
-
-.margin_top_and_bottom {
-    padding:5px;
 }

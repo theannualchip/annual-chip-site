@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html class='background_color-light_grey'>
-
+<html>
 <head>
     <% include head.ejs %>
-        <title>
-            Welcome
-            <%= standard_return.user %> to The Annual Chip In
-        </title>
-        <link rel='stylesheet' href='/stylesheets/sam.css' />
+    <title>
+        The Annual Chip In | <%= standard_return.user %> | Chit Chat
+    </title>
+    <link rel='stylesheet' href='/stylesheets/sam.css' />
+    <link rel='stylesheet' href='/stylesheets/palette.css' />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0" />
 </head>
 <body>
@@ -15,7 +14,7 @@
     <!-- the loading screen -->
     <% include menu_partial.ejs %>
 
-    <div class='main_theme-loading_window background_color-light_grey toggle-display_none' id='js-chit_chat_loader'>
+    <div class='main_theme-loading_window bc-light_grey toggle-display_none' id='js-chit_chat_loader'>
         <div class="main_theme-loading_window-content">
             <img src='<%= loading_image %>' class='chit_chat-loader_image' id='js-chit_chat-loader_image'>
             <br>
@@ -30,7 +29,7 @@
         <div class='column' id='js-chat_output'>
         </div>
         <div class='chat_output-request_messages-container' id='js-chat_output-request_messages-container'>
-                <div class='chat_output-request_messages-button background_color-grey' id='js-chat_output-request_messages-button'>
+                <div class='chat_output-request_messages-button bc-grey' id='js-chat_output-request_messages-button'>
                     <span>
                         Want older conversations?
                     </span>
@@ -41,7 +40,7 @@
 
     <!-- the side bar -->
 
-    <div class='chit_chat-side_bar background_color-light_grey toggle-display_none' id='js-chit_chat-side_bar'>
+    <div class='chit_chat-side_bar bc-light_grey toggle-display_none' id='js-chit_chat-side_bar'>
         <div class='column is-full-width' id='js-chat_side_bar-your_profile'>
         </div>
         <div class='column' id='js-chat_side_bar'>
@@ -50,16 +49,16 @@
 
     <!-- the chat input -->
 
-    <div class='chit_chat-chat_input background_color-grey toggle-display_none' id='js-chit_chat-chat_input'>
+    <div class='chit_chat-chat_input bc-grey toggle-display_none' id='js-chit_chat-chat_input'>
         <div class='column is-full-width'>
             <div class='chit_chat-input_container' id='js-chit_chat-input_container'>
-                <div class='chit_chat-chat_input-text background_color-light_grey' id='js-chit_chat-chat_input-text'>
+                <div class='chit_chat-chat_input-text bc-light_grey' id='js-chit_chat-chat_input-text'>
                     <p class='toggle-text_place_holder' contenteditable="true" id='js-chit_chat-chat_p' autocorrect='off' autocomplete='off' spellcheck='true'>Something you'd like to say?</p>
                 </div>
-                <div class='chit_chat-chat_input-send background_color-yellow' onclick='send_message()'>
+                <div class='chit_chat-chat_input-send bc-yellow' onclick='send_message()'>
                     <i class="fa fa-comment font-small-12"></i>
                 </div>
-                <div class='chit_chat-chat_input-bet background_color-info_blue'>
+                <div class='chit_chat-chat_input-bet bc-info_blue'>
                     <i class="fa fa-usd font-small-12"></i>
                 </div>
            </div>

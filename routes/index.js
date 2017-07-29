@@ -380,7 +380,7 @@ router.post('/user_signup', function(req, res, next) {
 
 router.post('/previous_messages', function(req, res, next) {
     authenticate(req, res, 'chit_chat', function() {
-        db.query("SELECT c.user_email, c.comment, c.timestamp, g.username, g.profile_photo_title FROM chat as c, golfers as g WHERE c.user_email=g.email ORDER BY c.timestamp")
+        db.query("SELECT c.user_email, c.comment, c.timestamp, g.username, g.profile_photo_title FROM chat as c FULL OUTER JOIN golfers as g ON c.user_email=g.email ORDER BY c.timestamp")
             .then(function(data) {
                 var return_array = []
                 if (data.length > 0) {
@@ -398,6 +398,10 @@ router.post('/previous_messages', function(req, res, next) {
                             }
                             if (collecting == true) {
                                 return_array.splice(0, 0, data[message - 1])
+                                if (return_array[0].user_email=='chat_bot') {
+                                    return_array[0].username='Chat Bot'
+                                    return_array[0].profile_photo_title='chat_bot.jpg'
+                                }
                                 if (message > 1) {
                                     if (return_array.length > 14 && !moment.utc(data[message - 1].timestamp).isSame(moment.utc(data[message - 2].timestamp), 'd')) {
                                         finished_collecting = true
@@ -441,6 +445,7 @@ router.post('/photo_album_upload', function(req, res, next) {
                 db.query("INSERT INTO photos (photo_title, date_uploaded, uploaded_user_email, short_title) VALUES ($1,$2,$3,$4)", [req.file.filename, moment.utc(), req.session.passport.user.email, req.body.photo_title])
                     .then(function(data) {
                         log("Successfully added $1 to the photos table", 'suc', [req.file.filename])
+                        chat_bot(req,req.session.passport.user.username + ' Just uploaded the a photo called ' + req.body.photo_title + '. Head to the photos page to see!')
                         res.redirect('/photos')
                     })
                     .catch(function(error) {

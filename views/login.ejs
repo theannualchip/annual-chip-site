@@ -6,15 +6,16 @@
         <title>
             Welcome To The Annual Chip In.
         </title>
+        <link rel='stylesheet' href='/stylesheets/palette.css' />
         <link rel='stylesheet' href='/stylesheets/sam.css' />
 </head>
 
 <body>
-    <section class="hero is-alt is-fullheight background_color-grey">
+    <section class="hero is-alt is-fullheight bc-grey">
         <div class="hero-body">
             <div class="column is-one-third-desktop is-offset-one-third-desktop">
                 <div class="card-content">
-                    <h1 class="title has-text-centered is-large main_theme-title">
+                    <h1 class="title has-text-centered chip_heading-large">
                         The Annual Chip In
                     </h1>
                     <br>
@@ -33,13 +34,13 @@
                         </p>
                         <br>
                         <p class="control" id='js-login_submit_button'>
-                            <button type='submit' class="button is-medium is-fullwidth background_color-yellow" style="display: inline-block">
+                            <button type='submit' class="button is-medium is-fullwidth bc-yellow" style="display: inline-block">
                                 Login
                             </button>
                         </p>
                     </form>
                     <%if (locals.warning) { %>
-                        <br><div class='notification is-danger has-text-centered'>  <%= warning %></div>
+                        <br><div class='notification bc-danger_pink has-text-centered'>  <%= warning %></div>
                     <% } %>
                     </div>
                 </div>

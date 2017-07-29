@@ -118,11 +118,12 @@ var socket = io();
 
 function update_own_profile(user_object) {
     var html_output = `<div class='column is-full-width side_bar-profile_container'>
-                        <div class='side_bar-username'>
-                            ${escape_html(user_object.username)} <a href='/edit_profile'>edit profile?</a>
-                        </div>
-                        <img class='side_bar-profile_picture' src='/img/profile_pictures/${user_object.profile_photo_title}'/>
-                    </div>`
+        <div class='has-text-centered'>
+            <a class='chip_heading-small text-color_grey'>${escape_html(user_object.username)}</a>&nbsp;&nbsp;<a href='/edit_profile'>edit profile?</a>
+        </div>
+        <br>
+        <img class='side_bar-profile_picture' src='/img/profile_pictures/${user_object.profile_photo_title}'/>
+    </div>`
     $('#js-chat_side_bar-your_profile').html(html_output);
 }
 
@@ -130,7 +131,7 @@ socket.on('online update', function(return_object) {
     html_output = ''
     for (row_1 = 0; row_1 < return_object.online.length; row_1++) {
         if (return_object.online[row_1].email != variables.user_email) {
-            html_output += `<a class='div_highlight-color_grey' href='/profile/${encodeURIComponent(return_object.online[row_1].email)}'><div class='column is-full-width side_bar_container background_color-info_blue'>
+            html_output += `<a class='text-color_grey' href='/profile/${encodeURIComponent(return_object.online[row_1].email)}'><div class='column is-full-width side_bar_container bc-info_blue'>
                 <div class='side_bar_image'>
                     <img class='ensure_square-side_bar' src='/img/profile_pictures/${return_object.online[row_1].profile_photo_title}'/>
                 </div>
@@ -151,7 +152,7 @@ socket.on('online update', function(return_object) {
             } else {
                 last_online = moment.utc(return_object.offline[row_1].last_active).local().format('D/MM/YY');
             }
-            html_output += `<a class='div_highlight-color_grey' href='/profile/${encodeURIComponent(return_object.offline[row_1].email)}'><div class='column is-full-width side_bar_container background_color-grey'>
+            html_output += `<a class='text-color_grey' href='/profile/${encodeURIComponent(return_object.offline[row_1].email)}'><div class='column is-full-width side_bar_container bc-grey'>
                 <div class='side_bar_image'>
                     <img class='ensure_square-side_bar black_and_white_img' src='/img/profile_pictures/${return_object.offline[row_1].profile_photo_title}'/>
                 </div>
@@ -314,7 +315,7 @@ $('#js-chat_output-request_messages-button').on('click touch', function() {
                         })
                     })
                 } else {
-                    $('#js-chat_output-request_messages-container').html(`<div class='chat_output-request_messages-button-spent background-color-danger_pink'>
+                    $('#js-chat_output-request_messages-container').html(`<div class='chat_output-request_messages-button-spent bc-danger_pink'>
                         <span>
                             Looks like thats it!
                         </span>
