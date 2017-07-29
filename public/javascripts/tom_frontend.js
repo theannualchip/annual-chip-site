@@ -3,10 +3,10 @@ function my_function() {
     // alert("I did something!");
 
     $('#hole_1').click(
-	    function(){
-	        $('.modal').addClass("is-active");
+    	function(){
+    		$('.modal').addClass("is-active");
 	        // css('border','0 none transparent');
-	});
+	    });
 };
 
 function go_to_hole() {
@@ -15,11 +15,11 @@ function go_to_hole() {
 
     // Find the day number
 
-	var all = $(".is-active").map(function() {
-	    return this.innerHTML;
-	}).get();
+    var all = $(".is-active").map(function() {
+    	return this.innerHTML;
+    }).get();
 
-	alert(all);
+    alert(all);
 
   	// Find the hole number
 
@@ -27,12 +27,12 @@ function go_to_hole() {
 
 
 
-    $('#hole_1').click(
-	    function(){
-	        $('.modal').addClass("is-active");
+  	$('#hole_1').click(
+  		function(){
+  			$('.modal').addClass("is-active");
 	        // css('border','0 none transparent');
-	});
-};
+	    });
+  };
 
 
 
@@ -48,17 +48,17 @@ $(function(){
 	    var day_num = day_string.match(/[0-9]/)
 
 	  	// Find the hole number
-		var hole_num = $(this).children('h1').html();
+	  	var hole_num = $(this).children('h1').html();
 
 	  	// Go to the hole page (card.ejs) with these parameters
 	  	$.get( "/scorecard/card?day=day_num&hole=hole_num", {day_num: day_num, hole_num: hole_num}, function( data ) {
-		   
+
 	  		res.render('card', {title: 'Individual Hole', day: day_num, hole: hole_num});
 
-		});
+	  	});
 
 	  	alert("Day" + day_num + " hole number " + hole_num);
-	 });
+	  });
 
 
 });
@@ -67,36 +67,91 @@ $(function(){
 // Respond to day update
 $(function(){
 
-	// Want to respond to a click on the .box-hole class
+	// Want to respond to updating the day
 	$('#update').on('click',function(){
 
-		alert($(this).parent().parent().find(".control").find("select :selected").html());
-
-		// var links = <%= links %>;
-
+		// The html of the selected option in the day select
 		var day_string = $(this).parent().parent().find(".control").find("select :selected").html();
+
+		// Regex out the day number
 		var day_num = day_string.match(/[0-9]/);
 
+		// Find the html of the hole links for the right day
+		// index starts at 0 hence the -1
+		var html_ = variables.links[day_num-1];
 
-		alert(day_num);
-		$("#hole_links").html(links[day_num-1]);
+		// Update HTML of hole links thing
+		$("#hole_links").html(html_);
 
-	 //    // Find the day number
-	 //    var day_string = $(".is-active").find(".day-label").html();
-	 //    var day_num = day_string.match(/[0-9]/)
-
-	 //  	// Find the hole number
-		// var hole_num = $(this).children('h1').html();
-
-	 //  	// Go to the hole page (card.ejs) with these parameters
-	 //  	$.get( "/scorecard/card?day=day_num&hole=hole_num", {day_num: day_num, hole_num: hole_num}, function( data ) {
-		   
-	 //  		res.render('card', {title: 'Individual Hole', day: day_num, hole: hole_num});
-
-		// });
-
-	 //  	alert("Day" + day_num + " hole number " + hole_num);
-	 });
+	});
 
 
 });
+
+
+
+// Respond to day update
+$(function(){
+
+	// Want to respond to updating the day
+	$('.piccer').on('click',function(){
+
+
+		$('.circler').toggle();
+
+		// Pic
+		$('#input-pic').toggleClass('is-active');
+
+		// Input
+		$('.score-input input').toggleClass('is-active');
+
+		if ($('.score-input input').val() != "") {
+			$('.score-input input').val("");
+		}
+
+		// Button
+		if ($('.score-input button').hasClass('is-active')) {
+			$('.score-input button').html('');
+		} else {
+			$('.score-input button').html('ADD');
+		}
+
+		$('.score-input button').toggleClass('is-active');
+
+
+	});
+
+
+});
+
+
+// Respond to day update
+$(function(){
+
+	// Want to respond to updating the day
+	$('#log').on('click',function(){
+
+
+		if ($('.score-input input').val() == "") {
+			alert("Thing 1");
+		} else {
+
+			var details = { 
+				day: variables.day,
+				hole: variables.hole,
+				score: $('.score-input input').val()
+			};
+
+			$.post('/scorecard/card', details, function(data) {
+
+			/*Stiff*/
+
+			});
+
+		};
+
+	});
+
+
+});
+

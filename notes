@@ -83,18 +83,36 @@
 			INSERT INTO scores (username, day, hole, score)
 		    VALUES ('Sammy B', 1, 2, 6);
 
+
+	** Weekend Schedule **
+
+		CREATE TABLE weekend_schedule(
+			day INTEGER,
+			course VARCHAR(50),
+			num_holes INTEGER,
+			PRIMARY KEY(day)
+		);
+
+			* Temp Data *
+
+			INSERT INTO weekend_schedule (day, course, num_holes)
+		    	VALUES (1, 'flinders', 9);
+			INSERT INTO weekend_schedule (day, course, num_holes)
+		    	VALUES (2, 'flinders', 18);
+			INSERT INTO weekend_schedule (day, course, num_holes)
+		    	VALUES (3, 'flinders', 9);
 	
 	** Hole Info Table **
 
-	CREATE TABLE hole_info(
-		course VARCHAR(50),
-		hole INTEGER,
-		par INTEGER,
-		distance INTEGER,
-		pro_tip VARCHAR(500),
-		hole_diagram VARCHAR(50),
-	    PRIMARY KEY(course, hole)
-	);
+		CREATE TABLE hole_info(
+			course VARCHAR(50),
+			hole INTEGER,
+			par INTEGER,
+			distance INTEGER,
+			pro_tip VARCHAR(500),
+			hole_diagram VARCHAR(50),
+		    PRIMARY KEY(course, hole)
+		);
 
 
 		* Flinders Golf Course Data *
@@ -108,7 +126,7 @@
 		    	VALUES ('flinders', 3, 3, 189, 'Long par 3 with all the trouble pin high and beyond. Par is more easily achieved if short of the green rather than long.','na');
 
 			INSERT INTO hole_info (course, hole, par, distance, pro_tip,hole_diagram)
-		    	VALUES ('flinders', 4, 4, 256, 'Risk and reward personified here. Almost as if the flag is waving at you enticing you to have a go. It’s dead left and long and there’s also 2 coffins to contend with. One is 150 metres from the tee which swallows any mishit tee shots and the other just before the green to swallow mishit approaches. Both offer unpredictable lies. Leave the Superman cloak in the bag, play safe and don’t leave yourself a downhill putt.','na');
+		    	VALUES ('flinders', 4, 4, 256, 'Risk and reward personified here. Almost as if the flag is waving at you enticing you to have a go. It''s dead left and long and there''s also 2 coffins to contend with. One is 150 metres from the tee which swallows any mishit tee shots and the other just before the green to swallow mishit approaches. Both offer unpredictable lies. Leave the Superman cloak in the bag, play safe and don''t leave yourself a downhill putt.','na');
 
 			INSERT INTO hole_info (course, hole, par, distance, pro_tip,hole_diagram)
 		    	VALUES ('flinders', 5, 5, 419, 'Reachable Par 5 all dependent on the tee shot. Tight driving hole with OOB on left side and lots of fairway bunkers to catch your ball. Take time to enjoy the view on your left hand side.','na');
@@ -123,7 +141,7 @@
 		    	VALUES ('flinders', 8, 4, 315, 'Another great driving hole. Beware fairway bunkers awaiting any ball left side of a sloping fairway on this dog leg left hole and the green side bunkers on right are a must to avoid.','na');
 
 			INSERT INTO hole_info (course, hole, par, distance,pro_tip, hole_diagram)
-		    	VALUES ('flinders', 9, 3, 161, 'Par 3 at the top of the course and club selection varies depending on wind. There never feels like there’s much wind on the protected tee but there always is. Much easier to make a 3 if your tee shot is from short of the green. Phil Mickelson can’t get up and down from the green side trap left!','na');
+		    	VALUES ('flinders', 9, 3, 161, 'Par 3 at the top of the course and club selection varies depending on wind. There never feels like there''s much wind on the protected tee but there always is. Much easier to make a 3 if your tee shot is from short of the green. Phil Mickelson can''t get up and down from the green side trap left!','na');
 
 			INSERT INTO hole_info (course, hole, par, distance,pro_tip, hole_diagram)
 		    	VALUES ('flinders', 10, 4, 312,'Straightforward Par 4 with tricky green sloping from back to front. Leave an uphill putt.', 'na');
@@ -144,7 +162,7 @@
 		    	VALUES ('flinders', 15, 5, 454, 'Long Par 5 aptly named in the cooler months of the year. The hole is just as you see it and the green can be reached in 2, but is more receptive to a short iron into it.','na');
 
 			INSERT INTO hole_info (course, hole, par, distance, pro_tip,hole_diagram)
-		    	VALUES ('flinders', 16, 4, 298, 'A driver isn’t always needed as this tight fairway is guarded by Pines down the left and 3 bunkers down the right. Wind conditions play a part in the approach. Beware!','na');
+		    	VALUES ('flinders', 16, 4, 298, 'A driver isn''t always needed as this tight fairway is guarded by Pines down the left and 3 bunkers down the right. Wind conditions play a part in the approach. Beware!','na');
 
 			INSERT INTO hole_info (course, hole, par, distance, pro_tip,hole_diagram)
 		    	VALUES ('flinders', 17, 3, 159, 'Long Par 3 with most of the trouble long. Play short rather than long.','na');

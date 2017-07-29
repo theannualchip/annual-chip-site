@@ -1,3 +1,63 @@
+//  +++++++++++++++++++++++++++++++++++++
+//  DATABASE FUNCTIONS
+//  +++++++++++++++++++++++++++++++++++++
+
+exports.get_hole_scores = function(db_connection, day, hole) {
+
+	db = db_connection;
+
+	query_string = `
+		WITH scores as (
+			SELECT
+				username,
+				score
+			FROM
+				scores
+			WHERE
+				day = ${day} AND
+				hole = ${hole}
+		)	
+
+		SELECT
+			a.username,
+			a.profile_photo_title,
+			COALESCE(b.score, 99) as score
+		FROM
+			golfers a
+			LEFT JOIN scores b ON (
+				a.username = b.username)
+		ORDER BY
+			score;
+	`
+	result = db.query(query_string)
+
+	return result;
+};
+
+exports.get_hole_info = function(db_connection, day, hole) {
+
+	// DB connection
+	db = db_connection;
+
+	hole = hole
+
+	// Hole details
+	query_string = `
+		SELECT
+			*
+		FROM
+			hole_info
+		WHERE
+			hole = ${hole}
+	`
+
+	result = db.query(query_string, [day])
+
+	return result;
+
+};
+
+
 exports.get_short_lboard = function(db_connection, day) {
 
 	db = db_connection;
@@ -32,37 +92,25 @@ exports.get_short_lboard = function(db_connection, day) {
 
 };
 
-exports.get_hole_scores = function(db_connection, day, hole) {
+
+exports.log_score = function(db_connection, user, hole, day, score) {
 
 	db = db_connection;
 
 	query_string = `
-		WITH scores as (
-			SELECT
-				username,
-				score
-			FROM
-				scores
-			WHERE
-				day = ${day} AND
-				hole = ${hole}
-		)	
-
-		SELECT
-			a.username,
-			a.profile_photo_title,
-			COALESCE(b.score, 99) as score
-		FROM
-			golfers a
-			LEFT JOIN scores b ON (
-				a.username = b.username)
-		ORDER BY
-			score;
+	INSERT INTO scores (username, day, hole, score)
+    	VALUES ({user}, {day}, {hole}, {score});
 	`
 	result = db.query(query_string)
 
 	return result;
+
 };
+
+
+//  +++++++++++++++++++++++++++++++++++++
+//  WEB CONTENT CREATION FUNCTIONS
+//  +++++++++++++++++++++++++++++++++++++
 
 exports.format_lboard = function(lboard) {
 
@@ -112,7 +160,7 @@ exports.format_hole_scores = function(scores) {
 
 		if (score == 99) { 
 			tag_ = "is-dark"
-			score = "TBD"
+			score = "-"
 		}
 
 		flick_cell_element = `
@@ -132,6 +180,30 @@ exports.format_hole_scores = function(scores) {
 	output += "</div>"
 
 	return output;
+
+};
+
+
+exports.top_scorer = function(scores) {
+
+	var min_score = 98
+	var min_player = "..."
+
+	for (var i=0; i<scores.length; i++) {
+
+		var name = scores[i].username;
+		var score = scores[i].score;
+
+
+		if (score < min_score) {
+
+			min_score = score;
+			min_player = name;
+
+		};
+	}
+
+	return min_player;
 
 };
 

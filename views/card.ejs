@@ -17,19 +17,17 @@
 
 	<% include menu_partial.ejs %>
 
-	<h1 class="main_theme-subtitle"> Day  <%= day %> > Hole <%= hole %>  </h1>
+	<br>
+	<div class="stats-container">
+	<h1 class="main_theme-subtitle"> Day  <%= day %> : Hole <%= hole %>  </h1>
 
-<!-- 
-		<nav class="breadcrumb is-large">
-			<ul>
-				<li><a href="/scorecard">Day <%= day %> </a></li>
-				<li class="is-active"><a>Hole <%= hole %> </a></li>
-			</ul>
-		</nav>
- -->
+		<br>
 
 
-		<div class="hole-details is-fullwidth" style="background-color:#ffedcc">
+
+		<!-- #FFE680 YELLOW-->
+		<!-- #D0F0C0 GREEN -->
+		<div class="hole-details is-fullwidth" style="background-color:#CCDCB0">
 
 			<div class="columns is-mobile">
 
@@ -39,14 +37,16 @@
 				</div>
 
 				<div class="column is-8 center-div">
-					<span class = "hole-stat"> 445m </span>
+					<span class = "hole-stat"> <%= distance %>m </span>
 				</div>
 
 
 			</div>
 		</div>
 
-		<div class="hole-details is-fullwidth" style="background-color:#cdcbb2">
+		<!-- #9dc183 GREEN--> 
+		<!-- #cdcbb2 YELLOW -->
+		<div class="hole-details is-fullwidth" style="background-color:#AACD92">
 
 			<div class="columns is-mobile">
 
@@ -56,15 +56,16 @@
 				</div>
 
 				<div class="column is-8 center-div">
-					<span class = "hole-stat"> 4 </span>
+					<span class = "hole-stat"> <%= par %> </span>
 				</div>
 
 
 			</div>
 		</div>
 
-
-		<div class="hole-details is-fullwidth" style="background-color:#ffcf79">
+		<!-- #4CBB17 GREEN -->
+		<!-- F9BC06 YELLOW -->
+		<div class="hole-details is-fullwidth" style="background-color:#81BD74">
 
 			<div class="columns is-mobile">
 
@@ -74,46 +75,71 @@
 				</div>
 
 				<div class="column is-8 center-div">
-					<span class = "hole-stat"> T Bish </span>
+					<span class = "hole-stat"> <%= top_scorer %> </span>
 				</div>
-
 
 			</div>
 		</div>
 
-
-		<div class="hole-details is-fullwidth" style="background-color:#f5f5f0">
+		<!-- FFE680 YELLOW -->
+		<!-- #2E8B57 GREEN -->
+		<div class="hole-details is-fullwidth" style="background-color:#58AC5C">
 
 			<div class="columns is-mobile">
 
 				<div class="column is-4">
-
-					<img class="image img-circle" src="/img/profile_pictures/tom.jpg">
+					<img class="image is-32x32" src="/img/holes/idea.png">
+					<span class="is-white"> Pro Tip </span>
 				</div>
 
 				<div class="column is-8 center-div">
-					<div class="score-input">
-<!-- 					<button class="score-input"> Test </button>
- -->  					
- 						<input></input>
- 						<button id="log" type="submit" class="button background_color-yellow"> Log </button>
-
-				</div>
+					<span class = "pro-tip"> <%= pro_tip %> </span>
 				</div>
 
 
 			</div>
 		</div>
 
-	<br>
-	<h1 class="main_theme-subtitle"> Who's Played </h1>
-	<div class="leader-board container is-fluid is-fullwidth">
-		<%- scores %>
+		<!-- 498D5B GREEN -->
+		<!-- f5f5f0 Grey -->
+		<div class="hole-details is-fullwidth" style="background-color:#498D5B">
+
+			<div class="columns is-mobile">
+
+				<div class="column is-4 piccer">
+
+					<img id="input-pic" class="image img-circle" src="/img/profile_pictures/tom.jpg">
+					<img class="circler" src="/img/holes/ring.gif">
+
+				</div>
+
+				<div class="column is-8 center-div">
+					<div class="score-input is-fullwidth center-div">				
+						<input></input>
+						<button id="log" type="submit"> </button>
+
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+
+
+		<br>
+		<h1 class="main_theme-subtitle"> Who's Played </h1>
+		<div class="leader-board container is-fluid is-fullwidth">
+			<%- scores %>
+		</div>
+		<br>
 	</div>
-	<br>
 
 
 	<script src="/javascripts/extras/flickity.pkgd.min.js"></script>
+
+<script>
+    var variables = <%- JSON.stringify(locals) %>;
+</script>
 
 </body>
 
