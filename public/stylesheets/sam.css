@@ -430,6 +430,42 @@ img {
     width:100%;
 }
 
+/***************************************************** BETS PAGE *************************************************/
+
+.form-betting_form-inline_text {
+    padding:3px;
+    background-color:#f5f5f0;
+    color:#4a4a4a;
+    border:none;
+    outline:none;
+    font-size:12pt;
+    font-family: 'Roboto', sans-serif;
+    border-bottom-style:solid;
+    border-bottom-width:2px;
+    border-bottom-color: #cdcbb2;
+    width:auto;
+    text-align:center;
+    min-width:15px;
+}
+
+select {
+    border-radius:0;
+    color:#4a4a4a;
+    -webkit-appearance: none;
+    text-align:center;
+    padding-left:5px;
+}
+
+input {
+    border-radius:0;
+    -webkit-appearance: none;
+    -webkit-border-radius: none;
+}
+
+.betting_form-submit_loading {
+    padding-top:0;
+}
+
 /***************************************************** HIGHLIGHTS *************************************************/
 
 .background_color-grey {

@@ -1,6 +1,7 @@
 var pgp = require('pg-promise')();
 var db = require("../db.js");
 var moment = require('moment');
+var comebacks = require('./abstracted_functions/comebacks.js');
 
 get_online_users = function(sockets,io) {
     var return_object = { online: [], offline: [] };
@@ -26,6 +27,18 @@ get_online_users = function(sockets,io) {
             console.log("Couldn't get online golfers \x1b[31m error quering the golfers database\x1b[0m:")
             console.log(error)
         })
+}
+
+snappy_bot=function(message,user,io) {
+    console.log(comebacks)
+    for (row_1=0;row_1<comebacks.length;row_1++) {
+        if (comebacks[row_1][0].toLowerCase()==message.toLowerCase()) {
+            var comeback_row=row_1;
+            setTimeout(function() {
+                io.emit('chat message', { username: 'Chat Bot', message: comebacks[comeback_row][1], profile_photo_title: 'chat_bot.jpg', timestamp: moment.utc() });  
+            },700)
+        }
+    }
 }
 
 module.exports = function(io) {
@@ -67,6 +80,7 @@ module.exports = function(io) {
                 .then(function(data) {
                     console.log("\x1b[42m\x1b[37mSuccessfully added \x1b[0m \x1b[34m" + message + "\x1b[0m to chat db");
                     io.emit('chat message', { username: socket.username, message: message, profile_photo_title: socket.profile_photo_title, timestamp: moment.utc() });  
+                    snappy_bot(message.toLowerCase(),socket.username,io)
                 })
                 .catch(function(error) {
                     console.log("Couldn't upload message \x1b[34m" + message + "\x1b[31m error quering the chat database\x1b[0m:");

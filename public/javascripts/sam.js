@@ -1,4 +1,3 @@
-
 /******************************************** CONTENTS ********************************************/
 
 //............(1) Photos Page
@@ -101,3 +100,95 @@ $('.photo_album-image_wrapper').on('click touch', function() {
 $("#js-edit_profile-photo_upload").change(function() {
     $("#js-edit_profile-photo_upload-name").html('<br>' + $(this).val().replace(/^.*[\\\/]/, '') + "<br>");
 });
+
+// BETS PAGE
+
+
+function bets_form_tidy() {
+    if ($('#js-betting_form-amount').val()) {
+        $('#js-betting_form-amount').width(($('#js-betting_form-amount').val().length + 1) * 8 + 10)
+    } else {
+        $('#js-betting_form-amount').width(20)
+    }
+    error_output = ''
+    // Names
+    if ($('#js-betting_form-better_2').val() == $('#js-betting_form-judge').val()) {
+        error_output += "The judge can't be involved in the bet, try chosing a different Judge"
+    }
+    // Amount
+    if (isNaN($('#js-betting_form-amount').val()) || $('#js-betting_form-amount').val() < 0 || $('#js-betting_form-amount').val() == '') {
+        if (error_output != '') {
+            error_output += "<br><br>"
+        }
+        error_output += "The amount you entered is not valid, try entering a number"
+    }
+    // Bet
+    if ($('#js-betting_form-comment').text() == '') {
+        if (error_output != '') {
+            error_output += "<br><br>"
+        }
+        error_output += "The bet you want to place is empty, try entering something in the above sentance"
+    }
+    if (error_output != '') {
+        $('#js-betting_form-success').toggleClass('toggle-display_none', true)
+        $('#js-betting_form-error').html(error_output)
+        $('#js-betting_form-error').toggleClass('toggle-display_none', false)
+        $('#js-betting_form-submit').prop('disabled', true);
+        return false
+    } else {
+        $('#js-betting_form-error').html('')
+        $('#js-betting_form-error').toggleClass('toggle-display_none', true)
+        $('#js-betting_form-submit').prop('disabled', false);
+        return true
+    }
+}
+
+bets_form_tidy()
+
+$(".form-betting_form-inline_text").each(function() {
+    $(this).on('keyup change', function() {
+        bets_form_tidy()
+    })
+})
+
+$('#js-betting_form-comment').on('focus', function() {
+    if ($('#js-betting_form-comment').text() == bet_placeholder) {
+        $('#js-betting_form-comment').text('')
+    }
+})
+
+$('#js-betting_form-comment').on('focusout', function() {
+    if ($('#js-betting_form-comment').text() == '') {
+        $('#js-betting_form-comment').text(bet_placeholder)
+    }
+})
+
+$('#js-betting_form-submit').on('click', function() {
+    if (bets_form_tidy()) {
+        $('#js-betting_form-submit').html('<div class="betting_form-submit_loading"><i class="fa fa-cog fa-spin fa-3x fa-fw"></i></div>')
+        $('#js-betting_form-submit').prop('disabled', true);
+        send_object = {
+            better: $('#js-betting_form-better_2').val(),
+            amount: $('#js-betting_form-amount').val(),
+            bet: $('#js-betting_form-comment').text(),
+            judge: $('#js-betting_form-judge').val()
+        }
+        $.ajax({
+                method: "POST",
+                url: "/place_bet",
+                data: send_object
+            })
+            .done(function(return_status) {
+                if (return_status='success') {
+                    $('#js-betting_form-success').toggleClass('toggle-display_none', false)
+                    $('#js-betting_form-submit').prop('disabled', false);
+                } else {
+                    $('#js-betting_form-success').toggleClass('toggle-display_none', true)
+                    $('#js-betting_form-error').html(return_status)
+                    $('#js-betting_form-error').toggleClass('toggle-display_none', false)
+                    $('#js-betting_form-submit').prop('disabled', true);
+                }
+                $('#js-betting_form-submit').html('Submit Bet')
+            });
+    }
+})

@@ -263,11 +263,19 @@ router.get('/admin', function(req, res, next) {
 //
 // This will be added * AFTER * invites are sent out.
 
-/*router.get('/bets', function(req, res, next) {
+router.get('/bets', function(req, res, next) {
     authenticate(req, res, 'bets', function() {
-        res.render('bets', { user: req.session.passport.user.username});
+        db.query("SELECT username FROM golfers WHERE email<>$1", [req.session.passport.user.email])
+            .then(function(data) {
+                res.render('bets', { golfers: data });
+            })
+            .catch(function(error) {
+                log("Couldn't find all usernames as there was an error when quering the golfers table:", 'err');
+                console.log(error);
+                res.redirect('/')
+            })
     })
-})*/
+})
 
 /********************************** POST REQUESTS FOR VARIOUS THINGS *****************************/
 
@@ -362,6 +370,71 @@ router.post('/user_signup', function(req, res, next) {
     })
 })
 
+// Place Bet
+//
+// The place bet route is to allow users to place bets.
+
+router.post('/place_bet', function(req, res, next) {
+    authenticate(req, res, null, function() {
+        log("$1 is attempting to place a bet:", 'inf', [req.session.passport.user.email]);
+        error_output = ''
+        if (req.body.better == req.body.judge) {
+            error_output += "The judge can't be involved in the bet, try chosing a different Judge"
+        }
+        if (isNaN(req.body.amount) || req.body.amount < 0 || req.body.amount == '') {
+            if (error_output != '') {
+                error_output += "<br><br>"
+            }
+            error_output += "The amount you entered is not valid, try entering a number"
+        }
+        if (req.body.bet == '') {
+            if (error_output != '') {
+                error_output += "<br><br>"
+            }
+            error_output += "The bet you want to place is empty, try entering something in the above sentance"
+        }
+        if (error_output != '') {
+            res.send(error_output)
+        } else {
+            res.send('success')
+            db.query("SELECT email, username FROM golfers WHERE username in ($1,$2)", [req.body.better, req.body.judge])
+                .then(function(names) {
+                    better_email = ''
+                    judge_email = ''
+                    if (names[0].username == req.body.better) {
+                        better_email = names[0].email
+                    } else if (names[1].username == req.body.better) {
+                        better_email = names[1].email
+                    }
+                    if (names[0].username == req.body.judge) {
+                        judge_email = names[0].email
+                    } else if (names[1].username == req.body.jdge) {
+                        judge_email = names[1].email
+                    }
+                    if (better_email == '' || judge_email == '') {
+                        error_output = "It doesn't look like those usernames exist, perhaps try again"
+                        res.send(error_output)
+                    } else {
+                        db.query("INSERT INTO bets (gambler_1, gambler_2, judge, amount, bet_comment, date_created) VALUES ($1, $2, $3, $4, $5, $6)", [req.session.passport.user.email, better_email, judge_email, req.body.amount, req.body.bet, moment.utc()])
+                            .then(function(data) {
+                                log('Successully uploaded bet from $1 to the bets table', 's', [req.session.passport.user.email])
+                                res.send('success')
+                            })
+                            .catch(function(error) {
+                                log("Couldn't insert bet from $1 as there was an error when quering the bets table:", 'err', [req.session.passport.user.email]);
+                                console.log(error);
+                                res.send('Whoops! Something went wrong uploading that bet, please try again');
+                            })
+                    }
+                })
+                .catch(function(error) {
+                    log("Couldn't upload bet from $1 to the database as there was an error querying the golfers table:", 'e', [req.session.passport.user.email])
+                    console.log(error)
+                })
+        }
+    })
+})
+
 // Previous Messages
 //
 // The previous messages route is for loading previous chat history from the 'chats' table and sending
@@ -398,9 +471,9 @@ router.post('/previous_messages', function(req, res, next) {
                             }
                             if (collecting == true) {
                                 return_array.splice(0, 0, data[message - 1])
-                                if (return_array[0].user_email=='chat_bot') {
-                                    return_array[0].username='Chat Bot'
-                                    return_array[0].profile_photo_title='chat_bot.jpg'
+                                if (return_array[0].user_email == 'chat_bot') {
+                                    return_array[0].username = 'Chat Bot'
+                                    return_array[0].profile_photo_title = 'chat_bot.jpg'
                                 }
                                 if (message > 1) {
                                     if (return_array.length > 14 && !moment.utc(data[message - 1].timestamp).isSame(moment.utc(data[message - 2].timestamp), 'd')) {
@@ -445,7 +518,7 @@ router.post('/photo_album_upload', function(req, res, next) {
                 db.query("INSERT INTO photos (photo_title, date_uploaded, uploaded_user_email, short_title) VALUES ($1,$2,$3,$4)", [req.file.filename, moment.utc(), req.session.passport.user.email, req.body.photo_title])
                     .then(function(data) {
                         log("Successfully added $1 to the photos table", 'suc', [req.file.filename])
-                        chat_bot(req,req.session.passport.user.username + ' Just uploaded the a photo called ' + req.body.photo_title + '. Head to the photos page to see!')
+                        chat_bot(req, req.session.passport.user.username + ' Just uploaded the a photo called ' + req.body.photo_title + '. Head to the photos page to see!')
                         res.redirect('/photos')
                     })
                     .catch(function(error) {
@@ -759,15 +832,16 @@ router.get('/scorecard/card', function(req, res, next) {
                     var pro_tip_ = data[0].pro_tip;
 
                     // Render the card with the right data
-                    res.render('card', { 
-                                title: 'Hole Scoracard', 
-                                day: day, 
-                                hole: hole, 
-                                scores: scores_html_,
-                                distance: distance_,
-                                par: par_,
-                                top_scorer: top_scorer_,
-                                pro_tip: pro_tip_ });
+                    res.render('card', {
+                        title: 'Hole Scoracard',
+                        day: day,
+                        hole: hole,
+                        scores: scores_html_,
+                        distance: distance_,
+                        par: par_,
+                        top_scorer: top_scorer_,
+                        pro_tip: pro_tip_
+                    });
 
                 }).catch(error => { console.log(error) })
 
@@ -777,7 +851,7 @@ router.get('/scorecard/card', function(req, res, next) {
 });
 
 
-router.post("/scorecard/card",  function(req, res, next) {
+router.post("/scorecard/card", function(req, res, next) {
 
     var user = req.user.username;
     var hole = req.body.hole;
@@ -785,11 +859,11 @@ router.post("/scorecard/card",  function(req, res, next) {
     var score = req.body.score;
 
     tom_js.log_score(db, user, hole, day, score)
-    .then(data => {
+        .then(data => {
 
-        // Do nothing
+            // Do nothing
 
-    }).catch(error => {console.log("Something went awry")})
+        }).catch(error => { console.log("Something went awry") })
 
 
 });

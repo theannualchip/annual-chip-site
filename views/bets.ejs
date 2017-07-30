@@ -7,20 +7,50 @@
             The Annual Chip In - Bets - <%= standard_return.user %>
         </title>
         <link rel='stylesheet' href='/stylesheets/sam.css' />
+        <link rel='stylesheet' href='/stylesheets/palette.css' />
 </head>
 
 <body>
     <% include menu_partial.ejs %>
-    <div class='column'>
-        <h1>Bets</h1>
+    <div class='column full_height bc-grey'>
+        <div class='column has-text-centered'>
+            <h1 class='title chip_heading-large'>Bets</h1>
+            <br>
+            <h1 class='title chip_heading-small'>Want to place a bet?</h1>
+        </div>
         <br>
-        <p>
-        <span placeholder='Oscar' contenteditable='true' class='form-betting_form-inline_text' js='js-betting_form-better_1'>Oscar</span> bets <input type='text' placeholder='Grouch' class='form-betting_form-inline_text' js='js-betting_form-better_2'/> a sum of $<input type='currency' placeholder='20.00' class='form-betting_form-inline_text' js='js-betting_form-amount'/> that <input type='text' placeholder="Oscar can't stand on his head for 5 seconds" class='form-betting_form-inline_text' js='js-betting_form-comment'/>.
-        </p>
-        <p> Sound good? </p>
+        <div class='column bc-light_grey'>
+            <p class='has-text-centered' style='line-height:32px;'>
+            <%= standard_return.user %> bets <select class='form-betting_form-inline_text' id='js-betting_form-better_2'>            
+            <% if (golfers) { %>
+                <% for (row_1=0;row_1<golfers.length;row_1++) { %>
+                    <option value="<%= golfers[row_1].username %>"><%= golfers[row_1].username %></option>
+                <% } %>
+            <% } %></select> a sum of $<input type="number" min="1" step="any" class='form-betting_form-inline_text' id='js-betting_form-amount' value='20'/> that <span contenteditable="true" class='form-betting_form-inline_text' id='js-betting_form-comment'><%= standard_return.user %> can't stand on his head for 5 seconds</span>.
+            </p>
+            <br>
+            <p class='has-text-centered'>
+            Who do you want to be the judge?<select class='form-betting_form-inline_text' id='js-betting_form-judge'>
+            <% if (golfers) { %>
+                <% for (row_1=golfers.length-1;row_1>=0;row_1--) { %>
+                    <option value="<%= golfers[row_1].username %>"><%= golfers[row_1].username %></option>
+                <% } %>
+            <% } %></select>
+            </p>
+            <br>
+            <div class='notification bc-danger_pink has-text-centered toggle-display_none' id='js-betting_form-error'></div>
+            <div class='notification bc-info_blue has-text-centered toggle-display_none' id='js-betting_form-success'>Bet successfully uploaded</div>
+            <div class='column has-text-centered'>
+                <button class="button bc-yellow" disabled='true' id='js-betting_form-submit' style="display: inline-block">
+                    Submit Bet
+                </button>
+            </div>
+        </div>
     </div>
 </body>
-
+<script>
+bet_placeholder="<%= standard_return.user %> can't stand on his head for 5 seconds"
+</script>
 <script src="/javascripts/sam.js"></script>
 
 </html>
