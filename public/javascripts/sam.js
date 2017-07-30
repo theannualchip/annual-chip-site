@@ -192,3 +192,9 @@ $('#js-betting_form-submit').on('click', function() {
             });
     }
 })
+
+function display_bet() {
+    console.log('tac')
+}
+
+

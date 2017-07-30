@@ -266,8 +266,8 @@ router.get('/admin', function(req, res, next) {
 router.get('/bets', function(req, res, next) {
     authenticate(req, res, 'bets', function() {
         db.query("SELECT username FROM golfers WHERE email<>$1", [req.session.passport.user.email])
-            .then(function(data) {
-                res.render('bets', { golfers: data });
+            .then(function(golfers) {
+                res.render('bets', { golfers: golfers });
             })
             .catch(function(error) {
                 log("Couldn't find all usernames as there was an error when quering the golfers table:", 'err');
@@ -396,7 +396,6 @@ router.post('/place_bet', function(req, res, next) {
         if (error_output != '') {
             res.send(error_output)
         } else {
-            res.send('success')
             db.query("SELECT email, username FROM golfers WHERE username in ($1,$2)", [req.body.better, req.body.judge])
                 .then(function(names) {
                     better_email = ''
@@ -408,7 +407,7 @@ router.post('/place_bet', function(req, res, next) {
                     }
                     if (names[0].username == req.body.judge) {
                         judge_email = names[0].email
-                    } else if (names[1].username == req.body.jdge) {
+                    } else if (names[1].username == req.body.judge) {
                         judge_email = names[1].email
                     }
                     if (better_email == '' || judge_email == '') {
@@ -418,6 +417,7 @@ router.post('/place_bet', function(req, res, next) {
                         db.query("INSERT INTO bets (gambler_1, gambler_2, judge, amount, bet_comment, date_created) VALUES ($1, $2, $3, $4, $5, $6)", [req.session.passport.user.email, better_email, judge_email, req.body.amount, req.body.bet, moment.utc()])
                             .then(function(data) {
                                 log('Successully uploaded bet from $1 to the bets table', 's', [req.session.passport.user.email])
+                                chat_bot(req, req.session.passport.user.username + " just bet " + req.body.better + " $" + req.body.amount + " that " + req.body.bet + "!")
                                 res.send('success')
                             })
                             .catch(function(error) {
@@ -432,6 +432,28 @@ router.post('/place_bet', function(req, res, next) {
                     console.log(error)
                 })
         }
+    })
+})
+
+// Previous Bets
+//
+// This is pulled out as an AJAX function so that it can be called with a bet is submitted
+
+router.post('/previous_bets', function(req, res, next) {
+    authenticate(req, res, 'bets', function() {
+        db.query(`SELECT g.username as gambler_1_name, g.profile_photo_title as gambler_1_photo, b.gambler_1, 
+            a.username as gambler_2_name, a.profile_photo_title as gambler_2_photo, b.gambler_2, 
+            c.username as judge_name, c.profile_photo_title as judge_photo, b.judge, 
+            b.amount, b.bet_comment, b.date_created, b.accepted, b.date_accepted, b.winner
+            FROM golfers as g, golfers as a, golfers as c, bets as b WHERE g.email=b.gambler_1 AND a.email=b.gambler_2 AND c.email=b.judge`)
+            .then(function(bets) {
+                res.send(bets);
+            })
+            .catch(function(error) {
+                log("Couldn't find all bets as there was an error when quering the bets table:", 'err');
+                console.log(error);
+                res.send('error_getting_bets')
+            })
     })
 })
 
