@@ -46,24 +46,81 @@
                 </button>
             </div>
         </div>
-    </div>
-    <div class='column bc-grey' id='js-previous_bet_output'>
-
+        <br>
+        <br>
+        <div class='bc-light_yellow' id='js-previous_stats_output'>
+        </div>
+        <br>
+        <br>
+        <div class='bc-accent_grey' id='js-previous_bets_output'>
+        </div>
     </div>
 </body>
 <script>
 bet_placeholder="<%= standard_return.user %> can't stand on his head for 5 seconds"
-$.ajax({
-    method: "POST",
-    url: "/previous_bets"
-})
-.done(function(data) {
-    // THIS IS WHERE YOU ARE UP TO! DEALING WITH THE BETTING OUTPUT, THEN ADDING
-    // TOTAL WON TO DATE, TOTAL EXPOSURE
-    // NEED TO ACTION
-    // PAST BETS
-    $('#js-previous_bet_output').html(JSON.stringify(data))
-})
+function collect_bets() {
+   $.ajax({
+        method: "POST",
+        url: "/previous_bets"
+    })
+    .done(function(data) {
+        $('#js-previous_stats_output').html(`
+            <br>
+            <div class='columns'>
+                <div class='column is-half bet_stats'>
+                    <p class='has-text-centered chip_heading-small'>
+                        Your Winnings To Date
+                    </p>
+                    <div class='has-text-centered'>
+                        $${data.stats.your_winnings}
+                    </div>
+                </div>
+                <div class='column is-half bet_stats'>
+                    <p class='has-text-centered chip_heading-small'>
+                        Your Current Exposure
+                    </p>
+                    <div class='has-text-centered'>
+                        $${data.stats.your_exposure}
+                    </div>
+                </div>
+            </div>
+            <div class='columns'>
+                <div class='column is-half bet_stats'>
+                    <p class='has-text-centered chip_heading-small'>
+                        Total Bets Won To Date
+                    </p>
+                    <div class='has-text-centered'>
+                        $${data.stats.all_won}
+                    </div>
+                </div>
+                <div class='column is-half bet_stats'>
+                    <p class='has-text-centered chip_heading-small'>
+                        Total Current Exposure
+                    </p>
+                    <div class='has-text-centered'>
+                        $${data.stats.all_exposed}
+                    </div>
+                </div>
+            </div>`)
+        // NEED TO ACTION
+        // PAST BETS
+        $('#js-previous_bets_output').html(`
+            <div class='column'>
+                Bets Still To Be Accepted (The Parties Need To Accept)
+            </div>
+            <div class='column'>
+                Open Bets (Judge Needs To Assign A Winner)
+            </div>
+            <div class='column'>
+                Previous (Closed) Bets
+            </div>`)
+
+        $('#js-previous_bets_output').append(JSON.stringify(data.bets))
+        
+    })
+
+}
+collect_bets()
 </script>
 <script src="/javascripts/sam.js"></script>
 

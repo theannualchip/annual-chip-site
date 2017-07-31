@@ -466,6 +466,20 @@ input {
     padding-top:0;
 }
 
+.bet_stats p {
+    margin-bottom:20px;
+}
+
+.bet_stats div {
+    font-size:16pt;
+    background-color:white;
+    border-radius:50px;
+    height:100px;
+    width:100px;
+    padding-top:33px;
+    margin:0 auto 20px auto;
+}
+
 /***************************************************** HIGHLIGHTS *************************************************/
 
 .background_color-grey {

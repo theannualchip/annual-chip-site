@@ -447,7 +447,25 @@ router.post('/previous_bets', function(req, res, next) {
             b.amount, b.bet_comment, b.date_created, b.accepted, b.date_accepted, b.winner
             FROM golfers as g, golfers as a, golfers as c, bets as b WHERE g.email=b.gambler_1 AND a.email=b.gambler_2 AND c.email=b.judge`)
             .then(function(bets) {
-                res.send(bets);
+                var user = req.session.passport.user.email
+                stats={your_exposure:0,your_winnings:0,all_won:0,all_exposed:0}
+                for (row_1 = 0; row_1 < bets.length; row_1++) {
+                    if (bets[row_1].gambler_1 == user || bets[row_1].gambler_2 == user) {
+                        if (bets[row_1].winner==null) {
+                            stats.your_exposure+=bets[row_1].amount
+                        } else if (bets[row_1].winner==user) {
+                            stats.your_winnings+=bets[row_1].amount
+                        } else {
+                            stats.your_winnings-=bets[row_1].amount
+                        }
+                    }
+                    if (bets[row_1].winner==null) {
+                        stats.all_exposed+=bets[row_1].amount
+                    } else {
+                        stats.all_won+=bets[row_1].amount
+                    }
+                }
+                res.send({bets:bets,stats:stats});
             })
             .catch(function(error) {
                 log("Couldn't find all bets as there was an error when quering the bets table:", 'err');
