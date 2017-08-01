@@ -447,30 +447,294 @@ router.post('/previous_bets', function(req, res, next) {
             b.amount, b.bet_comment, b.date_created, b.accepted, b.date_accepted, b.winner
             FROM golfers as g, golfers as a, golfers as c, bets as b WHERE g.email=b.gambler_1 AND a.email=b.gambler_2 AND c.email=b.judge`)
             .then(function(bets) {
-                var user = req.session.passport.user.email
-                stats={your_exposure:0,your_winnings:0,all_won:0,all_exposed:0}
-                for (row_1 = 0; row_1 < bets.length; row_1++) {
-                    if (bets[row_1].gambler_1 == user || bets[row_1].gambler_2 == user) {
-                        if (bets[row_1].winner==null) {
-                            stats.your_exposure+=bets[row_1].amount
-                        } else if (bets[row_1].winner==user) {
-                            stats.your_winnings+=bets[row_1].amount
-                        } else {
-                            stats.your_winnings-=bets[row_1].amount
+                db.query(`SELECT * FROM golfers`)
+                    .then(function(golfers) {
+                        var user = req.session.passport.user.email
+                        stats = { your_exposure: 0, your_winnings: 0, all_won: 0, all_exposed: 0 }
+                        for (row_1 = 0; row_1 < bets.length; row_1++) {
+                            if (bets[row_1].gambler_1 == user || bets[row_1].gambler_2 == user) {
+                                if (bets[row_1].winner == null) {
+                                    stats.your_exposure += bets[row_1].amount
+                                } else if (bets[row_1].winner == user) {
+                                    stats.your_winnings += bets[row_1].amount
+                                } else {
+                                    stats.your_winnings -= bets[row_1].amount
+                                }
+                            }
+                            if (bets[row_1].winner == null) {
+                                stats.all_exposed += bets[row_1].amount
+                            } else {
+                                stats.all_won += bets[row_1].amount
+                            }
                         }
-                    }
-                    if (bets[row_1].winner==null) {
-                        stats.all_exposed+=bets[row_1].amount
-                    } else {
-                        stats.all_won+=bets[row_1].amount
-                    }
-                }
-                res.send({bets:bets,stats:stats});
+                        sorted_bets = { to_be_accepted: '', open_bets: '', closed_bets: '' }
+                        for (row_1 = 0; row_1 < bets.length; row_1++) {
+                            if (bets[row_1].accepted == null) {
+                                if (bets[row_1].gambler_1 == user) {
+                                    sorted_bets.to_be_accepted += `
+                                        <div class='column bets-your_bet'>
+                                            <div class='column bets-description'>
+                                                <a>You</a> bet ${bets[row_1].gambler_2_name} $${bets[row_1].amount} that ${bets[row_1].bet_comment}. ${bets[row_1].judge_name} will be the judge.
+                                            </div>
+                                            <div class='column bets-action has-text-centered'>
+                                                Waiting for ${bets[row_1].gambler_2_name} to accept.
+                                            </div>
+                                        </div>`
+                                } else if (bets[row_1].gambler_2 == user) {
+                                    sorted_bets.to_be_accepted += `
+                                        <div class='column bets-your_bet'>
+                                            <div class='column bets-description'>
+                                                ${bets[row_1].gambler_1_name} bet <a>you</a> $${bets[row_1].amount} that ${bets[row_1].bet_comment}. ${bets[row_1].judge_name} will be the judge.
+                                            </div>
+                                            <div class='column bets-action has-text-centered'>
+                                                <div class='columns is-mobile'>
+                                                    <div class='column is-half'>
+                                                        <button class='button bc-info_blue' onclick="accept_bet('${moment.utc(bets[row_1].date_created).format('YYYY-MM-DDTHH:mm:ss.SSSZ')}','accept','${bets[row_1].gambler_1_name}')">Accept Bet</button>
+                                                    </div>
+                                                    <div class='column is-half'>
+                                                        <button class='button bc-danger_pink' onclick="accept_bet('${moment.utc(bets[row_1].date_created).format('YYYY-MM-DDTHH:mm:ss.SSSZ')}','reject','${bets[row_1].gambler_1_name}')">Reject Bet</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`
+                                } else {
+                                    sorted_bets.to_be_accepted += `
+                                        <div class='column bets-other_bet'>
+                                            <div class='column bets-description'>
+                                                ${bets[row_1].gambler_1_name} bet ${bets[row_1].gambler_2_name} $${bets[row_1].amount} that ${bets[row_1].bet_comment}. ${bets[row_1].judge_name} will be the judge.
+                                            </div>
+                                            <div class='column bets-action has-text-centered'>
+                                                Waiting for ${bets[row_1].gambler_2_name} to accept.
+                                            </div>
+                                        </div>`
+                                }
+                            } else if (bets[row_1].winner==null) {
+                                if (bets[row_1].judge==user) {
+                                    sorted_bets.open_bets += `
+                                        <div class='column bets-your_bet'>
+                                            <div class='column bets-description'>
+                                                ${bets[row_1].gambler_1_name} bet ${bets[row_1].gambler_2_name} $${bets[row_1].amount} that ${bets[row_1].bet_comment}. <a>You</a> are be the judge.
+                                            </div>
+                                            <div class='column bets-action has-text-centered'>
+                                                <div class='columns is-mobile'>
+                                                    <div class='column is-half'>
+                                                        <button class='button bc-info_blue' onclick="judge_bet('${moment.utc(bets[row_1].date_created).format('YYYY-MM-DDTHH:mm:ss.SSSZ')}','won_${bets[row_1].gambler_1}',['${bets[row_1].gambler_1_name}','${bets[row_1].gambler_2_name}','${bets[row_1].amount}'])">${bets[row_1].gambler_1_name} Won</button>
+                                                    </div>
+                                                    <div class='column is-half'>
+                                                        <button class='button bc-info_blue' onclick="judge_bet('${moment.utc(bets[row_1].date_created).format('YYYY-MM-DDTHH:mm:ss.SSSZ')}','won_${bets[row_1].gambler_2}',['${bets[row_1].gambler_2_name}','${bets[row_1].gambler_1_name}','${bets[row_1].amount}'])">${bets[row_1].gambler_2_name} Won</button>
+                                                    </div>
+                                                </div>
+                                                <div class='columns is-mobile'>
+                                                    <div class='column'>
+                                                        <button class='button bc-danger_pink' onclick="judge_bet('${moment.utc(bets[row_1].date_created).format('YYYY-MM-DDTHH:mm:ss.SSSZ')}','cancel',['${bets[row_1].gambler_1}','${bets[row_1].gambler_2_name}','${bets[row_1].amount}'])">Withdrawal or Tie</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`
+                                } else {
+                                    sorted_bets.open_bets += `
+                                        <div class='column bets-other_bet'>
+                                            <div class='column bets-description'>
+                                                ${bets[row_1].gambler_1_name} bet ${bets[row_1].gambler_2_name} $${bets[row_1].amount} that ${bets[row_1].bet_comment}. ${bets[row_1].judge_name} is the judge.
+                                            </div>
+                                            <div class='column bets-action has-text-centered'>
+                                                Waiting for ${bets[row_1].judge_name} to decide who won.
+                                            </div>
+                                        </div>`
+                                }
+                            } else {
+                                if (bets[row_1].gambler_1 == user && bets[row_1].winner == user) {
+                                    sorted_bets.closed_bets += `
+                                        <div class='column bets-your_bet'>
+                                            <div class='column bets-description'>
+                                                <a>You</a> bet ${bets[row_1].gambler_2_name} $${bets[row_1].amount} that ${bets[row_1].bet_comment}. ${bets[row_1].judge_name} was the judge.
+                                            </div>
+                                            <div class='column bets-action has-text-centered'>
+                                                <a class='bc-info_blue'>You won this bet. +$${bets[row_1].amount} baby.</a>
+                                            </div>
+                                        </div>`
+                                } else if (bets[row_1].gambler_2 == user && bets[row_1].winner == user) {
+                                    sorted_bets.closed_bets += `
+                                        <div class='column bets-your_bet'>
+                                            <div class='column bets-description'>
+                                                ${bets[row_1].gambler_2_name} bet <a>you</a> $${bets[row_1].amount} that ${bets[row_1].bet_comment}. ${bets[row_1].judge_name} was the judge.
+                                            </div>
+                                            <div class='column bets-action has-text-centered'>
+                                                <a class='bc-info_blue'>You won this bet. +$${bets[row_1].amount} baby. </a>
+                                            </div>
+                                        </div>`
+                                } else if (bets[row_1].gambler_1 == user && bets[row_1].winner != user) {
+                                    sorted_bets.closed_bets += `
+                                        <div class='column bets-your_bet'>
+                                            <div class='column bets-description'>
+                                                <a>You</a> bet ${bets[row_1].gambler_2_name} $${bets[row_1].amount} that ${bets[row_1].bet_comment}. ${bets[row_1].judge_name} was the judge.
+                                            </div>
+                                            <div class='column bets-action has-text-centered'>
+                                                <a class='bc-danger_pink'>You lost this bet. -$${bets[row_1].amount}. Arghh. </a>
+                                            </div>
+                                        </div>`
+                                } else if (bets[row_1].gambler_2 == user && bets[row_1].winner != user) {
+                                    sorted_bets.closed_bets += `
+                                        <div class='column bets-your_bet'>
+                                            <div class='column bets-description'>
+                                                ${bets[row_1].gambler_2_name} bet <a>you</a> $${bets[row_1].amount} that ${bets[row_1].bet_comment}. ${bets[row_1].judge_name} was the judge.
+                                            </div>
+                                            <div class='column bets-action has-text-centered'>
+                                                <a class='bc-danger_pink'>You lost this bet. -$${bets[row_1].amount} Arghh. </a>
+                                            </div>
+                                        </div>` 
+                                } else {
+                                    for (row_2=0;row_2<golfers.length;row_2++) {
+                                        if (golfers[row_2].email==bets[row_1].winner) {
+                                            bets[row_1].winner=golfers[row_2].username
+                                        }
+                                    }
+                                    sorted_bets.closed_bets += `
+                                        <div class='column bets-other_bet'>
+                                            <div class='column bets-description'>
+                                                ${bets[row_1].gambler_1_name} bet ${bets[row_1].gambler_2_name} $${bets[row_1].amount} that ${bets[row_1].bet_comment}. ${bets[row_1].judge_name} was the judge.
+                                            </div>
+                                            <div class='column bets-action has-text-centered'>
+                                                ${bets[row_1].winner} won the bet.
+                                            </div>
+                                        </div>`
+                                }
+                            }
+                        }
+                        if(sorted_bets.to_be_accepted=='') {
+                            sorted_bets.to_be_accepted=`<div class='column bets-other_bet bc-danger_pink'>Doesn't look like there is anything here...</div>`
+                        }
+                        if(sorted_bets.open_bets=='') {
+                            sorted_bets.open_bets=`<div class='column bets-other_bet bc-danger_pink'>Doesn't look like there is anything here...</div>`
+                        }
+                        if(sorted_bets.closed_bets=='') {
+                            sorted_bets.closed_bets=`<div class='column bets-other_bet bc-danger_pink'>Doesn't look like there is anything here...</div>`
+                        }
+                        res.send({ bets: sorted_bets, stats: stats });
+                    })
+                    .catch(function(error) {
+                        log("Couldn't find all bets as there was an error when quering the golfers table:", 'err');
+                        console.log(error);
+                        res.send('error_getting_bets')
+                    })
             })
             .catch(function(error) {
                 log("Couldn't find all bets as there was an error when quering the bets table:", 'err');
                 console.log(error);
                 res.send('error_getting_bets')
+            })
+    })
+})
+
+// Accept Bets
+//
+// This POST request allows users to either accept or reject bets which have been wagered against them.
+
+router.post('/accept_bet', function(req, res, next) {
+    authenticate(req, res, 'bets', function() {
+        db.query("SELECT * FROM bets WHERE date_created=$1", [moment.utc(req.body.time_stamp)])
+            .then(function(data) {
+                if (data.length > 0) {
+                    if (data[0].gambler_2 == req.session.passport.user.email) {
+                        if (req.body.action == 'accept') {
+                            db.query("UPDATE bets SET accepted=TRUE, date_accepted=$1 WHERE date_created=$2", [moment.utc(), moment.utc(req.body.time_stamp)])
+                                .then(function(update) {
+                                    log("$1 successfully accepted bet $2", 's', [req.session.passport.user.email, moment(req.body.time_stamp)])
+                                    chat_bot(req,"Look out! " + req.session.passport.user.username + " just accepted " + req.body.name + "'s bet!")
+                                    res.send('success')
+                                })
+                                .catch(function(error) {
+                                    log("Couldn't accept the bet $1 for $2 as there was an error querying the bets table:", 'err', [moment(req.body.time_stamp),req.session.passport.user.email]);
+                                    console.log(error);
+                                    res.send('Ah oh! Something went wrong. Try the request again.')
+                                })
+                        } else if (req.body.action == 'reject') {
+                            db.query("DELETE FROM bets WHERE date_created=$1", [moment.utc(req.body.time_stamp)])
+                                .then(function(update) {
+                                    log("$1 successfully rejected bet $2", 's', [req.session.passport.user.email], moment(req.body.time_stamp))
+                                    chat_bot(req,"Soft. " + req.session.passport.user.username + " just rejected " + req.body.name + "'s bet.")
+                                    res.send('success')
+                                })
+                                .catch(function(error) {
+                                    log("Couldn't reject the bet $1 for $2 as there was an error querying the bets table:", 'err', [moment(req.body.time_stamp),req.session.passport.user.email]);
+                                    console.log(error);
+                                    res.send('Ah oh! Something went wrong. Try the request again.')
+                                })
+                        } else {
+                            log("$1 was trying to accept bet $2 but the action specified wasn't 'accept' or 'reject'", 'e', [req.session.passport.user.email, moment.utc(req.body.time_stamp)])
+                            res.send("Ah oh! It doesn't look like you've said to accept or reject that bet. Try the request again.")
+                        }
+                    } else {
+                        log("$1 was trying to accept bet $2 when that isn't their bet", 'e', [req.session.passport.user.email, moment.utc(req.body.time_stamp)])
+                        res.send("Ah oh! It doesn't look like you need ot accept that bet")
+                    }
+                } else {
+                    log("Couldn't find bet with timestamp $1 for $2", 'e', [moment.utc(req.body.time_stamp), req.session.passport.user.email])
+                    res.send("Ah oh! It doesn't look like that bet exists anymore")
+                }
+            })
+            .catch(function(error) {
+                log("Couldn't find the bet with timestamp $1 as there was an error when quering the bets table:", 'err', [moment(req.body.time_stamp).format()]);
+                console.log(error);
+                res.send('Ah oh! Something went wrong. Try the request again.')
+            })
+    })
+})
+
+// Bet Outcome
+//
+// This POST request allows the judge of a bet to input who the winner of the bet was, or cancel the bet.
+
+router.post('/bet_outcome', function(req, res, next) {
+    authenticate(req, res, 'bets', function() {
+        db.query("SELECT * FROM bets WHERE date_created=$1", [moment.utc(req.body.time_stamp)])
+            .then(function(data) {
+                if (data.length > 0) {
+                    if (data[0].judge == req.session.passport.user.email) {
+
+                        if (req.body.outcome.substring(0,4)=='won_') {
+                            db.query("UPDATE bets SET winner=$1, date_won=$2 WHERE date_created=$3", [req.body.outcome.substring(4,req.body.outcome.length), moment.utc(), moment.utc(req.body.time_stamp)])
+                                .then(function(update) {
+                                    log("$1 successfully judged bet $2", 's', [req.session.passport.user.email, moment(req.body.time_stamp)])
+                                    chat_bot(req,"Haha Boom! " + req.body.bet_info[0] + " just cost " + req.body.bet_info[1] + " $" + req.body.bet_info[2] + ". Nice win champ!")
+                                    res.send('success')
+                                })
+                                .catch(function(error) {
+                                    log("Couldn't accept the bet $1 for $2 as there was an error querying the bets table:", 'err', [moment(req.body.time_stamp),req.session.passport.user.email]);
+                                    console.log(error);
+                                    res.send('Ah oh! Something went wrong. Try the request again.')
+                                })
+                        } else if (req.body.outcome == 'cancel') {
+                            db.query("DELETE FROM bets WHERE date_created=$1", [moment.utc(req.body.time_stamp)])
+                                .then(function(update) {
+                                    log("$1 successfully cancelled bet $2 as judge", 's', [req.session.passport.user.email], moment(req.body.time_stamp))
+                                    chat_bot(req,"Put your money away boys. " + req.session.passport.user.username + " just cancelled the bet between " + req.body.bet_info[0] + " and " + req.body.bet_info[1] + ".")
+                                    res.send('success')
+                                })
+                                .catch(function(error) {
+                                    log("Couldn't reject the bet $1 for $2 as there was an error querying the bets table:", 'err', [moment(req.body.time_stamp),req.session.passport.user.email]);
+                                    console.log(error);
+                                    res.send('Ah oh! Something went wrong. Try the request again.')
+                                })
+                        } else {
+                            log("$1 was trying to accept bet $2 but the action specified wasn't 'won_' or 'cancel'", 'e', [req.session.passport.user.email, moment.utc(req.body.time_stamp)])
+                            res.send("Ah oh! It doesn't look like you've decided on a winner for that bet. Try the request again.")
+                        }
+
+
+                    } else {
+                        log("$1 was trying to judge bet $2 when that isn't their bet to judge", 'e', [req.session.passport.user.email, moment.utc(req.body.time_stamp)])
+                        res.send("Ah oh! It doesn't look like you need to judge that bet")
+                    }
+                } else {
+                    log("Couldn't find bet with timestamp $1 for $2", 'e', [moment.utc(req.body.time_stamp), req.session.passport.user.email])
+                    res.send("Ah oh! It doesn't look like that bet exists anymore")
+                }
+            })
+            .catch(function(error) {
+                log("Couldn't find the bet with timestamp $1 as there was an error when quering the bets table:", 'err', [moment(req.body.time_stamp).format()]);
+                console.log(error);
+                res.send('Ah oh! Something went wrong. Try the request again.')
             })
     })
 })

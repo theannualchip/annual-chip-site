@@ -105,6 +105,7 @@ $("#js-edit_profile-photo_upload").change(function() {
 
 
 function bets_form_tidy() {
+    $('#js-update_bets-error').toggleClass('toggle-display_none', true)
     if ($('#js-betting_form-amount').val()) {
         $('#js-betting_form-amount').width(($('#js-betting_form-amount').val().length + 1) * 8 + 10)
     } else {
@@ -179,6 +180,7 @@ $('#js-betting_form-submit').on('click', function() {
                 data: send_object
             })
             .done(function(return_status) {
+                collect_bets()
                 if (return_status='success') {
                     $('#js-betting_form-success').toggleClass('toggle-display_none', false)
                     $('#js-betting_form-submit').prop('disabled', false);
@@ -193,8 +195,36 @@ $('#js-betting_form-submit').on('click', function() {
     }
 })
 
-function display_bet() {
-    console.log('tac')
+function accept_bet(time_stamp,action,name) {
+    $('#js-update_bets-error').toggleClass('toggle-display_none', true)
+    $.ajax({
+                method: "POST",
+                url: "/accept_bet",
+                data: {time_stamp:time_stamp,action:action,name:name}
+            })
+            .done(function(return_status) {
+                if (return_status!='success') {
+                    $('#js-update_bets-error').html=return_status
+                    $('#js-update_bets-error').toggleClass('toggle-display_none', false)
+                }
+                collect_bets()
+            });
+}
+
+function judge_bet(time_stamp,outcome,bet_info) {
+    $('#js-update_bets-error').toggleClass('toggle-display_none', true)
+    $.ajax({
+                method: "POST",
+                url: "/bet_outcome",
+                data: {time_stamp:time_stamp,outcome:outcome,bet_info:bet_info}
+            })
+            .done(function(return_status) {
+                if (return_status!='success') {
+                    $('#js-update_bets-error').html=return_status
+                    $('#js-update_bets-error').toggleClass('toggle-display_none', false)
+                }
+                collect_bets()
+            });
 }
 
 

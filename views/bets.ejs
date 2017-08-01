@@ -52,7 +52,8 @@
         </div>
         <br>
         <br>
-        <div class='bc-accent_grey' id='js-previous_bets_output'>
+        <div class='notification bc-danger_pink has-text-centered toggle-display_none' id='js-update_bets-error'></div>
+        <div class='bc-light_grey' id='js-previous_bets_output'>
         </div>
     </div>
 </body>
@@ -106,17 +107,23 @@ function collect_bets() {
         // PAST BETS
         $('#js-previous_bets_output').html(`
             <div class='column'>
-                Bets Still To Be Accepted (The Parties Need To Accept)
+                <p class='chip_heading-small'>
+                    Bets Still To Be Accepted
+                </p>
+                ${data.bets.to_be_accepted}
             </div>
             <div class='column'>
-                Open Bets (Judge Needs To Assign A Winner)
+                <p class='chip_heading-small'>
+                    Open Bets
+                </p>
+                ${data.bets.open_bets}
             </div>
             <div class='column'>
-                Previous (Closed) Bets
+                <p class='chip_heading-small'>
+                    Closed Bets
+                </p>
+                ${data.bets.closed_bets}
             </div>`)
-
-        $('#js-previous_bets_output').append(JSON.stringify(data.bets))
-        
     })
 
 }

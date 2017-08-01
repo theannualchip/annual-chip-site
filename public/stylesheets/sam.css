@@ -480,6 +480,35 @@ input {
     margin:0 auto 20px auto;
 }
 
+.bets-other_bet {
+    background-color:white;
+    border-radius:10px;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+.bets-your_bet {
+    border-radius:10px;
+    margin-top:10px;
+    margin-bottom:10px;
+    background-color:#ffedcc;
+}
+
+.bets-action {
+    color:#ffcf79;
+}
+
+.bets-action button {
+    width:140px;
+}
+
+.bets-description a {
+    color:white;
+    background-color:#e5e4d7;
+    padding:5px;
+    border-radius:5px;
+}
+
 /***************************************************** HIGHLIGHTS *************************************************/
 
 .background_color-grey {
