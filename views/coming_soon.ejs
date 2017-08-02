@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include head.ejs %>
+    <title>
+        The Annual Chip In | <%= standard_return.user %> | Scorecard
+    </title>
+    <link rel='stylesheet' href='/stylesheets/sam.css' />
+    <link rel='stylesheet' href='/stylesheets/palette.css' />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0" />
+</head>
+<body>
+    <!-- the loading screen -->
+    <% include menu_partial.ejs %>
+        <section class="hero is-alt is-fullheight bc-grey">
+            <div class="hero-body">
+                <div class="column is-one-third-desktop is-offset-one-third-desktop">
+                    <div class="card-content">
+                        <h1 class="title has-text-centered chip_heading-large countdown">
+                            Tee Off In...
+                        </h1>
+                    </div>
+                    <div class='column has-text-centered countdown' id='js-count_down'>        
+                    </div>
+                </div>
+            </div>
+        </section>
+</body>
+<script>
+    function countdown() {
+        current_time = moment()
+        golf_start=moment('14/10/17 09:00','DD/MM/YY HH:mm')
+        days=golf_start.diff(current_time,'d')
+        hours=golf_start.diff(current_time,'h')-days*24
+        minutes=golf_start.diff(current_time,'m')-golf_start.diff(current_time,'h')*60
+        seconds=golf_start.diff(current_time,'s')-golf_start.diff(current_time,'m')*60
+        $('#js-count_down').html(days + ' days ' + hours + ' hours ' + minutes + ' minutes ' + seconds + ' seconds ')
+        setTimeout(countdown,1000)
+    }
+    countdown()
+</script>
+<script src="/javascripts/sam.js"></script>
+</html>

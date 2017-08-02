@@ -1159,8 +1159,10 @@ router.post('/submit_profile_update', function(req, res, next) {
 /* TOM SECTION. */
 
 router.get('/scorecard', function(req, res, next) {
-
-
+    authenticate(req, res, 'score_card', function() {
+        res.render('coming_soon')
+    })
+    /*
     tom_js.get_short_lboard(db, 1)
         .then(data => {
 
@@ -1174,6 +1176,7 @@ router.get('/scorecard', function(req, res, next) {
                 links: links_html
             })
         }).catch(error => { console.log(error) })
+    */
 
     // console.log(JSON.stringify(leaderboard_s));
 
@@ -1182,7 +1185,8 @@ router.get('/scorecard', function(req, res, next) {
 
 
 router.get('/scorecard/card', function(req, res, next) {
-
+    res.redirect('/scorecard')
+    /*
     day = req.query.day;
     hole = req.query.hole;
 
@@ -1220,12 +1224,13 @@ router.get('/scorecard/card', function(req, res, next) {
 
 
         }).catch(error => { console.log(error) })
-
+    */
 });
 
 
 router.post("/scorecard/card", function(req, res, next) {
-
+    res.redirect('/scorecard')
+    /*
     var user = req.user.username;
     var hole = req.body.hole;
     var day = req.body.day;
@@ -1238,7 +1243,7 @@ router.post("/scorecard/card", function(req, res, next) {
 
         }).catch(error => { console.log("Something went awry") })
 
-
+    */
 });
 
 /******************************************* MODULE EXPORTS **************************************/
