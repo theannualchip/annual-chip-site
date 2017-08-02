@@ -3,7 +3,7 @@ var db = require("../db.js");
 var moment = require('moment');
 var comebacks = require('./abstracted_functions/comebacks.js');
 
-get_online_users = function(sockets,io) {
+get_online_users = function(sockets, io) {
     var return_object = { online: [], offline: [] };
     db.query("SELECT username, last_active, email, profile_photo_title FROM golfers")
         .then(function(data) {
@@ -29,14 +29,13 @@ get_online_users = function(sockets,io) {
         })
 }
 
-snappy_bot=function(message,user,io) {
-    console.log(comebacks)
-    for (row_1=0;row_1<comebacks.length;row_1++) {
-        if (comebacks[row_1][0].toLowerCase()==message.toLowerCase()) {
-            var comeback_row=row_1;
+snappy_bot = function(message, user, io) {
+    for (row_1 = 0; row_1 < comebacks.length; row_1++) {
+        if (comebacks[row_1][0].toLowerCase() == message.toLowerCase()) {
+            var comeback_row = row_1;
             setTimeout(function() {
-                io.emit('chat message', { username: 'Chat Bot', message: comebacks[comeback_row][1], profile_photo_title: 'chat_bot.jpg', timestamp: moment.utc() });  
-            },700)
+                io.emit('chat message', { username: 'Chat Bot', message: comebacks[comeback_row][1], profile_photo_title: 'chat_bot.jpg', timestamp: moment.utc() });
+            }, 700)
         }
     }
 }
@@ -52,8 +51,8 @@ module.exports = function(io) {
                         socket.useremail = user_email;
                         socket.username = data[0].username;
                         socket.profile_photo_title = data[0].profile_photo_title;
-                        get_online_users(io.sockets.connected,io);
-                        io.emit('chat message', { username: "Chat Bot", message: socket.username + " just joined the conversation.", profile_photo_title: 'chat_bot.jpg', timestamp: moment.utc() });               
+                        get_online_users(io.sockets.connected, io);
+                        io.emit('chat message', { username: "Chat Bot", message: socket.username + " just joined the conversation.", profile_photo_title: 'chat_bot.jpg', timestamp: moment.utc() });
                     } else {
                         console.log("Couldn't connect socket for \x1b[34m" + user_email + "\x1b[31m the email they provided is not valid\x1b[0m:");
                         socket.disconnect();
@@ -69,7 +68,7 @@ module.exports = function(io) {
             if (socket.useremail) {
                 console.log("\x1b[42m\x1b[37mSuccessfully disconnected socket for\x1b[0m \x1b[34m" + socket.useremail + "\x1b[0m");
                 io.emit('chat message', { username: "Chat Bot", message: socket.username + " has left the conversation.", profile_photo_title: 'chat_bot.jpg', timestamp: moment.utc() });
-                get_online_users(io.sockets.connected,io);
+                get_online_users(io.sockets.connected, io);
             } else {
                 console.log("\x1b[31m Unusual disconnect for \x1b[0m" + socket.id + "\x1b[31m. No username or email included in socket object \x1b[0m");
             }
@@ -79,8 +78,8 @@ module.exports = function(io) {
             db.query("INSERT INTO chat (user_email,comment,timestamp) VALUES ($1,$2,$3)", [socket.useremail, message, moment.utc()])
                 .then(function(data) {
                     console.log("\x1b[42m\x1b[37mSuccessfully added \x1b[0m \x1b[34m" + message + "\x1b[0m to chat db");
-                    io.emit('chat message', { username: socket.username, message: message, profile_photo_title: socket.profile_photo_title, timestamp: moment.utc() });  
-                    snappy_bot(message.toLowerCase(),socket.username,io)
+                    io.emit('chat message', { username: socket.username, message: message, profile_photo_title: socket.profile_photo_title, timestamp: moment.utc(), user_email: socket.useremail });
+                    snappy_bot(message.toLowerCase(), socket.username, io)
                 })
                 .catch(function(error) {
                     console.log("Couldn't upload message \x1b[34m" + message + "\x1b[31m error quering the chat database\x1b[0m:");

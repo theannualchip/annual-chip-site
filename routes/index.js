@@ -130,8 +130,64 @@ router.get('/profile/:email', function(req, res, next) {
         db.query("SELECT profile_photo_title, email, last_active::varchar, username FROM golfers WHERE email=$1", [decodeURIComponent(req.params.email)])
             .then(function(data) {
                 if (data.length > 0) {
-                    log("Successfully collected user info for $1", 'suc', [decodeURIComponent(req.params.email)]);
-                    res.render('profile', { user_info: data[0] });
+                    db.query("SELECT COUNT(comment) FROM chat WHERE user_email=$1", [decodeURIComponent(req.params.email)])
+                        .then(function(chat_count) {
+                            db.query(`SELECT g.username as gambler_1_name, g.profile_photo_title as gambler_1_photo, b.gambler_1, 
+                                a.username as gambler_2_name, a.profile_photo_title as gambler_2_photo, b.gambler_2, 
+                                b.amount, b.bet_comment, b.date_created, b.accepted, b.date_accepted, b.winner
+                                FROM golfers as g, golfers as a, bets as b WHERE g.email=b.gambler_1 AND a.email=b.gambler_2 AND (b.gambler_1=$1 OR b.gambler_2=$1)`, [decodeURIComponent(req.params.email)])
+                                .then(function(bets) {
+                                    profile_bets={winnings:0,exposure:0,open_bets:'',closed_bets:''}
+                                    for (row_1=0;row_1<bets.length;row_1++) {
+                                        if (bets[row_1].winner==null && bets[row_1].accepted!=null) {
+                                            profile_bets.exposure+=bets[row_1].amount
+                                            profile_bets.open_bets+=`
+                                                <div class='column bets-other_bet'>
+                                                    <div class='column bets-description'>
+                                                        ${bets[row_1].gambler_1_name} bet ${bets[row_1].gambler_2_name} $${bets[row_1].amount} that ${bets[row_1].bet_comment}.
+                                                    </div>
+                                                    <div class='column bets-action has-text-centered'>
+                                                        $${bets[row_1].amount} is on the line.
+                                                    </div>
+                                                </div>`
+                                        } else if (bets[row_1].winner==decodeURIComponent(req.params.email)) {
+                                            profile_bets.winnings+=bets[row_1].amount
+                                            profile_bets.closed_bets+=`
+                                                <div class='column bets-your_bet bc-info_blue'>
+                                                    <div class='column bets-description'>
+                                                        ${bets[row_1].gambler_1_name} bet ${bets[row_1].gambler_2_name} $${bets[row_1].amount} that ${bets[row_1].bet_comment}.
+                                                    </div>
+                                                    <div class='column bets-action has-text-centered'>
+                                                        ${data[0].username} won $${bets[row_1].amount} 
+                                                    </div>
+                                                </div>`
+                                        } else if (bets[row_1].winner!=null && bets[row_1].winner!=decodeURIComponent(req.params.email)) {
+                                            profile_bets.winnings-=bets[row_1].amount
+                                            profile_bets.closed_bets+=`
+                                                <div class='column bets-your_bet bc-danger_pink'>
+                                                    <div class='column bets-description'>
+                                                        ${bets[row_1].gambler_1_name} bet ${bets[row_1].gambler_2_name} $${bets[row_1].amount} that ${bets[row_1].bet_comment}.
+                                                    </div>
+                                                    <div class='column bets-action has-text-centered'>
+                                                        ${data[0].username} lost $${bets[row_1].amount}
+                                                    </div>
+                                                </div>`
+                                        }
+                                    }
+                                    log("Successfully collected user info for $1", 'suc', [decodeURIComponent(req.params.email)]);
+                                    res.render('profile', { user_info: data[0], user_stats: { chat_count: chat_count, bets: profile_bets } });
+                                })
+                                .catch(function(error) {
+                                    log("Couldn't find $1 in database as there was an error when quering the bets table:", 'wrn', [decodeURIComponent(req.params.email)]);
+                                    console.log(error);
+                                    res.render('profile', { warning: "Woops! Something went wrong, try refreshing the page." });
+                                })
+                        })
+                        .catch(function(error) {
+                            log("Couldn't find $1 in database as there was an error when quering the chat table:", 'wrn', [decodeURIComponent(req.params.email)]);
+                            console.log(error);
+                            res.render('profile', { warning: "Woops! Something went wrong, try refreshing the page." });
+                        })
                 } else {
                     log("Couldn't find a user with email $1 in the golfers database", 'wrn', [decodeURIComponent(req.params.email)]);
                     res.render('profile', { warning: "Woops! It doesn't look like we have a user with email " + decodeURIComponent(req.params.email) });
@@ -468,6 +524,7 @@ router.post('/previous_bets', function(req, res, next) {
                             }
                         }
                         sorted_bets = { to_be_accepted: '', open_bets: '', closed_bets: '' }
+                        disable_text = `loading_button(this);`
                         for (row_1 = 0; row_1 < bets.length; row_1++) {
                             if (bets[row_1].accepted == null) {
                                 if (bets[row_1].gambler_1 == user) {
@@ -488,11 +545,11 @@ router.post('/previous_bets', function(req, res, next) {
                                             </div>
                                             <div class='column bets-action has-text-centered'>
                                                 <div class='columns is-mobile'>
-                                                    <div class='column is-half'>
-                                                        <button class='button bc-info_blue' onclick="accept_bet('${moment.utc(bets[row_1].date_created).format('YYYY-MM-DDTHH:mm:ss.SSSZ')}','accept','${bets[row_1].gambler_1_name}')">Accept Bet</button>
+                                                    <div class='column is-half has-text-centered'>
+                                                        <button class='button bc-info_blue has-text-centered' onclick="${disable_text} accept_bet('${moment.utc(bets[row_1].date_created).format('YYYY-MM-DDTHH:mm:ss.SSSZ')}','accept','${bets[row_1].gambler_1_name}')">Accept Bet</button>
                                                     </div>
-                                                    <div class='column is-half'>
-                                                        <button class='button bc-danger_pink' onclick="accept_bet('${moment.utc(bets[row_1].date_created).format('YYYY-MM-DDTHH:mm:ss.SSSZ')}','reject','${bets[row_1].gambler_1_name}')">Reject Bet</button>
+                                                    <div class='column is-half has-text-centered'>
+                                                        <button class='button bc-danger_pink has-text-centered' onclick="${disable_text} accept_bet('${moment.utc(bets[row_1].date_created).format('YYYY-MM-DDTHH:mm:ss.SSSZ')}','reject','${bets[row_1].gambler_1_name}')">Reject Bet</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -508,8 +565,8 @@ router.post('/previous_bets', function(req, res, next) {
                                             </div>
                                         </div>`
                                 }
-                            } else if (bets[row_1].winner==null) {
-                                if (bets[row_1].judge==user) {
+                            } else if (bets[row_1].winner == null) {
+                                if (bets[row_1].judge == user) {
                                     sorted_bets.open_bets += `
                                         <div class='column bets-your_bet'>
                                             <div class='column bets-description'>
@@ -517,30 +574,22 @@ router.post('/previous_bets', function(req, res, next) {
                                             </div>
                                             <div class='column bets-action has-text-centered'>
                                                 <div class='columns is-mobile'>
-                                                    <div class='column is-half'>
-                                                        <button class='button bc-info_blue' onclick="judge_bet('${moment.utc(bets[row_1].date_created).format('YYYY-MM-DDTHH:mm:ss.SSSZ')}','won_${bets[row_1].gambler_1}',['${bets[row_1].gambler_1_name}','${bets[row_1].gambler_2_name}','${bets[row_1].amount}'])">${bets[row_1].gambler_1_name} Won</button>
+                                                    <div class='column is-half has-text-centered'>
+                                                        <button class='button bc-info_blue has-text-centered' onclick="${disable_text} judge_bet('${moment.utc(bets[row_1].date_created).format('YYYY-MM-DDTHH:mm:ss.SSSZ')}','won_${bets[row_1].gambler_1}',['${bets[row_1].gambler_1_name}','${bets[row_1].gambler_2_name}','${bets[row_1].amount}'])">${bets[row_1].gambler_1_name} Won</button>
                                                     </div>
-                                                    <div class='column is-half'>
-                                                        <button class='button bc-info_blue' onclick="judge_bet('${moment.utc(bets[row_1].date_created).format('YYYY-MM-DDTHH:mm:ss.SSSZ')}','won_${bets[row_1].gambler_2}',['${bets[row_1].gambler_2_name}','${bets[row_1].gambler_1_name}','${bets[row_1].amount}'])">${bets[row_1].gambler_2_name} Won</button>
+                                                    <div class='column is-half has-text-centered'>
+                                                        <button class='button bc-info_blue has-text-centered' onclick="${disable_text} judge_bet('${moment.utc(bets[row_1].date_created).format('YYYY-MM-DDTHH:mm:ss.SSSZ')}','won_${bets[row_1].gambler_2}',['${bets[row_1].gambler_2_name}','${bets[row_1].gambler_1_name}','${bets[row_1].amount}'])">${bets[row_1].gambler_2_name} Won</button>
                                                     </div>
                                                 </div>
-                                                <div class='columns is-mobile'>
-                                                    <div class='column'>
-                                                        <button class='button bc-danger_pink' onclick="judge_bet('${moment.utc(bets[row_1].date_created).format('YYYY-MM-DDTHH:mm:ss.SSSZ')}','cancel',['${bets[row_1].gambler_1}','${bets[row_1].gambler_2_name}','${bets[row_1].amount}'])">Withdrawal or Tie</button>
+                                                <div class='columns is-mobile '>
+                                                    <div class='column has-text-centered'>
+                                                        <button class='button bc-danger_pink has-text-centered' onclick="${disable_text} judge_bet('${moment.utc(bets[row_1].date_created).format('YYYY-MM-DDTHH:mm:ss.SSSZ')}','cancel',['${bets[row_1].gambler_1_name}','${bets[row_1].gambler_2_name}','${bets[row_1].amount}'])">Withdrawal or Tie</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>`
                                 } else {
-                                    sorted_bets.open_bets += `
-                                        <div class='column bets-other_bet'>
-                                            <div class='column bets-description'>
-                                                ${bets[row_1].gambler_1_name} bet ${bets[row_1].gambler_2_name} $${bets[row_1].amount} that ${bets[row_1].bet_comment}. ${bets[row_1].judge_name} is the judge.
-                                            </div>
-                                            <div class='column bets-action has-text-centered'>
-                                                Waiting for ${bets[row_1].judge_name} to decide who won.
-                                            </div>
-                                        </div>`
+
                                 }
                             } else {
                                 if (bets[row_1].gambler_1 == user && bets[row_1].winner == user) {
@@ -550,7 +599,7 @@ router.post('/previous_bets', function(req, res, next) {
                                                 <a>You</a> bet ${bets[row_1].gambler_2_name} $${bets[row_1].amount} that ${bets[row_1].bet_comment}. ${bets[row_1].judge_name} was the judge.
                                             </div>
                                             <div class='column bets-action has-text-centered'>
-                                                <a class='bc-info_blue'>You won this bet. +$${bets[row_1].amount} baby.</a>
+                                                <a class='bc-info_blue' style='padding:5px; border-radius:5px;'>You won this bet. +$${bets[row_1].amount} baby.</a>
                                             </div>
                                         </div>`
                                 } else if (bets[row_1].gambler_2 == user && bets[row_1].winner == user) {
@@ -560,7 +609,7 @@ router.post('/previous_bets', function(req, res, next) {
                                                 ${bets[row_1].gambler_2_name} bet <a>you</a> $${bets[row_1].amount} that ${bets[row_1].bet_comment}. ${bets[row_1].judge_name} was the judge.
                                             </div>
                                             <div class='column bets-action has-text-centered'>
-                                                <a class='bc-info_blue'>You won this bet. +$${bets[row_1].amount} baby. </a>
+                                                <a class='bc-info_blue' style='padding:5px; border-radius:5px;'>You won this bet. +$${bets[row_1].amount} baby. </a>
                                             </div>
                                         </div>`
                                 } else if (bets[row_1].gambler_1 == user && bets[row_1].winner != user) {
@@ -570,7 +619,7 @@ router.post('/previous_bets', function(req, res, next) {
                                                 <a>You</a> bet ${bets[row_1].gambler_2_name} $${bets[row_1].amount} that ${bets[row_1].bet_comment}. ${bets[row_1].judge_name} was the judge.
                                             </div>
                                             <div class='column bets-action has-text-centered'>
-                                                <a class='bc-danger_pink'>You lost this bet. -$${bets[row_1].amount}. Arghh. </a>
+                                                <a class='bc-danger_pink' style='padding:5px; border-radius:5px;'>You lost this bet. -$${bets[row_1].amount}. Arghh. </a>
                                             </div>
                                         </div>`
                                 } else if (bets[row_1].gambler_2 == user && bets[row_1].winner != user) {
@@ -580,13 +629,13 @@ router.post('/previous_bets', function(req, res, next) {
                                                 ${bets[row_1].gambler_2_name} bet <a>you</a> $${bets[row_1].amount} that ${bets[row_1].bet_comment}. ${bets[row_1].judge_name} was the judge.
                                             </div>
                                             <div class='column bets-action has-text-centered'>
-                                                <a class='bc-danger_pink'>You lost this bet. -$${bets[row_1].amount} Arghh. </a>
+                                                <a class='bc-danger_pink' style='padding:5px; border-radius:5px;'>You lost this bet. -$${bets[row_1].amount} Arghh. </a>
                                             </div>
-                                        </div>` 
+                                        </div>`
                                 } else {
-                                    for (row_2=0;row_2<golfers.length;row_2++) {
-                                        if (golfers[row_2].email==bets[row_1].winner) {
-                                            bets[row_1].winner=golfers[row_2].username
+                                    for (row_2 = 0; row_2 < golfers.length; row_2++) {
+                                        if (golfers[row_2].email == bets[row_1].winner) {
+                                            bets[row_1].winner = golfers[row_2].username
                                         }
                                     }
                                     sorted_bets.closed_bets += `
@@ -601,14 +650,14 @@ router.post('/previous_bets', function(req, res, next) {
                                 }
                             }
                         }
-                        if(sorted_bets.to_be_accepted=='') {
-                            sorted_bets.to_be_accepted=`<div class='column bets-other_bet bc-danger_pink'>Doesn't look like there is anything here...</div>`
+                        if (sorted_bets.to_be_accepted == '') {
+                            sorted_bets.to_be_accepted = `<div class='column bets-other_bet bc-danger_pink'>Doesn't look like there is anything here...</div>`
                         }
-                        if(sorted_bets.open_bets=='') {
-                            sorted_bets.open_bets=`<div class='column bets-other_bet bc-danger_pink'>Doesn't look like there is anything here...</div>`
+                        if (sorted_bets.open_bets == '') {
+                            sorted_bets.open_bets = `<div class='column bets-other_bet bc-danger_pink'>Doesn't look like there is anything here...</div>`
                         }
-                        if(sorted_bets.closed_bets=='') {
-                            sorted_bets.closed_bets=`<div class='column bets-other_bet bc-danger_pink'>Doesn't look like there is anything here...</div>`
+                        if (sorted_bets.closed_bets == '') {
+                            sorted_bets.closed_bets = `<div class='column bets-other_bet bc-danger_pink'>Doesn't look like there is anything here...</div>`
                         }
                         res.send({ bets: sorted_bets, stats: stats });
                     })
@@ -640,11 +689,11 @@ router.post('/accept_bet', function(req, res, next) {
                             db.query("UPDATE bets SET accepted=TRUE, date_accepted=$1 WHERE date_created=$2", [moment.utc(), moment.utc(req.body.time_stamp)])
                                 .then(function(update) {
                                     log("$1 successfully accepted bet $2", 's', [req.session.passport.user.email, moment(req.body.time_stamp)])
-                                    chat_bot(req,"Look out! " + req.session.passport.user.username + " just accepted " + req.body.name + "'s bet!")
+                                    chat_bot(req, "Look out! " + req.session.passport.user.username + " just accepted " + req.body.name + "'s bet!")
                                     res.send('success')
                                 })
                                 .catch(function(error) {
-                                    log("Couldn't accept the bet $1 for $2 as there was an error querying the bets table:", 'err', [moment(req.body.time_stamp),req.session.passport.user.email]);
+                                    log("Couldn't accept the bet $1 for $2 as there was an error querying the bets table:", 'err', [moment(req.body.time_stamp), req.session.passport.user.email]);
                                     console.log(error);
                                     res.send('Ah oh! Something went wrong. Try the request again.')
                                 })
@@ -652,11 +701,11 @@ router.post('/accept_bet', function(req, res, next) {
                             db.query("DELETE FROM bets WHERE date_created=$1", [moment.utc(req.body.time_stamp)])
                                 .then(function(update) {
                                     log("$1 successfully rejected bet $2", 's', [req.session.passport.user.email], moment(req.body.time_stamp))
-                                    chat_bot(req,"Soft. " + req.session.passport.user.username + " just rejected " + req.body.name + "'s bet.")
+                                    chat_bot(req, "Soft. " + req.session.passport.user.username + " just rejected " + req.body.name + "'s bet.")
                                     res.send('success')
                                 })
                                 .catch(function(error) {
-                                    log("Couldn't reject the bet $1 for $2 as there was an error querying the bets table:", 'err', [moment(req.body.time_stamp),req.session.passport.user.email]);
+                                    log("Couldn't reject the bet $1 for $2 as there was an error querying the bets table:", 'err', [moment(req.body.time_stamp), req.session.passport.user.email]);
                                     console.log(error);
                                     res.send('Ah oh! Something went wrong. Try the request again.')
                                 })
@@ -692,15 +741,15 @@ router.post('/bet_outcome', function(req, res, next) {
                 if (data.length > 0) {
                     if (data[0].judge == req.session.passport.user.email) {
 
-                        if (req.body.outcome.substring(0,4)=='won_') {
-                            db.query("UPDATE bets SET winner=$1, date_won=$2 WHERE date_created=$3", [req.body.outcome.substring(4,req.body.outcome.length), moment.utc(), moment.utc(req.body.time_stamp)])
+                        if (req.body.outcome.substring(0, 4) == 'won_') {
+                            db.query("UPDATE bets SET winner=$1, date_won=$2 WHERE date_created=$3", [req.body.outcome.substring(4, req.body.outcome.length), moment.utc(), moment.utc(req.body.time_stamp)])
                                 .then(function(update) {
                                     log("$1 successfully judged bet $2", 's', [req.session.passport.user.email, moment(req.body.time_stamp)])
-                                    chat_bot(req,"Haha Boom! " + req.body.bet_info[0] + " just cost " + req.body.bet_info[1] + " $" + req.body.bet_info[2] + ". Nice win champ!")
+                                    chat_bot(req, "Haha Boom! " + req.body.bet_info[0] + " just cost " + req.body.bet_info[1] + " $" + req.body.bet_info[2] + ". Nice win champ!")
                                     res.send('success')
                                 })
                                 .catch(function(error) {
-                                    log("Couldn't accept the bet $1 for $2 as there was an error querying the bets table:", 'err', [moment(req.body.time_stamp),req.session.passport.user.email]);
+                                    log("Couldn't accept the bet $1 for $2 as there was an error querying the bets table:", 'err', [moment(req.body.time_stamp), req.session.passport.user.email]);
                                     console.log(error);
                                     res.send('Ah oh! Something went wrong. Try the request again.')
                                 })
@@ -708,11 +757,11 @@ router.post('/bet_outcome', function(req, res, next) {
                             db.query("DELETE FROM bets WHERE date_created=$1", [moment.utc(req.body.time_stamp)])
                                 .then(function(update) {
                                     log("$1 successfully cancelled bet $2 as judge", 's', [req.session.passport.user.email], moment(req.body.time_stamp))
-                                    chat_bot(req,"Put your money away boys. " + req.session.passport.user.username + " just cancelled the bet between " + req.body.bet_info[0] + " and " + req.body.bet_info[1] + ".")
+                                    chat_bot(req, "Put your money away boys. " + req.session.passport.user.username + " just cancelled the bet between " + req.body.bet_info[0] + " and " + req.body.bet_info[1] + ".")
                                     res.send('success')
                                 })
                                 .catch(function(error) {
-                                    log("Couldn't reject the bet $1 for $2 as there was an error querying the bets table:", 'err', [moment(req.body.time_stamp),req.session.passport.user.email]);
+                                    log("Couldn't reject the bet $1 for $2 as there was an error querying the bets table:", 'err', [moment(req.body.time_stamp), req.session.passport.user.email]);
                                     console.log(error);
                                     res.send('Ah oh! Something went wrong. Try the request again.')
                                 })
@@ -757,7 +806,7 @@ router.post('/bet_outcome', function(req, res, next) {
 
 router.post('/previous_messages', function(req, res, next) {
     authenticate(req, res, 'chit_chat', function() {
-        db.query("SELECT c.user_email, c.comment, c.timestamp, g.username, g.profile_photo_title FROM chat as c FULL OUTER JOIN golfers as g ON c.user_email=g.email ORDER BY c.timestamp")
+        db.query("SELECT c.user_email, c.comment, c.timestamp, g.username, g.profile_photo_title FROM chat as c LEFT JOIN golfers as g ON c.user_email=g.email ORDER BY c.timestamp")
             .then(function(data) {
                 var return_array = []
                 if (data.length > 0) {
@@ -793,6 +842,26 @@ router.post('/previous_messages', function(req, res, next) {
             })
             .catch(function(error) {
                 log("Couldn't collect previous chat comments for $1 error quering the chat database:", 'err', [req.session.passport.user.email]);
+                console.log(error);
+                res.send("Whoops! Something went wrong.");
+            });
+    })
+})
+
+// Delete Message
+//
+// This POST request allows a user to delete a comment from the chat room.
+
+
+router.post('/delete_message', function(req, res, next) {
+    authenticate(req, res, 'chit_chat', function() {
+        db.query("DELETE FROM chat WHERE timestamp = $1 AND user_email = $2", [moment.utc(req.body.time_stamp),req.session.passport.user.email])
+            .then(function(data) {
+                log("Successfully deleted chat $1 for $2", 'suc', [moment.utc(req.body.time_stamp),req.session.passport.user.email]);
+                res.send('success');
+            })
+            .catch(function(error) {
+                log("Couldn't collect delete chat from chat table for $1 error quering the chat database:", 'err', [req.session.passport.user.email]);
                 console.log(error);
                 res.send("Whoops! Something went wrong.");
             });

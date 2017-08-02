@@ -227,4 +227,12 @@ function judge_bet(time_stamp,outcome,bet_info) {
             });
 }
 
+function loading_button(element) {
+    $(element).html('<div class="betting_form-submit_loading"><i class="fa fa-cog fa-spin fa-3x fa-fw"></i></div>');
+    $(element).closest('.bets-action').find('button').each(function(i) {
+        $(this).css({'color':'#4a4a4a'})
+        $(this).prop('disabled', true)
+    })
+}
+
 

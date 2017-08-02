@@ -15,12 +15,23 @@ function escape_html(string) {
     });
 }
 
-function output_chat_message(username, image_name, message, timestamp) {
-    html_output = `
-    <div class='is-full-width margin_top_and_bottom'>
-        <div class='comment_image'>
-            <img class='ensure_square' src='/img/profile_pictures/${image_name}'/>
-        </div>
+function output_chat_message(username, image_name, message, timestamp, email) {
+    if (email=='chat_bot') {
+        html_output = `
+        <div class='comment_message-wrapper is-full-width margin_top_and_bottom'>
+            <div class='comment_image'>
+                <img class='ensure_square' src='/img/profile_pictures/${image_name}'/>
+            </div>`
+    } else {
+        html_output = `
+        <div class='comment_message-wrapper is-full-width margin_top_and_bottom'>
+            <a href='/profile/${encodeURIComponent(email)}'>
+                <div class='comment_image'>
+                    <img class='ensure_square' src='/img/profile_pictures/${image_name}'/>
+                </div>
+            </a>`
+    }
+    html_output += `
         <div class='comment_title'>
             <div class='column'>
                 <div class='comment_title-user'>
@@ -29,10 +40,18 @@ function output_chat_message(username, image_name, message, timestamp) {
                 <div class='comment_title-time' id='${moment.utc(timestamp).local().format()}'>
                     ${moment.utc(timestamp).local().format('h:mm a')}
                 </div>
+            </div>`
+    if (email==variables.user_email) {
+        html_output += `
+                <div class='comment_message'><div>${escape_html(message)}<div class='comment_message-delete' onclick="delete_message(this,'${timestamp}');"><i class="fa fa-times" aria-hidden="true"></i></div></div></div>
             </div>
-            <div class='comment_message'><div>${escape_html(message)}</div></div>
-        </div>
-    </div>`
+        </div>`
+    } else {
+        html_output += `
+                <div class='comment_message'><div>${escape_html(message)}</div></div>
+            </div>
+        </div>`       
+    }
     return html_output;
 }
 
@@ -61,7 +80,7 @@ function message_publisher(message_array, callback) {
             if (message_array.length > 0) {
                 if ($('#js-chat_output').children().length == 0) {
                     last_message = message_array[message_array.length - 1]
-                    $('#js-chat_output').html(output_chat_message(last_message.username, last_message.profile_photo_title, last_message.comment, last_message.timestamp))
+                    $('#js-chat_output').html(output_chat_message(last_message.username, last_message.profile_photo_title, last_message.comment, last_message.timestamp, last_message.user_email))
                     starting_message = message_array.length - 1
                 } else {
                     starting_message = message_array.length
@@ -73,15 +92,19 @@ function message_publisher(message_array, callback) {
                     current_message = message_array[message - 1]
                     if (moment(previous_timestamp).isSame(moment(current_message.timestamp), 'd')) {
                         if (previous_user == current_message.username) {
-                            $($('#js-chat_output').find('.comment_message')[0]).prepend(`<div>${escape_html(current_message.comment)}</div>`)
+                            if (current_message.user_email==variables.user_email) {
+                                $($('#js-chat_output').find('.comment_message')[0]).prepend(`<div>${escape_html(current_message.comment)}<div class='comment_message-delete' onclick="delete_message(this,'${current_message.timestamp}');"><i class="fa fa-times" aria-hidden="true"></i></div></div>`)
+                            } else {
+                                $($('#js-chat_output').find('.comment_message')[0]).prepend(`<div>${escape_html(current_message.comment)}</div>`)
+                            }
                         } else {
-                            $('#js-chat_output').prepend(output_chat_message(current_message.username, current_message.profile_photo_title, current_message.comment, current_message.timestamp))
+                            $('#js-chat_output').prepend(output_chat_message(current_message.username, current_message.profile_photo_title, current_message.comment, current_message.timestamp, current_message.user_email))
                         }
                     } else {
                         if (!$($($('#js-chat_output').children()[0]).children()[0]).hasClass('chit_chat-time_stamp_break')) {
                             $('#js-chat_output').prepend(create_chat_break(previous_timestamp))
                         }
-                        $('#js-chat_output').prepend(output_chat_message(current_message.username, current_message.profile_photo_title, current_message.comment, current_message.timestamp))
+                        $('#js-chat_output').prepend(output_chat_message(current_message.username, current_message.profile_photo_title, current_message.comment, current_message.timestamp, current_message.user_email))
                     }
                 }
                 $('#js-chat_output').prepend(create_chat_break(message_array[0].timestamp))
@@ -94,20 +117,24 @@ function message_publisher(message_array, callback) {
 function message_publisher_to_end(message, callback) {
     if (message != null && message.message.length > 0) {
         if ($('#js-chat_output').children().length == 0) {
-            $('#js-chat_output').html(output_chat_message(message.username, message.profile_photo_title, message.message, message.timestamp))
+            $('#js-chat_output').html(output_chat_message(message.username, message.profile_photo_title, message.message, message.timestamp, message.user_email))
             $('#js-chat_output').prepend(create_chat_break(message.timestamp))
         } else {
             previous_user = $($('#js-chat_output').children()[$('#js-chat_output').children().length - 1]).find('.comment_title-user').html().trim()
             previous_timestamp = $($('#js-chat_output').children()[$('#js-chat_output').children().length - 1]).find('.comment_title-time').attr('id')
             if (moment(previous_timestamp).isSame(moment(message.timestamp), 'd')) {
                 if (previous_user == message.username) {
-                    $($('#js-chat_output').children()[$('#js-chat_output').children().length - 1]).find('.comment_message').append(`<div>${escape_html(message.message)}</div>`)
+                    if (message.user_email==variables.user_email) {
+                        $($('#js-chat_output').children()[$('#js-chat_output').children().length - 1]).find('.comment_message').append(`<div>${escape_html(message.message)}<div class='comment_message-delete' onclick="delete_message(this,'${message.timestamp}');"><i class="fa fa-times" aria-hidden="true"></i></div></div>`)
+                    } else {
+                        $($('#js-chat_output').children()[$('#js-chat_output').children().length - 1]).find('.comment_message').append(`<div>${escape_html(message.message)}</div>`)
+                    }
                 } else {
-                    $('#js-chat_output').append(output_chat_message(message.username, message.profile_photo_title, message.message, message.timestamp))
+                    $('#js-chat_output').append(output_chat_message(message.username, message.profile_photo_title, message.message, message.timestamp, message.user_email))
                 }
             } else {
                 $('#js-chat_output').append(create_chat_break(message.timestamp))
-                $('#js-chat_output').append(output_chat_message(message.username, message.profile_photo_title, message.message, message.timestamp))
+                $('#js-chat_output').append(output_chat_message(message.username, message.profile_photo_title, message.message, message.timestamp, message.user_email))
             }
         }
         callback()
@@ -324,3 +351,24 @@ $('#js-chat_output-request_messages-button').on('click touch', function() {
             })
     }
 })
+
+function delete_message(element, timestamp) {
+    $(element).html('<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>')
+    $(element).parent().css({'background-color':'#4a4a4a','border-radius':'5px','color':'white','padding':'0 5px 0 5px'})
+    $.ajax({
+                method: "POST",
+                url: "/delete_message",
+                data: {time_stamp:timestamp}
+            })
+            .done(function(return_status) {
+                if (return_status=='success') {
+                    if($(element).closest('.comment_message').children().length>1){
+                        $(element).parent().remove()
+                    } else {
+                       $(element).closest('.comment_message-wrapper').remove() 
+                    }
+                } else {
+                    $(element).html('<i class="fa fa-times" aria-hidden="true"></i>')
+                }
+            });
+}

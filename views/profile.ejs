@@ -6,23 +6,23 @@
         <title>
             <% if (locals.user_info) { %>
                 <%= user_info.username %> - Profile
-            <% } else { %>
-                Woops! Something went wrong.
-            <% } %>
+                    <% } else { %>
+                        Woops! Something went wrong.
+                        <% } %>
         </title>
         <link rel='stylesheet' href='/stylesheets/sam.css' />
+        <link rel='stylesheet' href='/stylesheets/palette.css' />
 </head>
 
 <body>
     <% include menu_partial.ejs %>
-    <% if (locals.user_info) { %>
-        <section class="hero is-alt is-fullheight background_color-light_grey">
-            <div class="hero-body">
+        <% if (locals.user_info) { %>
+            <div class="column is-fullheight bc-light_grey">
                 <div class="column is-one-third-desktop is-offset-one-third-desktop">
                     <div class="card-content">
                         <h1 class="title has-text-centered is-large main_theme-title">
-                            <%= user_info.username %>
-                        </h1>
+                        <%= user_info.username %>
+                    </h1>
                         <br>
                         <div class='edit_profile-image'>
                             <img src='/img/profile_pictures/<%= user_info.profile_photo_title %>' />
@@ -37,22 +37,63 @@
                             Last Online
                             <br>
                         </p>
-
+                    </div>
+                </div>
+                <div class='column has-text-centered background_color-grey'>
+                    <div class='columns'>
+                        <div class='column is-one-third bet_stats'>
+                            <p class='has-text-centered chip_heading-small'>
+                                <%= user_info.username %>'s Chat Contributions
+                            </p>
+                            <div class='has-text-centered'>
+                                <%= user_stats.chat_count[0].count %>
+                            </div>
+                        </div>
+                        <div class='column is-one-third bet_stats'>
+                            <p class='has-text-centered chip_heading-small'>
+                                <%= user_info.username %>'s Winnings To Date
+                            </p>
+                            <div class='has-text-centered'>
+                                $<%= user_stats.bets.winnings %>
+                            </div>
+                        </div>
+                        <div class='column is-one-third bet_stats'>
+                            <p class='has-text-centered chip_heading-small'>
+                                <%= user_info.username %>'s Current Exposure
+                            </p>
+                            <div class='has-text-centered'>
+                                $<%= user_stats.bets.exposure %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='column'>
+                        <p class='has-text-centered chip_heading-small'>
+                            <%= user_info.username %>'s Open Bets
+                        </p>
+                        <br>
+                        <div id='js-profile-open_bets'>
+                        <%- user_stats.bets.open_bets %>
+                        </div>                
+                    </div>
+                    <div class='column'>
+                        <p class='has-text-centered chip_heading-small'>
+                            <%= user_info.username %>'s Closed Bets
+                        </p>
+                        <br>
+                        <div id='js-profile-closed_bets'>
+                        <%- user_stats.bets.closed_bets %>
+                        </div>                  
                     </div>
                 </div>
             </div>
-        </section>
-    <% } %>
-    <% if (locals.warning) { %>
-        <div class='column background-color-danger_pink'>
-            <%= warning %>
-        </div>
-    <% } %>
+            <% } %>
+                <% if (locals.warning) { %>
+                    <div class='column background-color-danger_pink'>
+                        <%= warning %>
+                    </div>
+                    <% } %>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>
 <script src="/javascripts/sam.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script>
 $('#js-profile-last_active').append(moment('<%= user_info.last_active %>').format('Do MMMM YYYY h:mm a'))
 </script>

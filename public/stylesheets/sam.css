@@ -283,6 +283,21 @@ img {
 
 .comment_message div {
     margin-bottom:5px;
+    position:relative;
+}
+
+.comment_message-delete {
+    position:absolute!important;
+    top:4px;
+    right:4px;
+}
+
+.comment_message-delete i {
+    font-size:9pt;
+}
+
+.comment_message-delete:hover {
+    cursor:pointer;
 }
 
 .chit_chat-chat_input-button {
@@ -499,7 +514,7 @@ input {
 }
 
 .bets-action button {
-    width:140px;
+    
 }
 
 .bets-description a {

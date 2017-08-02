@@ -4,21 +4,2462 @@
 <head>
     <% include head.ejs %>
         <title>
-            The Annual Chip In | <%= standard_return.user %> | Constitution
+            The Annual Chip In |
+            <%= standard_return.user %> | Constitution
         </title>
         <link rel='stylesheet' href='/stylesheets/sam.css' />
         <link rel='stylesheet' href='/stylesheets/palette.css' />
+        <style type="text/css">
+        ol.lst-kix_list_b-5.start {
+            counter-reset: lst-ctn-kix_list_b-5 0
+        }
+
+        ul.lst-kix_list_9-3 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_9-1 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_9-2 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_7-4.start {
+            counter-reset: lst-ctn-kix_list_7-4 0
+        }
+
+        ol.lst-kix_list_7-5 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_7-6 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_7-7 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_7-8 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_7-1 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_7-2 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_9-0 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_7-3 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_7-4 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_5-3.start {
+            counter-reset: lst-ctn-kix_list_5-3 0
+        }
+
+        ol.lst-kix_list_3-7.start {
+            counter-reset: lst-ctn-kix_list_3-7 0
+        }
+
+        ol.lst-kix_list_8-8.start {
+            counter-reset: lst-ctn-kix_list_8-8 0
+        }
+
+        .lst-kix_list_7-2>li {
+            counter-increment: lst-ctn-kix_list_7-2
+        }
+
+        .lst-kix_list_5-0>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_c-5>li {
+            counter-increment: lst-ctn-kix_list_c-5
+        }
+
+        .lst-kix_list_5-4>li {
+            counter-increment: lst-ctn-kix_list_5-4
+        }
+
+        .lst-kix_list_1-4>li {
+            counter-increment: lst-ctn-kix_list_1-4
+        }
+
+        ol.lst-kix_list_1-6.start {
+            counter-reset: lst-ctn-kix_list_1-6 0
+        }
+
+        .lst-kix_list_5-3>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_9-5.start {
+            counter-reset: lst-ctn-kix_list_9-5 0
+        }
+
+        .lst-kix_list_5-2>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_5-1>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_5-7>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_d-6.start {
+            counter-reset: lst-ctn-kix_list_d-6 0
+        }
+
+        .lst-kix_list_5-6>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_5-8>li:before {
+            content: " "
+        }
+
+        ul.lst-kix_list_8-2 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_8-3 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_d-6>li {
+            counter-increment: lst-ctn-kix_list_d-6
+        }
+
+        .lst-kix_list_9-4>li {
+            counter-increment: lst-ctn-kix_list_9-4
+        }
+
+        ol.lst-kix_list_6-6 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_6-7 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_5-4>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_6-8 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_5-5>li:before {
+            content: " "
+        }
+
+        ul.lst-kix_list_8-0 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_6-3 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_8-1 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_6-4 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_6-5 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_6-1>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_6-3>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_6-5>li {
+            counter-increment: lst-ctn-kix_list_6-5
+        }
+
+        .lst-kix_list_a-7>li {
+            counter-increment: lst-ctn-kix_list_a-7
+        }
+
+        .lst-kix_list_6-8>li {
+            counter-increment: lst-ctn-kix_list_6-8
+        }
+
+        .lst-kix_list_6-0>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_6-4>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_a-6.start {
+            counter-reset: lst-ctn-kix_list_a-6 0
+        }
+
+        .lst-kix_list_3-6>li {
+            counter-increment: lst-ctn-kix_list_3-6
+        }
+
+        .lst-kix_list_6-2>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_2-5>li {
+            counter-increment: lst-ctn-kix_list_2-5
+        }
+
+        .lst-kix_list_2-8>li {
+            counter-increment: lst-ctn-kix_list_2-8
+        }
+
+        .lst-kix_list_6-8>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_6-5>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_6-7>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_b-8>li {
+            counter-increment: lst-ctn-kix_list_b-8
+        }
+
+        .lst-kix_list_6-6>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_7-4>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_7-6>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_7-2>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_d-8.start {
+            counter-reset: lst-ctn-kix_list_d-8 0
+        }
+
+        .lst-kix_list_7-6>li {
+            counter-increment: lst-ctn-kix_list_7-6
+        }
+
+        .lst-kix_list_8-6>li {
+            counter-increment: lst-ctn-kix_list_8-6
+        }
+
+        ol.lst-kix_list_4-6.start {
+            counter-reset: lst-ctn-kix_list_4-6 0
+        }
+
+        ol.lst-kix_list_9-7 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_d-3>li {
+            counter-increment: lst-ctn-kix_list_d-3
+        }
+
+        ol.lst-kix_list_9-8 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_9-4 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_5-7>li {
+            counter-increment: lst-ctn-kix_list_5-7
+        }
+
+        ol.lst-kix_list_9-5 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_7-8>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_9-6 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_4-7>li {
+            counter-increment: lst-ctn-kix_list_4-7
+        }
+
+        ol.lst-kix_list_2-5.start {
+            counter-reset: lst-ctn-kix_list_2-5 0
+        }
+
+        .lst-kix_list_9-8>li {
+            counter-increment: lst-ctn-kix_list_9-8
+        }
+
+        ol.lst-kix_list_c-4.start {
+            counter-reset: lst-ctn-kix_list_c-4 0
+        }
+
+        .lst-kix_list_4-1>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_4-3>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_4-5>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_1-8>li {
+            counter-increment: lst-ctn-kix_list_1-8
+        }
+
+        ol.lst-kix_list_1-4.start {
+            counter-reset: lst-ctn-kix_list_1-4 0
+        }
+
+        .lst-kix_list_3-5>li {
+            counter-increment: lst-ctn-kix_list_3-5
+        }
+
+        ol.lst-kix_list_1-1.start {
+            counter-reset: lst-ctn-kix_list_1-1 0
+        }
+
+        ol.lst-kix_list_c-7.start {
+            counter-reset: lst-ctn-kix_list_c-7 0
+        }
+
+        ol.lst-kix_list_4-4.start {
+            counter-reset: lst-ctn-kix_list_4-4 0
+        }
+
+        .lst-kix_list_6-4>li {
+            counter-increment: lst-ctn-kix_list_6-4
+        }
+
+        ol.lst-kix_list_2-8.start {
+            counter-reset: lst-ctn-kix_list_2-8 0
+        }
+
+        ol.lst-kix_list_a-8.start {
+            counter-reset: lst-ctn-kix_list_a-8 0
+        }
+
+        ol.lst-kix_list_8-8 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_7-6.start {
+            counter-reset: lst-ctn-kix_list_7-6 0
+        }
+
+        ol.lst-kix_list_8-4 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_8-5 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_8-6 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_8-7 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_5-8.start {
+            counter-reset: lst-ctn-kix_list_5-8 0
+        }
+
+        .lst-kix_list_1-3>li {
+            counter-increment: lst-ctn-kix_list_1-3
+        }
+
+        ol.lst-kix_list_3-3 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_3-4.start {
+            counter-reset: lst-ctn-kix_list_3-4 0
+        }
+
+        ol.lst-kix_list_3-4 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_d-8 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_1-1>li {
+            counter-increment: lst-ctn-kix_list_1-1
+        }
+
+        .lst-kix_list_7-1>li {
+            counter-increment: lst-ctn-kix_list_7-1
+        }
+
+        ol.lst-kix_list_d-5 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_2-6.start {
+            counter-reset: lst-ctn-kix_list_2-6 0
+        }
+
+        .lst-kix_list_3-0>li:before {
+            content: "\002022  "
+        }
+
+        ol.lst-kix_list_d-4 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_d-7 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_d-6 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_d-7>li {
+            counter-increment: lst-ctn-kix_list_d-7
+        }
+
+        ul.lst-kix_list_5-0 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_3-4>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_3-3>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_3-5 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_3-6 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_5-1 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_8-0>li:before {
+            content: "\002022  "
+        }
+
+        ol.lst-kix_list_3-7 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_3-8 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_8-7>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_3-8>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_a-7>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_8-3>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_b-7>li {
+            counter-increment: lst-ctn-kix_list_b-7
+        }
+
+        .lst-kix_list_3-7>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_8-4>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_a-2>li:before {
+            content: "\002022  "
+        }
+
+        ol.lst-kix_list_d-3 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_8-5.start {
+            counter-reset: lst-ctn-kix_list_8-5 0
+        }
+
+        .lst-kix_list_a-3>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_a-6>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_a-8>li {
+            counter-increment: lst-ctn-kix_list_a-8
+        }
+
+        .lst-kix_list_8-8>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_2-4 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_7-2.start {
+            counter-reset: lst-ctn-kix_list_7-2 0
+        }
+
+        ol.lst-kix_list_2-5 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_4-8>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_4-7>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_c-6 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_c-5 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_c-8 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_c-7 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_4-8.start {
+            counter-reset: lst-ctn-kix_list_4-8 0
+        }
+
+        .lst-kix_list_8-4>li {
+            counter-increment: lst-ctn-kix_list_8-4
+        }
+
+        ul.lst-kix_list_4-0 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_4-1 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_3-3.start {
+            counter-reset: lst-ctn-kix_list_3-3 0
+        }
+
+        ol.lst-kix_list_2-6 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_2-7 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_4-2 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_2-8 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_4-3 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_7-1.start {
+            counter-reset: lst-ctn-kix_list_7-1 0
+        }
+
+        ol.lst-kix_list_8-6.start {
+            counter-reset: lst-ctn-kix_list_8-6 0
+        }
+
+        .lst-kix_list_a-4>li {
+            counter-increment: lst-ctn-kix_list_a-4
+        }
+
+        ol.lst-kix_list_c-4 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_7-0>li:before {
+            content: "\002022  "
+        }
+
+        ol.lst-kix_list_4-7.start {
+            counter-reset: lst-ctn-kix_list_4-7 0
+        }
+
+        .lst-kix_list_3-7>li {
+            counter-increment: lst-ctn-kix_list_3-7
+        }
+
+        ol.lst-kix_list_9-7.start {
+            counter-reset: lst-ctn-kix_list_9-7 0
+        }
+
+        ol.lst-kix_list_5-2 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_2-4>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_2-8>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_6-6>li {
+            counter-increment: lst-ctn-kix_list_6-6
+        }
+
+        .lst-kix_list_7-3>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_9-7>li {
+            counter-increment: lst-ctn-kix_list_9-7
+        }
+
+        .lst-kix_list_b-3>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_b-7>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_5-7 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_5-8 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_5-3 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_8-7>li {
+            counter-increment: lst-ctn-kix_list_8-7
+        }
+
+        ol.lst-kix_list_5-4 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_3-8.start {
+            counter-reset: lst-ctn-kix_list_3-8 0
+        }
+
+        ol.lst-kix_list_5-5 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_5-6 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_7-0 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_7-7>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_9-5>li {
+            counter-increment: lst-ctn-kix_list_9-5
+        }
+
+        .lst-kix_list_5-8>li {
+            counter-increment: lst-ctn-kix_list_5-8
+        }
+
+        .lst-kix_list_4-0>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_b-4>li {
+            counter-increment: lst-ctn-kix_list_b-4
+        }
+
+        .lst-kix_list_4-4>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_d-5.start {
+            counter-reset: lst-ctn-kix_list_d-5 0
+        }
+
+        .lst-kix_list_9-3>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_d-5>li {
+            counter-increment: lst-ctn-kix_list_d-5
+        }
+
+        .lst-kix_list_9-7>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_2-4>li {
+            counter-increment: lst-ctn-kix_list_2-4
+        }
+
+        ol.lst-kix_list_d-3.start {
+            counter-reset: lst-ctn-kix_list_d-3 0
+        }
+
+        ol.lst-kix_list_3-6.start {
+            counter-reset: lst-ctn-kix_list_3-6 0
+        }
+
+        .lst-kix_list_a-6>li {
+            counter-increment: lst-ctn-kix_list_a-6
+        }
+
+        .lst-kix_list_5-3>li {
+            counter-increment: lst-ctn-kix_list_5-3
+        }
+
+        ol.lst-kix_list_4-8 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_7-4>li {
+            counter-increment: lst-ctn-kix_list_7-4
+        }
+
+        .lst-kix_list_1-0>li:before {
+            content: "\002022  "
+        }
+
+        ol.lst-kix_list_4-4 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_6-2 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_4-5 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_4-6 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_6-0 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_4-7 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_6-1 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_8-4.start {
+            counter-reset: lst-ctn-kix_list_8-4 0
+        }
+
+        .lst-kix_list_1-4>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_3-5.start {
+            counter-reset: lst-ctn-kix_list_3-5 0
+        }
+
+        .lst-kix_list_1-6>li {
+            counter-increment: lst-ctn-kix_list_1-6
+        }
+
+        .lst-kix_list_c-7>li {
+            counter-increment: lst-ctn-kix_list_c-7
+        }
+
+        ol.lst-kix_list_d-4.start {
+            counter-reset: lst-ctn-kix_list_d-4 0
+        }
+
+        .lst-kix_list_2-0>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_4-5>li {
+            counter-increment: lst-ctn-kix_list_4-5
+        }
+
+        ol.lst-kix_list_9-8.start {
+            counter-reset: lst-ctn-kix_list_9-8 0
+        }
+
+        .lst-kix_list_1-8>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_c-0>li:before {
+            content: "\002022  "
+        }
+
+        ul.lst-kix_list_1-0 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_c-1>li:before {
+            content: "\002022  "
+        }
+
+        ul.lst-kix_list_b-2 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_c-3>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_c-4>li:before {
+            content: " "
+        }
+
+        ul.lst-kix_list_b-1 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_a-7.start {
+            counter-reset: lst-ctn-kix_list_a-7 0
+        }
+
+        ul.lst-kix_list_b-0 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_c-2>li:before {
+            content: "\002022  "
+        }
+
+        ol.lst-kix_list_6-6.start {
+            counter-reset: lst-ctn-kix_list_6-6 0
+        }
+
+        ol.lst-kix_list_1-5.start {
+            counter-reset: lst-ctn-kix_list_1-5 0
+        }
+
+        ol.lst-kix_list_9-6.start {
+            counter-reset: lst-ctn-kix_list_9-6 0
+        }
+
+        ol.lst-kix_list_4-5.start {
+            counter-reset: lst-ctn-kix_list_4-5 0
+        }
+
+        .lst-kix_list_1-2>li {
+            counter-increment: lst-ctn-kix_list_1-2
+        }
+
+        .lst-kix_list_5-2>li {
+            counter-increment: lst-ctn-kix_list_5-2
+        }
+
+        ol.lst-kix_list_8-7.start {
+            counter-reset: lst-ctn-kix_list_8-7 0
+        }
+
+        ul.lst-kix_list_a-3 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_a-2 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_a-1 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_d-6>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_c-8.start {
+            counter-reset: lst-ctn-kix_list_c-8 0
+        }
+
+        .lst-kix_list_d-8>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_d-7>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_d-2>li:before {
+            content: "\002022  "
+        }
+
+        ol.lst-kix_list_b-4.start {
+            counter-reset: lst-ctn-kix_list_b-4 0
+        }
+
+        .lst-kix_list_d-1>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_d-5>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_d-4>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_d-3>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_c-7>li:before {
+            content: " "
+        }
+
+        ul.lst-kix_list_a-0 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_c-5>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_c-8>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_d-7.start {
+            counter-reset: lst-ctn-kix_list_d-7 0
+        }
+
+        .lst-kix_list_d-0>li:before {
+            content: "\002022  "
+        }
+
+        ol.lst-kix_list_2-4.start {
+            counter-reset: lst-ctn-kix_list_2-4 0
+        }
+
+        .lst-kix_list_c-6>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_1-3 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_1-4 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_2-7>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_2-7>li {
+            counter-increment: lst-ctn-kix_list_2-7
+        }
+
+        ol.lst-kix_list_1-5 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_1-6 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_2-5>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_1-1 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_1-2 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_d-1 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_d-0 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_b-8>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_b-7 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_b-6 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_d-2 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_b-8 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_b-4>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_9-4.start {
+            counter-reset: lst-ctn-kix_list_9-4 0
+        }
+
+        ul.lst-kix_list_3-1 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_3-2 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_7-7>li {
+            counter-increment: lst-ctn-kix_list_7-7
+        }
+
+        ul.lst-kix_list_3-0 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_1-7 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_1-8 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_b-6>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_7-8>li {
+            counter-increment: lst-ctn-kix_list_7-8
+        }
+
+        .lst-kix_list_2-6>li {
+            counter-increment: lst-ctn-kix_list_2-6
+        }
+
+        .lst-kix_list_b-0>li:before {
+            content: "\002022  "
+        }
+
+        ol.lst-kix_list_7-3.start {
+            counter-reset: lst-ctn-kix_list_7-3 0
+        }
+
+        .lst-kix_list_b-2>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_9-2>li:before {
+            content: "\002022  "
+        }
+
+        ol.lst-kix_list_b-3 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_b-5 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_b-4 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_5-7.start {
+            counter-reset: lst-ctn-kix_list_5-7 0
+        }
+
+        .lst-kix_list_5-5>li {
+            counter-increment: lst-ctn-kix_list_5-5
+        }
+
+        .lst-kix_list_9-0>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_3-4>li {
+            counter-increment: lst-ctn-kix_list_3-4
+        }
+
+        .lst-kix_list_9-6>li:before {
+            content: " "
+        }
+
+        ul.lst-kix_list_c-2 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_c-5.start {
+            counter-reset: lst-ctn-kix_list_c-5 0
+        }
+
+        ul.lst-kix_list_c-1 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_c-0 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_9-4>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_a-7 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_a-0>li:before {
+            content: "\002022  "
+        }
+
+        ol.lst-kix_list_a-8 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_c-3 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_6-3>li {
+            counter-increment: lst-ctn-kix_list_6-3
+        }
+
+        ol.lst-kix_list_1-3.start {
+            counter-reset: lst-ctn-kix_list_1-3 0
+        }
+
+        ol.lst-kix_list_1-2.start {
+            counter-reset: lst-ctn-kix_list_1-2 0
+        }
+
+        .lst-kix_list_b-6>li {
+            counter-increment: lst-ctn-kix_list_b-6
+        }
+
+        ul.lst-kix_list_2-2 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_2-3 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_2-0 {
+            list-style-type: none
+        }
+
+        ul.lst-kix_list_2-1 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_9-8>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_1-1>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_8-5>li {
+            counter-increment: lst-ctn-kix_list_8-5
+        }
+
+        .lst-kix_list_1-3>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_c-4>li {
+            counter-increment: lst-ctn-kix_list_c-4
+        }
+
+        .lst-kix_list_4-8>li {
+            counter-increment: lst-ctn-kix_list_4-8
+        }
+
+        .lst-kix_list_1-7>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_2-7.start {
+            counter-reset: lst-ctn-kix_list_2-7 0
+        }
+
+        .lst-kix_list_1-5>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_5-6>li {
+            counter-increment: lst-ctn-kix_list_5-6
+        }
+
+        ol.lst-kix_list_7-5.start {
+            counter-reset: lst-ctn-kix_list_7-5 0
+        }
+
+        ol.lst-kix_list_a-4 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_a-5 {
+            list-style-type: none
+        }
+
+        ol.lst-kix_list_a-6 {
+            list-style-type: none
+        }
+
+        .lst-kix_list_2-1>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_2-3>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_d-8>li {
+            counter-increment: lst-ctn-kix_list_d-8
+        }
+
+        .lst-kix_list_c-8>li {
+            counter-increment: lst-ctn-kix_list_c-8
+        }
+
+        ol.lst-kix_list_7-7.start {
+            counter-reset: lst-ctn-kix_list_7-7 0
+        }
+
+        .lst-kix_list_3-1>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_3-2>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_8-1>li:before {
+            content: "\002022  "
+        }
+
+        ol.lst-kix_list_1-8.start {
+            counter-reset: lst-ctn-kix_list_1-8 0
+        }
+
+        .lst-kix_list_8-2>li:before {
+            content: "\002022  "
+        }
+
+        ol.lst-kix_list_c-6.start {
+            counter-reset: lst-ctn-kix_list_c-6 0
+        }
+
+        .lst-kix_list_3-5>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_b-8.start {
+            counter-reset: lst-ctn-kix_list_b-8 0
+        }
+
+        .lst-kix_list_8-5>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_8-6>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_3-6>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_a-8>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_a-1>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_a-5>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_a-4.start {
+            counter-reset: lst-ctn-kix_list_a-4 0
+        }
+
+        .lst-kix_list_a-4>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_a-5.start {
+            counter-reset: lst-ctn-kix_list_a-5 0
+        }
+
+        .lst-kix_list_4-4>li {
+            counter-increment: lst-ctn-kix_list_4-4
+        }
+
+        ol.lst-kix_list_6-4.start {
+            counter-reset: lst-ctn-kix_list_6-4 0
+        }
+
+        ol.lst-kix_list_5-6.start {
+            counter-reset: lst-ctn-kix_list_5-6 0
+        }
+
+        .lst-kix_list_7-3>li {
+            counter-increment: lst-ctn-kix_list_7-3
+        }
+
+        .lst-kix_list_c-6>li {
+            counter-increment: lst-ctn-kix_list_c-6
+        }
+
+        ol.lst-kix_list_b-3.start {
+            counter-reset: lst-ctn-kix_list_b-3 0
+        }
+
+        ol.lst-kix_list_7-8.start {
+            counter-reset: lst-ctn-kix_list_7-8 0
+        }
+
+        .lst-kix_list_3-3>li {
+            counter-increment: lst-ctn-kix_list_3-3
+        }
+
+        ol.lst-kix_list_6-3.start {
+            counter-reset: lst-ctn-kix_list_6-3 0
+        }
+
+        ol.lst-kix_list_5-5.start {
+            counter-reset: lst-ctn-kix_list_5-5 0
+        }
+
+        .lst-kix_list_b-5>li {
+            counter-increment: lst-ctn-kix_list_b-5
+        }
+
+        .lst-kix_list_2-6>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_7-1>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_7-5>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_9-6>li {
+            counter-increment: lst-ctn-kix_list_9-6
+        }
+
+        ol.lst-kix_list_5-4.start {
+            counter-reset: lst-ctn-kix_list_5-4 0
+        }
+
+        .lst-kix_list_b-3>li {
+            counter-increment: lst-ctn-kix_list_b-3
+        }
+
+        .lst-kix_list_b-5>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_6-7>li {
+            counter-increment: lst-ctn-kix_list_6-7
+        }
+
+        .lst-kix_list_1-7>li {
+            counter-increment: lst-ctn-kix_list_1-7
+        }
+
+        .lst-kix_list_7-5>li {
+            counter-increment: lst-ctn-kix_list_7-5
+        }
+
+        .lst-kix_list_3-8>li {
+            counter-increment: lst-ctn-kix_list_3-8
+        }
+
+        .lst-kix_list_b-1>li:before {
+            content: "\002022  "
+        }
+
+        ol.lst-kix_list_b-6.start {
+            counter-reset: lst-ctn-kix_list_b-6 0
+        }
+
+        ol.lst-kix_list_6-8.start {
+            counter-reset: lst-ctn-kix_list_6-8 0
+        }
+
+        .lst-kix_list_4-6>li {
+            counter-increment: lst-ctn-kix_list_4-6
+        }
+
+        .lst-kix_list_d-4>li {
+            counter-increment: lst-ctn-kix_list_d-4
+        }
+
+        ol.lst-kix_list_1-7.start {
+            counter-reset: lst-ctn-kix_list_1-7 0
+        }
+
+        .lst-kix_list_1-5>li {
+            counter-increment: lst-ctn-kix_list_1-5
+        }
+
+        ol.lst-kix_list_6-5.start {
+            counter-reset: lst-ctn-kix_list_6-5 0
+        }
+
+        .lst-kix_list_4-2>li:before {
+            content: "\002022  "
+        }
+
+        .lst-kix_list_4-6>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_a-5>li {
+            counter-increment: lst-ctn-kix_list_a-5
+        }
+
+        .lst-kix_list_9-1>li:before {
+            content: "\002022  "
+        }
+
+        ol.lst-kix_list_6-7.start {
+            counter-reset: lst-ctn-kix_list_6-7 0
+        }
+
+        .lst-kix_list_9-5>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_1-2>li:before {
+            content: " "
+        }
+
+        .lst-kix_list_8-8>li {
+            counter-increment: lst-ctn-kix_list_8-8
+        }
+
+        .lst-kix_list_1-6>li:before {
+            content: " "
+        }
+
+        ol.lst-kix_list_b-7.start {
+            counter-reset: lst-ctn-kix_list_b-7 0
+        }
+
+        .lst-kix_list_2-2>li:before {
+            content: "\002022  "
+        }
+
+        ol.lst-kix_list_5-2.start {
+            counter-reset: lst-ctn-kix_list_5-2 0
+        }
+
+        ol {
+            margin: 0;
+            padding: 0
+        }
+
+        table td,
+        table th {
+            padding: 0
+        }
+
+        ul {
+            margin-bottom:20px;
+        }
+
+        .c9 {
+            border-right-style: solid;
+            padding: 5pt 5pt 0pt 5.4pt;
+            border-bottom-color: #4a4a4a;
+            border-top-width: 1pt;
+            border-right-width: 1pt;
+            border-left-color: #4a4a4a;
+            vertical-align: middle;
+            border-right-color: #4a4a4a;
+            border-left-width: 1pt;
+            border-top-style: solid;
+            border-left-style: solid;
+            border-bottom-width: 1pt;
+            width: 108pt;
+            border-top-color: #4a4a4a;
+            border-bottom-style: solid
+        }
+
+        .c18 {
+            border-right-style: solid;
+            padding: 5pt 5pt 0pt 5.4pt;
+            border-bottom-color: #4a4a4a;
+            border-top-width: 1pt;
+            border-right-width: 1pt;
+            border-left-color: #4a4a4a;
+            vertical-align: middle;
+            border-right-color: #4a4a4a;
+            border-left-width: 1pt;
+            border-top-style: solid;
+            border-left-style: solid;
+            border-bottom-width: 1pt;
+            width: 113.4pt;
+            border-top-color: #4a4a4a;
+            border-bottom-style: solid
+        }
+
+        .c28 {
+            border-right-style: solid;
+            padding: 5pt 5pt 0pt 5.4pt;
+            border-bottom-color: #4a4a4a;
+            border-top-width: 1pt;
+            border-right-width: 1pt;
+            border-left-color: #4a4a4a;
+            vertical-align: middle;
+            border-right-color: #4a4a4a;
+            border-left-width: 1pt;
+            border-top-style: solid;
+            border-left-style: solid;
+            border-bottom-width: 1pt;
+            width: 437.4pt;
+            border-top-color: #4a4a4a;
+            border-bottom-style: solid
+        }
+
+        .c5 {
+            margin-left: 18pt;
+            padding-top: 0pt;
+            padding-left: 126pt;
+            padding-bottom: 0pt;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        .c19 {
+            margin-left: 18pt;
+            padding-top: 6pt;
+            padding-left: 126pt;
+            padding-bottom: 0pt;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        .c4 {
+            margin-left: 18pt;
+            padding-top: 4pt;
+            padding-left: 90pt;
+            padding-bottom: 0pt;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        .c11 {
+            margin-left: 18pt;
+            padding-top: 6pt;
+            padding-left: 90pt;
+            padding-bottom: 0pt;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        .c24 {
+            margin-left: 18pt;
+            padding-top: 4pt;
+            padding-left: 126pt;
+            padding-bottom: 0pt;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        .c30 {
+            padding-top: 0pt;
+            padding-bottom: 30pt;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: center;
+            margin-right: 25pt
+        }
+
+        .c0 {
+            color: #4a4a4a;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 12pt;
+            font-family: 'Roboto', sans-serif;
+            font-style: normal
+        }
+
+        .c13 {
+            padding-top: 0pt;
+            padding-bottom: 12pt;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        .c20 {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: center
+        }
+
+        .c33 {
+            color: #4a4a4a;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-family: 'Roboto', sans-serif;
+            font-style: normal
+        }
+
+        .c6 {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        .c25 {
+            padding-top: 6pt;
+            padding-bottom: 0pt;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        .c14 {
+            padding-top: 0pt;
+            padding-bottom: 40pt;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: center
+        }
+
+        .c3 {
+            color: #4a4a4a;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 12pt;
+            font-style: normal
+        }
+
+        .c26 {
+            color: #4a4a4a;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 48pt;
+            font-style: normal
+        }
+
+        .c22 {
+            color: #236073;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 12pt;
+            font-style: normal
+        }
+
+        .c21 {
+            color: #236073;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 36pt;
+            font-style: normal
+        }
+
+        .c32 {
+            border-spacing: 0;
+            border-collapse: collapse;
+            margin-right: auto
+        }
+
+        .c31 {
+            background-color: #ffffff;
+            max-width: 415pt;
+            padding: 99.2pt 90pt 85.1pt 90pt
+        }
+
+        .c1 {
+            padding: 0;
+            margin: 0
+        }
+
+        .c15 {
+            margin-left: 18pt;
+            padding-left: 90pt
+        }
+
+        .c16 {
+            margin-left: 18pt;
+            padding-left: 54pt
+        }
+
+        .c8 {
+            font-weight: 400;
+            font-family: 'Roboto', sans-serif
+        }
+
+        .c2 {
+            font-weight: 700;
+            font-family: 'Roboto', sans-serif
+        }
+
+        .c10 {
+            margin-left: 18pt;
+            padding-left: 18pt
+        }
+
+        .c7 {
+            height: 12pt
+        }
+
+        .c36 {
+            margin-left: 61.2pt
+        }
+
+        .c12 {
+            font-style: italic
+        }
+
+        .c34 {
+            margin-left: 17.9pt
+        }
+
+        .c23 {
+            font-size: 11pt
+        }
+
+        .c35 {
+            margin-right: 25pt
+        }
+
+        .c27 {
+            margin-left: 36pt
+        }
+
+        .c17 {
+            margin-left: 108pt
+        }
+
+        .c29 {
+            height: 0pt
+        }
+
+        .subtitle {
+            padding-top: 0pt;
+            color: #4a4a4a;
+            font-size: 12pt;
+            padding-bottom: 3pt;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: center
+        }
+
+        li {
+            color: #4a4a4a;
+            font-size: 12pt;
+            font-family: 'Roboto', sans-serif
+        }
+
+        p {
+            margin: 0;
+            color: #4a4a4a;
+            font-size: 12pt;
+            font-family: 'Roboto', sans-serif
+        }
+
+        h1 {
+            padding-top: 12pt;
+            color: #4a4a4a;
+            font-weight: 700;
+            font-size: 16pt;
+            padding-bottom: 3pt;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.0;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        h2 {
+            padding-top: 12pt;
+            color: #4a4a4a;
+            font-weight: 700;
+            font-size: 14pt;
+            padding-bottom: 3pt;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.0;
+            page-break-after: avoid;
+            font-style: italic;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        
+
+        h4 {
+            padding-top: 12pt;
+            color: #4a4a4a;
+            font-weight: 700;
+            font-size: 14pt;
+            padding-bottom: 3pt;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.0;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        h5 {
+            padding-top: 12pt;
+            color: #4a4a4a;
+            font-weight: 700;
+            font-size: 13pt;
+            padding-bottom: 3pt;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.0;
+            font-style: italic;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        h6 {
+            padding-top: 12pt;
+            color: #4a4a4a;
+            font-weight: 700;
+            font-size: 11pt;
+            padding-bottom: 3pt;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+        </style>
 </head>
 
 <body>
     <% include menu_partial.ejs %>
-    <div class='column'>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-    </div>
+        <div class='column bc-light_grey'>
+            <p class='chip_heading-small'>Constitution Of</p>
+            <p class='chip_heading-large'>The Annual Chip</p>
+            <br>
+            <p>A company limited by guarantee</p>
+            <hr style="page-break-before:always;display:none;">
+            <p class="c6 c7"><span class="c0"></span></p>
+            <div class='column' style='background-color:white; border-radius:10px; padding:10px;'>
+            <p class="c6"><span class="c8">1.</span><span class="c2 c12 c23">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Preliminary</span></p>
+            <p class="c6"><span class="c8">1.1.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Name of the company</span></p>
+            <p class="c6"><span class="c8">1.2.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Type of company</span></p>
+            <p class="c6"><span class="c8">1.3.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Limited liability of members&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">1.4.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">The guarantee&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">1.5.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Definitions&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">2.</span><span class="c2 c12 c23">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Charitable purposes and powers&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">2.1.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Objective&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">2.2.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Powers&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">2.3.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Not-for-profit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">2.4.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Amending the constitution&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">3.</span><span class="c2 c12 c23">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Members&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">3.1.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Membership and register of members&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">3.2.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Who can be a member&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">3.3.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Membership Lifecycle&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">3.4.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">How to apply for membership&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">3.5.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Deciding membership acceptance&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">3.6.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">When a person becomes a member&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">3.7.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">When a person stops being a member&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">3.8.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Membership Invitations&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">4.</span><span class="c2 c12 c23">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Dispute resolution and disciplinary procedures&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">4.1.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Dispute resolution&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">4.2.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Disciplining members&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">5.</span><span class="c2 c12 c23">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">General meetings of members&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">5.1.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">General meetings called by directors&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">5.2.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Annual Commencement meeting&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">5.3.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Annual Organization meeting&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">5.4.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Quorum at meetings&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">5.5.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Using technology to hold meetings&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">5.6.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Chairperson for general meetings&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">5.7.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Adjournment of meetings&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">6.</span><span class="c2 c12 c23">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">By-laws&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">6.1.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">By-laws&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">7.</span><span class="c2 c12 c23">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">The Event&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">7.1.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Start Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">7.2.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Duration&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">7.3.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Location&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">7.4.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Cost&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">7.5.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Rules&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">7.6.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Prizes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c8">7.7.</span><span class="c2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="c0">Gambling&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            <p class="c6"><span class="c0">Appendix&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+            </div>
+            <hr style="page-break-before:always;display:none;">
+            <p class="c6 c7"><span class="c0"></span></p>
+            <ul class="c1 lst-kix_list_1-0 start">
+            </ul><a id="t.a6fffd06a096531825003269922e9d3e9c2aff93"></a><a id="t.1"></a>
+            <table class="c32">
+                <tbody>
+                    <tr class="c29">
+                        <td class="c18" colspan="1" rowspan="1">
+                            <p class="c6"><span class="c3 c2">Version</span></p>
+                        </td>
+                        <td class="c9" colspan="1" rowspan="1">
+                            <p class="c6"><span class="c3 c2">Details</span></p>
+                        </td>
+                        <td class="c9" colspan="1" rowspan="1">
+                            <p class="c6"><span class="c3 c2">Author</span></p>
+                        </td>
+                        <td class="c9" colspan="1" rowspan="1">
+                            <p class="c6"><span class="c3 c2">Date</span></p>
+                        </td>
+                    </tr>
+                    <tr class="c29">
+                        <td class="c18" colspan="1" rowspan="1">
+                            <p class="c25"><span class="c0">0.1</span></p>
+                        </td>
+                        <td class="c9" colspan="1" rowspan="1">
+                            <p class="c25"><span class="c3 c2">Initial Draft</span></p>
+                        </td>
+                        <td class="c9" colspan="1" rowspan="1">
+                            <p class="c25"><span class="c2 c3">Calham Dower</span></p>
+                        </td>
+                        <td class="c9" colspan="1" rowspan="1">
+                            <p class="c25"><span class="c3 c2">13-1-2017</span></p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="c6 c7"><span class="c3 c2"></span></p>
+            <ul class="c1 lst-kix_list_2-0 start">
+                <li class="c6 c10"><span class="c0">Preliminary</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-1 start">
+                <li class="c6 c16"><span class="c0">Name of the company</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-2 start">
+                <li class="c6 c15"><span class="c8">The name of the </span><span class="c2">company</span><span class="c8">&nbsp;is </span><span class="c8 c12">The Annual Chip</span><span class="c8">&nbsp;(the </span><span class="c2">company</span><span class="c0">).</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-1">
+                <li class="c6 c16"><span class="c8">Type of </span><span class="c3 c2">company</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-2 start">
+                <li class="c4"><span class="c8">The </span><span class="c2">company</span><span class="c8">&nbsp;is a not-for-profit public </span><span class="c2">company</span><span class="c0">&nbsp;limited by guarantee which is established to be, and to continue as, a charity. </span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-1">
+                <li class="c6 c16"><span class="c0">Limited liability of members</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-2 start">
+                <li class="c4"><span class="c0">The liability of members is limited to the amount of the guarantee in clause 1.4.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-1">
+                <li class="c6 c16"><span class="c0">The guarantee </span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-2 start">
+                <li class="c4"><span class="c8">Each member must contribute an amount equal to $[100] (the </span><span class="c2">guarantee</span><span class="c8">) to the property of the </span><span class="c2">company.</span><span class="c8">&nbsp;If the </span><span class="c2">company</span><span class="c0">&nbsp;is wound up while the member is a member, or within 12 months after they stop being a member, this contribution is required to pay for the:</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-3 start">
+                <li class="c24"><span class="c8">debts and liabilities of the </span><span class="c2">company</span><span class="c0">&nbsp;incurred before the member stopped being a member, or</span></li>
+                <li class="c5"><span class="c0">costs of winding up.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-2">
+                <li class="c6 c15"><span class="c8">The guarantee is to be used to purchase necessary items for participation in the </span><span class="c2">Event</span><span class="c0">, and to ensure the ongoing loyalty of the member. </span></li>
+                <li class="c6 c15"><span class="c8">Any remaining amount of the guarantee may be made available for subsidization of the cost of the </span><span class="c3 c2">Event.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-1">
+                <li class="c6 c16"><span class="c0">Definitions</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-2 start">
+                <li class="c4"><span class="c0">In this constitution, words and phrases in bold have meanings specified within this document.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-0">
+                <li class="c6 c10"><span class="c0">Charitable purposes and powers</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-1 start">
+                <li class="c6 c16"><span class="c0">Objective </span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-2 start">
+                <li class="c4"><span class="c8">The </span><span class="c2">company</span><span class="c0">&rsquo;s objective is to pursue the following charitable purpose(s):</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-3 start">
+                <li class="c5"><span class="c0">To encourage and persist future golfing, and similarly related, activities for the whole of, and limited to, the invitational group. </span></li>
+                <li class="c5"><span class="c0">As a non-for-profit, all financial and emotional gains will be re-directed back towards the sole purpose of the organisation as stated in 2.1.1.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-1">
+                <li class="c6 c16"><span class="c0">Powers </span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-2 start">
+                <li class="c4"><span class="c8">Subject to clause 2.1, the </span><span class="c2">company </span><span class="c0">has the following powers, which may only be used to carry out its purpose(s) set out in clause 2.1: </span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-3 start">
+                <li class="c5"><span class="c0">&nbsp;The powers of an individual, and</span></li>
+                <li class="c5"><span class="c8">&nbsp;All the powers of a </span><span class="c2">company</span><span class="c8">&nbsp;limited by guarantee under the </span><span class="c2">Corporations Act</span><span class="c0">.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-1">
+                <li class="c6 c16"><span class="c0">Not-for-profit</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-2 start">
+                <li class="c4"><span class="c8">The</span><span class="c2">&nbsp;company</span><span class="c0">&nbsp;must not distribute any income or assets directly or indirectly to its members, except as provided in clause 2.3.2</span></li>
+                <li class="c6 c15"><span class="c8">Clause 2.3.1 does not stop the </span><span class="c2">company</span><span class="c0">&nbsp;from doing the following things, provided they are done in good faith:</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_2-3 start">
+                <li class="c5"><span class="c8">Paying a member for goods or services they have provided or expenses they have properly incurred at fair and reasonable rates or rates more favourable to the </span><span class="c2">company</span><span class="c0">, or</span></li>
+                <li class="c5"><span class="c8">Making a payment to a member in carrying out the </span><span class="c2">company</span><span class="c0">&rsquo;s charitable purpose(s).</span></li>
+            </ul>
+            <p class="c25 c7 c34"><span class="c0"></span></p>
+            <ul class="c1 lst-kix_list_3-1 start">
+                <li class="c6 c16"><span class="c0">Amending the constitution</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_3-2 start">
+                <li class="c11"><span class="c8">&nbsp;Subject to clause 2.4.2, the members may amend this constitution by passing a </span><span class="c2">special resolution</span><span class="c0">.</span></li>
+                <li class="c6 c15"><span class="c8">&nbsp;The members must not pass a </span><span class="c2">special resolution</span><span class="c8">&nbsp;that amends this constitution if passing it causes the </span><span class="c2">company</span><span class="c0">&nbsp;to no longer be a charity.</span></li>
+            </ul>
+            <p class="c6 c7 c36"><span class="c0"></span></p>
+            <ul class="c1 lst-kix_list_4-0 start">
+                <li class="c6 c10"><span class="c0">Members</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_4-1 start">
+                <li class="c6 c16"><span class="c0">Membership and register of members</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_4-2 start">
+                <li class="c6 c15"><span class="c8">The members of the </span><span class="c2">company</span><span class="c0">&nbsp;are:</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_4-3 start">
+                <li class="c5"><span class="c0">initial members, and</span></li>
+                <li class="c5"><span class="c0">any other person that the directors allow to be a member, in accordance with this constitution. </span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_4-2">
+                <li class="c6 c15"><span class="c0">The company must establish and maintain a register of members. &nbsp;The register of members must be kept by the secretary and must contain for each current member:</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_5-1 start">
+                <li class="c6 c16"><span class="c0">name</span></li>
+                <li class="c6 c16"><span class="c0">address</span></li>
+                <li class="c6 c16"><span class="c0">email address</span></li>
+                <li class="c6 c16"><span class="c0">date the member was entered on to the register.</span></li>
+            </ul>
+            <p class="c6 c7 c17"><span class="c0"></span></p>
+            <ul class="c1 lst-kix_list_6-2 start">
+                <li class="c6 c15"><span class="c8">The </span><span class="c2">company</span><span class="c0">&nbsp;must give current members access to the register of members. </span></li>
+                <li class="c6 c15"><span class="c0">Information that is accessed from the register of members must only be used in a manner relevant to the interests or rights of members.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_6-1 start">
+                <li class="c6 c16"><span class="c0">Who can be a member</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_6-2 start">
+                <li class="c11"><span class="c8">A </span><span class="c2">person</span><span class="c8">&nbsp;who supports the purposes of the</span><span class="c2">&nbsp;company</span><span class="c8">&nbsp;is eligible to apply to be a member of the </span><span class="c3 c2">company.</span></li>
+                <li class="c6 c15"><span class="c8">In this clause, </span><span class="c2">person</span><span class="c0">&nbsp;means a human individual.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_6-1">
+                <li class="c6 c16"><span class="c0">Membership Lifecycle</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_6-2 start">
+                <li class="c6 c15"><span class="c8">Memberships are based on the previous years&rsquo; invitational list. The inaugural years&rsquo; membership was deemed by committee vote at the commencement of the </span><span class="c2">company</span><span class="c0">.</span></li>
+                <li class="c6 c15"><span class="c0">Members will be given opportunity to perpetuate their membership into the next year on the first calendar day of the year, and will be given one (1) month notice to RSVP membership by the necessary communication method. Upon termination of the perpetuation period membership will be lost and will be subject to clauses stated in section 3.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_6-1">
+                <li class="c6 c16"><span class="c0">How to apply for membership</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_6-2 start">
+                <li class="c6 c15"><span class="c8">Membership to the </span><span class="c2">company</span><span class="c0">&nbsp;is strictly Invite only. After the perpetuation period (3.3.2) membership options will be given to the membership base. </span></li>
+                <li class="c6 c15"><span class="c8">Membership options will be given to members for A person (as defined in clause 11.2) to apply to become a member of the </span><span class="c2">company. </span><span class="c8">This is done by writing to the </span><span class="c2">company</span><span class="c0">&nbsp;board stating:</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_7-0 start">
+                <li class="c6 c10"><span class="c0">Who wants to become a member</span></li>
+                <li class="c6 c10"><span class="c8">Said applicant will support the purpose(s) of the </span><span class="c2">company</span><span class="c0">, and</span></li>
+                <li class="c6 c10"><span class="c8">Said applicant will agree to comply with the </span><span class="c2">company</span><span class="c0">&rsquo;s constitution, including paying the guarantee under clause 1.4 if required.</span></li>
+                <li class="c6 c10"><span class="c8">How said applicant will assist in perpetuating the </span><span class="c2">company </span><span class="c0">goals, as stated in clause 2.1.1.1.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_8-1 start">
+                <li class="c6 c16"><span class="c0">Deciding membership acceptance</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_8-2 start">
+                <li class="c11"><span class="c8">The directors must consider an application for membership within a reasonable time after the </span><span class="c2">company</span><span class="c0">&nbsp;receives the application.</span></li>
+                <li class="c6 c15"><span class="c0">If the directors approve an application, the secretary must as soon as possible:</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_8-3 start">
+                <li class="c5"><span class="c0">enter the new member on the register of members, and</span></li>
+                <li class="c5"><span class="c0">write to the applicant as specified in 4.8.1 to advise them that their application was approved, and the date that their membership started (see clause 2).</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_8-2">
+                <li class="c6 c15"><span class="c0">If the directors reject an application, the secretary must write to the applicant as soon as possible to tell them that their application has been rejected, but does not have to give reasons.</span></li>
+                <li class="c6 c15"><span class="c0">For the avoidance of doubt, the directors may approve an application even if the application does not state the matters listed in clauses 13.2. In that case, by applying to be a member, the applicant agrees to those matters.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_8-1">
+                <li class="c6 c16"><span class="c0">When a person becomes a member</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_8-2 start">
+                <li class="c6 c15"><span class="c8">Other than </span><span class="c2">initial members</span><span class="c0">, an applicant will become a member when all of:</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_8-3 start">
+                <li class="c5"><span class="c8">They are entered on the register of members.</span><span class="c3 c2">&nbsp;</span></li>
+                <li class="c5"><span class="c8">They have paid the </span><span class="c3 c2">guarantee</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_8-1">
+                <li class="c6 c16"><span class="c0">When a person stops being a member</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_8-2 start">
+                <li class="c11"><span class="c0">&nbsp;A person immediately stops being a member if they:</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_8-3 start">
+                <li class="c19"><span class="c0">die </span></li>
+                <li class="c19"><span class="c0">are wound up or otherwise dissolved or deregistered (for an incorporated member)</span></li>
+                <li class="c19"><span class="c0">resign, by writing to the secretary</span></li>
+                <li class="c19"><span class="c0">are expelled, or</span></li>
+                <li class="c19"><span class="c0">have not responded within one (1) month to a written request from the secretary that they confirm in writing that they want to remain a member.</span></li>
+                <li class="c19"><span class="c0">Do not attend annual event</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_8-1">
+                <li class="c6 c16"><span class="c0">Membership Invitations</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_8-2 start">
+                <li class="c11"><span class="c0">&nbsp;Membership invitations shall be distributed by mail or email to accepted new invitees, they shall contain the membership details, a copy of the constitution, as well as the intended rules of play for the coming year.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_8-0 start">
+                <li class="c6 c10"><span class="c0">Dispute resolution and disciplinary procedures</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_8-1 start">
+                <li class="c6 c16"><span class="c0">Dispute resolution </span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_8-2 start">
+                <li class="c11"><span class="c0">The dispute resolution procedure in this clause applies to disputes (disagreements) under this constitution between a member or director and:</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_9-3 start">
+                <li class="c5"><span class="c0">one or more members</span></li>
+                <li class="c5"><span class="c0">one or more directors, or</span></li>
+                <li class="c5"><span class="c8">the </span><span class="c2">company</span><span class="c0">.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-2 start">
+                <li class="c11"><span class="c0">All disputes are to be settled by means of director jurisdiction</span></li>
+                <li class="c11"><span class="c0">In the case a director cannot immediately resolve a dispute; Paper Scissors Rock (best of 3) is to be performed in order to resolve the dispute.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-1 start">
+                <li class="c6 c16"><span class="c0">Disciplining members</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-2 start">
+                <li class="c11"><span class="c0">In the case a dispute is resolved by that set out in 4.1.3 the loser must drink 2 shots on the next morning of the event. In the case the dispute is outside the Event weekend, this carries on to the next event. The shots are cumulative.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-0 start">
+                <li class="c6 c10"><span class="c0">General meetings of members</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-1 start">
+                <li class="c6 c16"><span class="c0">General meetings called by directors </span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-2 start">
+                <li class="c11"><span class="c0">The directors may call a general meeting.</span></li>
+                <li class="c11"><span class="c0">They must hold the general meeting within 2 months of the directors&rsquo; request.</span></li>
+                <li class="c11"><span class="c0">All members may attend</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-1">
+                <li class="c6 c16"><span class="c0">Annual Commencement meeting</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-2 start">
+                <li class="c11"><span class="c8">A </span><span class="c2">general meeting</span><span class="c8">, called the </span><span class="c2">annual commencement meeting</span><span class="c0">, must be held: </span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-3 start">
+                <li class="c19"><span class="c0">within 18 months after registration of the company, and</span></li>
+                <li class="c19"><span class="c0">At least once in every calendar year. &nbsp;</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-2">
+                <li class="c11"><span class="c0">Even if these items are not set out in the notice of meeting, the business of an annual commencement meeting must include:</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-3 start">
+                <li class="c19"><span class="c0">a review of the company&rsquo;s activities into the coming year</span></li>
+                <li class="c19"><span class="c0">a review of the company&rsquo;s finances</span></li>
+                <li class="c19"><span class="c0">any auditor&rsquo;s report</span></li>
+                <li class="c19"><span class="c0">discussions on invitations for the event into the coming year</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-2">
+                <li class="c11"><span class="c8">Attendees of the </span><span class="c2">annual commencement meeting</span><span class="c0">&nbsp;are directors only, or by invitation by a majority of the directors</span></li>
+                <li class="c11"><span class="c8">The </span><span class="c2">annual commencement meeting</span><span class="c0">&nbsp;must happen within 3 Months of the conclusion of the event.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-1">
+                <li class="c6 c16"><span class="c0">Annual Organization meeting</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-2 start">
+                <li class="c11"><span class="c8">A general meeting, called the </span><span class="c2">annual organization meeting</span><span class="c0">, must be held: </span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-3 start">
+                <li class="c19"><span class="c8">within 18 months after registration of the </span><span class="c2">company</span><span class="c0">, and</span></li>
+                <li class="c19"><span class="c0">At least once in every calendar year. &nbsp;</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-2">
+                <li class="c11"><span class="c0">Even if these items are not set out in the notice of meeting, the business of an annual organization meeting must include:</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-3 start">
+                <li class="c19"><span class="c0">a review of the company&rsquo;s activities based on the member callout</span></li>
+                <li class="c19"><span class="c0">a review of the company&rsquo;s finances</span></li>
+                <li class="c19"><span class="c0">any auditor&rsquo;s report</span></li>
+                <li class="c19"><span class="c0">discussions on possible member additions</span></li>
+                <li class="c19"><span class="c0">additional member invites</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-2">
+                <li class="c11"><span class="c0">Attendees of the annual commencement meeting are directors only, or by invitation by a majority of the directors</span></li>
+                <li class="c11"><span class="c0">The annual commencement meeting must happen within the calendar month of March.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-1">
+                <li class="c6 c16"><span class="c0">Quorum at meetings </span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-2 start">
+                <li class="c11"><span class="c0">For a general meeting to be held, at least [4] directors (a quorum) must be present (in person, by proxy or by representative) for the whole meeting. &nbsp;When determining whether a quorum is present, a person may only be counted once (even if that person is a representative or proxy of more than one member).</span></li>
+                <li class="c11"><span class="c0">No business may be conducted at a general meeting if a quorum is not present.</span></li>
+                <li class="c11"><span class="c0">If there is no quorum present within 30 minutes after the starting time stated in the notice of general meeting, the general meeting is adjourned to the date, time and place that the chairperson specifies. If the chairperson does not specify one or more of those things, the meeting is adjourned to:</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-3 start">
+                <li class="c19"><span class="c0">if the date is not specified &ndash; the same day in the next week</span></li>
+                <li class="c19"><span class="c0">if the time is not specified &ndash; the same time, and</span></li>
+                <li class="c19"><span class="c0">if the place is not specified &ndash; the same place. </span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-2">
+                <li class="c11"><span class="c0">If no quorum is present at the resumed meeting within 30 minutes after the starting time set for that meeting, the meeting is cancelled.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-1">
+                <li class="c6 c16"><span class="c0">Using technology to hold meetings</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-2 start">
+                <li class="c11"><span class="c0">The company may hold a general meeting at two or more venues using any technology that gives the members as a whole a reasonable opportunity to participate, including to hear and be heard. &nbsp;</span></li>
+                <li class="c11"><span class="c0">Anyone using this technology is taken to be present in person at the meeting. </span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-1">
+                <li class="c6 c16"><span class="c0">Chairperson for general meetings</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-2 start">
+                <li class="c11"><span class="c8">The elected </span><span class="c2">chairperson</span><span class="c0">&nbsp;is entitled to chair general meetings.</span></li>
+                <li class="c11"><span class="c0">The members present and entitled to vote at a general meeting may choose a director or member to be the chairperson for that meeting if:</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_a-3 start">
+                <li class="c19"><span class="c0">there is no elected chairperson, or </span></li>
+                <li class="c19"><span class="c0">the elected chairperson is not present within 30 minutes after the starting time set for the meeting, or</span></li>
+                <li class="c19"><span class="c0">the elected chairperson is present but says they do not wish to act as chairperson of the meeting. </span></li>
+            </ul>
+            <p class="c25 c7"><span class="c0"></span></p>
+            <ul class="c1 lst-kix_list_b-2 start">
+                <li class="c11"><span class="c0">The chairperson is responsible for the conduct of the general meeting, and for this purpose must give members a reasonable opportunity to make comments and ask questions (including to the auditor (if any)). </span></li>
+                <li class="c11"><span class="c0">The chairperson does not have a casting vote. </span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_b-1 start">
+                <li class="c6 c16"><span class="c0">Adjournment of meetings</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_b-2 start">
+                <li class="c11"><span class="c0">If a quorum is present, a general meeting must be adjourned if a majority of members present direct the chairperson to adjourn it. </span></li>
+                <li class="c11"><span class="c0">Only unfinished business may be dealt with at a meeting resumed after an adjournment. </span></li>
+            </ul>
+            <p class="c25 c7 c27"><span class="c0"></span></p>
+            <ul class="c1 lst-kix_list_c-0 start">
+                <li class="c6 c10"><span class="c0">By-laws</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_c-1 start">
+                <li class="c6 c16"><span class="c0">By-laws</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_c-2 start">
+                <li class="c11"><span class="c0">The directors may pass a resolution to make by-laws to give effect to this constitution.</span></li>
+                <li class="c11"><span class="c0">Members and directors must comply with by-laws as if they were part of this constitution.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_c-0">
+                <li class="c6 c10"><span class="c0">The Event</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_c-1 start">
+                <li class="c6 c16"><span class="c0">Start Date</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_c-2 start">
+                <li class="c11"><span class="c8">The Date of the </span><span class="c2">event</span><span class="c0">&nbsp;is to be scheduled commencing the second weekend of October perpetually.</span></li>
+                <li class="c11"><span class="c0">The date may only be changed in the event of a death of a member.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_c-1">
+                <li class="c6 c16"><span class="c0">Duration</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_c-2 start">
+                <li class="c11"><span class="c8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The </span><span class="c2">Event</span><span class="c0">&nbsp;will be a three (3) day event commencing on either the Saturday or the Friday and finishing therefore on the Sunday or the Monday. The imposed long weekend (Monday or Friday) of the date specified in 7.1.1 will be advised with the invitations.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_c-1">
+                <li class="c6 c16"><span class="c0">Location</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_c-2 start">
+                <li class="c11"><span class="c8">The location of the </span><span class="c2">event</span><span class="c0">&nbsp;may be at any public (or where possible, private) Golf Course. This will be decided by the directors at the annual organization meeting.</span></li>
+                <li class="c11"><span class="c0">The location may change each year.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_c-1">
+                <li class="c6 c16"><span class="c0">Cost</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_c-2 start">
+                <li class="c11"><span class="c0">The cost of the Event will be dictated by the courses and accommodation of the specific annual event. The cost of the event will be the summation of:</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_c-3 start">
+                <li class="c19"><span class="c0">The Accommodation</span></li>
+                <li class="c19"><span class="c0">The Golfing green fees </span></li>
+                <li class="c19"><span class="c0">The Entry Fee</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_c-2">
+                <li class="c11"><span class="c0">Any other incurred costs during the event are at the expense of the individual partaking.</span></li>
+                <li class="c11"><span class="c0">Any money left in the kitty from the previous years will be injected back into future events such that the individual cost for members is subsidised.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_c-1">
+                <li class="c6 c16"><span class="c0">Rules</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_c-2 start">
+                <li class="c11"><span class="c0">The rules of the event are dictated in Appendix A: Rulebook 0.1. The placings are dictated according to the rules and the prizes dictated by the order of these placings</span></li>
+                <li class="c11"><span class="c0">The rules must not change unless approved by all directors. Suggestions may be made by any member to be passed by the directors. </span></li>
+                <li class="c11"><span class="c0">Emergency rule change is defined a rule change where rulebook cannot be distributed to members prior to the Event</span></li>
+                <li class="c11"><span class="c0">In the case of an emergency rule change; all members must have a verbal agreement with the Emergency rule change</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_c-1">
+                <li class="c6 c16"><span class="c0">Prizes</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_c-2 start">
+                <li class="c11"><span class="c0">Prizes are dictated by the placings resulting from the Rules as dictated within Appendix A: Rulebook 0.1</span></li>
+                <li class="c11"><span class="c0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;There are two main prizes for the participants in the Event; a prize pool, and the winners Jersey. </span></li>
+                <li class="c11"><span class="c0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The previous years&rsquo; victor must wear the winners jersey for the entirety of play of the following year, the Jersey may only be removed during play of a stroke. </span></li>
+                <li class="c11"><span class="c0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The prize pool consists of the sum of the Entry Fees and is to be split according to the following ratios</span></li>
+            </ul>
+            <p class="c25 c27"><span class="c0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1st: 60%</span></p>
+            <p class="c25 c27"><span class="c0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2nd: 30%</span></p>
+            <p class="c25 c27"><span class="c0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3rd: 10%</span></p>
+            <ul class="c1 lst-kix_list_d-2 start">
+                <li class="c11"><span class="c0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prizes are to be paid out at the completion of the Event.</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_d-1 start">
+                <li class="c6 c16"><span class="c0">Gambling</span></li>
+            </ul>
+            <ul class="c1 lst-kix_list_d-2 start">
+                <li class="c11"><span class="c0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gambling is encouraged at the event and wagers may be placed on any conceivable market that will complete before or at the conclusion of the current Event.</span></li>
+                <li class="c11"><span class="c0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gambling is to be organised between two or more parties and all parties must agree with a witness to the terms of the wager. </span></li>
+                <li class="c11"><span class="c0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A fair dispute is called when the result of the wager is indeterminate such that the witness cannot call a clear winner. </span></li>
+                <li class="c11"><span class="c0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fair disputes are settled by either; a mutual agreeable decision to nullify the bet; or in the case that one or more parties do not wish to nullify the bet, Best of three Paper Scissors Rock. The odds remain the same as originally arranged during the fair dispute.</span></li>
+            </ul>
+            <p class="c25 c7 c27"><span class="c0"></span></p>
+            <hr style="page-break-before:always;display:none;">
+            <p class="c6 c7"><span class="c0"></span></p>
+            <p class="c6"><span class="c0">Appendix A: Rulebook 0.1</span></p>
+            <p class="c6"><span class="c0">Rulebook for the annual chip in: TBD</span></p>
+            <p class="c6 c7"><span class="c0"></span></p>
+        </div>
 </body>
-
 <script src="/javascripts/sam.js"></script>
 
 </html>
