@@ -588,8 +588,36 @@ router.post('/previous_bets', function(req, res, next) {
                                                 </div>
                                             </div>
                                         </div>`
+                                } else if (bets[row_1].gambler_1 == user) {
+                                    sorted_bets.open_bets += `
+                                        <div class='column bets-your_bet'>
+                                            <div class='column bets-description'>
+                                                <a>You</a> bet ${bets[row_1].gambler_2_name} $${bets[row_1].amount} that ${bets[row_1].bet_comment}. ${bets[row_1].judge_name} is the judge.
+                                            </div>
+                                            <div class='column bets-action has-text-centered'>
+                                                Waiting for ${bets[row_1].judge_name} to decide on a winner.
+                                            </div>
+                                        </div>`
+                                } else if (bets[row_1].gambler_2 == user) {
+                                    sorted_bets.open_bets += `
+                                        <div class='column bets-your_bet'>
+                                            <div class='column bets-description'>
+                                                ${bets[row_1].gambler_1_name} bet <a>you</a> $${bets[row_1].amount} that ${bets[row_1].bet_comment}. ${bets[row_1].judge_name} is the judge.
+                                            </div>
+                                            <div class='column bets-action has-text-centered'>
+                                                Waiting for ${bets[row_1].judge_name} to decide on a winner.
+                                            </div>
+                                        </div>`
                                 } else {
-
+                                     sorted_bets.open_bets += `
+                                        <div class='column bets-other_bet'>
+                                            <div class='column bets-description'>
+                                                ${bets[row_1].gambler_1_name} bet ${bets[row_1].gambler_2_name} $${bets[row_1].amount} that ${bets[row_1].bet_comment}. ${bets[row_1].judge_name} is the judge.
+                                            </div>
+                                            <div class='column bets-action has-text-centered'>
+                                                Waiting for ${bets[row_1].judge_name} to decide on a winner.
+                                            </div>
+                                        </div>`                                   
                                 }
                             } else {
                                 if (bets[row_1].gambler_1 == user && bets[row_1].winner == user) {
@@ -653,6 +681,7 @@ router.post('/previous_bets', function(req, res, next) {
                         if (sorted_bets.to_be_accepted == '') {
                             sorted_bets.to_be_accepted = `<div class='column bets-other_bet bc-danger_pink'>Doesn't look like there is anything here...</div>`
                         }
+
                         if (sorted_bets.open_bets == '') {
                             sorted_bets.open_bets = `<div class='column bets-other_bet bc-danger_pink'>Doesn't look like there is anything here...</div>`
                         }
@@ -855,6 +884,7 @@ router.post('/previous_messages', function(req, res, next) {
 
 router.post('/delete_message', function(req, res, next) {
     authenticate(req, res, 'chit_chat', function() {
+        console.log(moment.utc(req.body.time_stamp))
         db.query("DELETE FROM chat WHERE timestamp = $1 AND user_email = $2", [moment.utc(req.body.time_stamp),req.session.passport.user.email])
             .then(function(data) {
                 log("Successfully deleted chat $1 for $2", 'suc', [moment.utc(req.body.time_stamp),req.session.passport.user.email]);

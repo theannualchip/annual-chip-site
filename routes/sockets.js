@@ -75,10 +75,11 @@ module.exports = function(io) {
         });
 
         socket.on('chat message', function(message) {
-            db.query("INSERT INTO chat (user_email,comment,timestamp) VALUES ($1,$2,$3)", [socket.useremail, message, moment.utc()])
+            time_stamp=moment.utc()
+            db.query("INSERT INTO chat (user_email,comment,timestamp) VALUES ($1,$2,$3)", [socket.useremail, message, time_stamp])
                 .then(function(data) {
                     console.log("\x1b[42m\x1b[37mSuccessfully added \x1b[0m \x1b[34m" + message + "\x1b[0m to chat db");
-                    io.emit('chat message', { username: socket.username, message: message, profile_photo_title: socket.profile_photo_title, timestamp: moment.utc(), user_email: socket.useremail });
+                    io.emit('chat message', { username: socket.username, message: message, profile_photo_title: socket.profile_photo_title, timestamp: time_stamp, user_email: socket.useremail });
                     snappy_bot(message.toLowerCase(), socket.username, io)
                 })
                 .catch(function(error) {
